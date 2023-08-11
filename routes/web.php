@@ -20,8 +20,14 @@ Route::get('/register', [AuthController::class, 'register']);
 Route::get('/forgot', [AuthController::class, 'forgot']);
 Route::get('/reset', [AuthController::class, 'reset']);
 
+// Site Routes
 Route::get('/', [SiteController::class, 'index']);
+Route::get('/trading', [SiteController::class, 'trading']);
+Route::get('/deposit', [SiteController::class, 'deposit']);
+Route::get('/withdrawal', [SiteController::class, 'withdrawal']);
+Route::get('/about', [SiteController::class, 'about']);
 
+// Admin Panel Routes
 Route::prefix('admin')->group(function () {
    Route::get('/', [AdminController::class, 'index']);
    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');

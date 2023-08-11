@@ -9,7 +9,7 @@
         <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10 p-4 bg-white rounded">
             <div class="text-center">
                 <a href="{{url('/')}}">
-                    <img src="{{asset('assets/images/hostel-finder-logo.png')}}" height="120" width="130" alt="Logo">
+                    <img src="{{asset('assets/site/img/logo-2.png')}}" alt="Logo" width="165" height="70">
                 </a>
             </div>
             <form method="POST" action="{{url('register')}}" name="register-form" id="register-form">

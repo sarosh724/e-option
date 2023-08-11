@@ -9,7 +9,7 @@
         <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10 p-4 bg-white rounded">
             <div class="mb-3 text-center">
                 <a href="index.html">
-                    <img src="assets/img/logo.png" class="logo logo-scrolled" alt="Logo">
+                    <img src="{{asset('assets/site/img/logo-2.png')}}" alt="Logo" width="165" height="70">
                 </a>
             </div>
             <form method="POST" name="reset-form" id="reset-form">

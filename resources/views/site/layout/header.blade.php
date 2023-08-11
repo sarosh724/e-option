@@ -103,8 +103,8 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand" href="{{url('/')}}">
-                    <img src="assets/site/img/logo-light.png" class="logo logo-display" alt="Logo">
-                    <img src="assets/site/img/logo.png" class="logo logo-scrolled" alt="Logo">
+                    <img src="assets/site/img/logo-2.png" class="logo logo-display" alt="Logo" width="165" height="50">
+                    <img src="assets/site/img/logo-2.png" class="logo logo-scrolled" alt="Logo" width="165" height="50">
                 </a>
             </div>
             <!-- End Header Navigation -->
@@ -119,16 +119,16 @@
                         <a href="{{url('/')}}">home</a>
                     </li>
                     <li>
-                        <a href="">trading</a>
+                        <a href="{{url('trading')}}">trading</a>
                     </li>
                     <li>
-                        <a href="">deposit</a>
+                        <a href="{{url('deposit')}}">deposit</a>
                     </li>
                     <li>
-                        <a href="">withdraw</a>
+                        <a href="{{url('withdrawal')}}">withdraw</a>
                     </li>
                     <li>
-                        <a href="">about us</a>
+                        <a href="{{url('about')}}">about us</a>
                     </li>
                     <li class="btn-login-sm">
                         <a href="">login</a>

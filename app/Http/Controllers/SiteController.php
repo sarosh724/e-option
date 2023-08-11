@@ -10,4 +10,24 @@ class SiteController extends Controller
     {
         return view('site.pages.home');
     }
+
+    public function trading()
+    {
+        return view('site.pages.trading');
+    }
+
+    public function deposit()
+    {
+        return view('site.pages.deposit');
+    }
+
+    public function withdrawal()
+    {
+        return view('site.pages.withdrawal');
+    }
+
+    public function about()
+    {
+        return view('site.pages.about');
+    }
 }
