@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 interface PaymentMethodInterface
 {
-    public function paymentMethodListing(Request $request);
+    public function paymentMethodListing($active = false);
     public function storePaymentMethod(Request $request);
+    public function updateStatus(Request $request);
 }

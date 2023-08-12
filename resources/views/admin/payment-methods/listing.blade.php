@@ -18,12 +18,13 @@
 
     <div class="table-responsive my-3">
         <table id="data-table" class="table table-grid table-striped table-sm">
-            <thead class="bg-secondary">
+            <thead class="bg-light">
             <tr>
                 <th>Bank</th>
                 <th>Account Title</th>
                 <th>Account No</th>
                 <th>Mobile No</th>
+                <th width="10%">Status</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -36,6 +37,31 @@
 @section('scripts')
     <script>
         $(document).ready(function (){
+            loadTable();
+
+            $("#data-table").on('change', '.btn-status', function() {
+                let id = $(this).data('id');
+                let status = $("#"+$(this).attr('id')).val();
+                $.ajax({
+                    url :  '{{url('admin/payment-methods/status')}}',
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "status" : status,
+                        "id": id
+                    },
+                    cache: false,
+                    success: function(res) {
+                        toast(res.message, res.type);
+                        if (res.type == "success") {
+                            loadTable();
+                        }
+                    }
+                });
+            });
+        });
+
+        function loadTable() {
             $('#data-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -65,13 +91,17 @@
                         name: 'mobile_no',
                     }
                     ,{
+                        data: 'status',
+                        name: 'status',
+                    }
+                    ,{
                         data: 'actions',
                         name: 'actions',
                         orderable : false
                     },
                 ]
             });
-        });
+        }
 
         $(".btn-add").click(function (){
             open_modal('{{url('admin/payment-methods/modal')}}');

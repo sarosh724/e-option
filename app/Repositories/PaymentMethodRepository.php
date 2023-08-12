@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentMethodRepository implements PaymentMethodInterface
 {
-    public function paymentMethodListing($request)
+    public function paymentMethodListing($active = false)
     {
+        if ($active) {
+            return PaymentMethod::where("status", "active")->select("id", "bank")->get();
+        }
+
         return PaymentMethod::all();
     }
 
@@ -29,6 +33,25 @@ class PaymentMethodRepository implements PaymentMethodInterface
             $res["status"] = true;
         } catch (\Exception $e) {
             DB::rollBack();
+        }
+
+        return $res;
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $res["type"] = "error";
+        try {
+            DB::beginTransaction();
+            $payment = PaymentMethod::find($request->id);
+            $payment->status = $request->status;
+            $payment->save();
+            DB::commit();
+            $res["type"] = "success";
+            $res["message"] = "Status Updated Successfully";
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $res["message"] = "Internal Server Error";
         }
 
         return $res;

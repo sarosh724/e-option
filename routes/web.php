@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CoinController;
+use App\Http\Controllers\PaymentMethodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +58,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', [SiteController::class, 'withdrawal']);
             Route::post('/', [SiteController::class, 'withdrawal']);
         });
+
+    Route::get('payment-method/{id}', [SiteController::class, 'getPaymentMethodDetail']);
 });
 
 /*
@@ -74,6 +78,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
     Route::prefix('deposits')
         ->group(function () {
             Route::get('/', [AdminController::class, 'getDeposits']);
+            Route::post('/status', [AdminController::class, 'changeDepositStatus']);
         });
 
     Route::prefix('withdrawals')
@@ -84,17 +89,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
 
     Route::prefix('coins')
         ->group(function () {
-            Route::get('/', [\App\Http\Controllers\CoinController::class, 'index']);
-            Route::get('/coin-modal', [\App\Http\Controllers\CoinController::class, 'coinModal']);
-            Route::get('/coin-modal/{id}', [\App\Http\Controllers\CoinController::class, 'coinModal']);
-            Route::post('/store', [\App\Http\Controllers\CoinController::class, 'store']);
+            Route::get('/', [CoinController::class, 'index']);
+            Route::get('/coin-modal', [CoinController::class, 'coinModal']);
+            Route::get('/coin-modal/{id}', [CoinController::class, 'coinModal']);
+            Route::post('/store', [CoinController::class, 'store']);
         });
 
     Route::prefix('payment-methods')
         ->group(function () {
-            Route::get('/', [\App\Http\Controllers\PaymentMethodController::class, 'index']);
-            Route::get('/modal', [\App\Http\Controllers\PaymentMethodController::class, 'modal']);
-            Route::get('/modal/{id}', [\App\Http\Controllers\PaymentMethodController::class, 'modal']);
-            Route::post('/store', [\App\Http\Controllers\PaymentMethodController::class, 'store']);
+            Route::get('/', [PaymentMethodController::class, 'index']);
+            Route::get('/modal', [PaymentMethodController::class, 'modal']);
+            Route::get('/modal/{id}', [PaymentMethodController::class, 'modal']);
+            Route::post('/store', [PaymentMethodController::class, 'store']);
+            Route::post('/status', [PaymentMethodController::class, 'changePaymentStatusStatus']);
         });
 });

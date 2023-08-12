@@ -48,7 +48,7 @@ function statusBadge($status)
         case "approved":
             $color = "success";
             break;
-        case "disable":
+        case "disabled":
         case "rejected":
             $color = "danger";
             break;
@@ -67,7 +67,7 @@ function statusDropdown($entity, $status, $id) {
             $list = ["pending", "approved", "rejected"];
             break;
         case "payment_method":
-            $list = ["active", "disable"];
+            $list = ["active", "disabled"];
             break;
         default:
             break;

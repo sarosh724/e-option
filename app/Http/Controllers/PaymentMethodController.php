@@ -21,7 +21,7 @@ class PaymentMethodController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $paymentMethod = $this->paymentMethodInterface->paymentMethodListing($request);
+            $paymentMethod = $this->paymentMethodInterface->paymentMethodListing();
 
             return DataTables::of($paymentMethod)
                 ->addColumn('account_title', function ($paymentMethod) {
@@ -36,11 +36,14 @@ class PaymentMethodController extends Controller
                 ->addColumn('mobile_no', function ($paymentMethod) {
                     return $paymentMethod->mobile_no;
                 })
+                ->addColumn('status', function ($paymentMethod) {
+                    return statusDropdown("payment_method", $paymentMethod->status, $paymentMethod->id);
+                })
                 ->addColumn('actions', function ($paymentMethod) {
                     return '<a href="javascript:void(0);" data-id="' . $paymentMethod->id . '"
-                    class="btn btn-sm btn-edit btn-primary mr-1" ><i class="fal fa-edit mr-1"></i>Edit</a>';
+                    class="btn btn-sm btn-edit btn-primary mr-1" ><i class="fas fa-edit mr-1"></i>Edit</a>';
                 })
-                ->rawColumns(['actions'])
+                ->rawColumns(['actions', 'status'])
                 ->make(true);
         }
 
@@ -79,5 +82,24 @@ class PaymentMethodController extends Controller
         } else {
             return redirect(url('admin/payment-methods'))->withErrors($validator->errors());
         }
+    }
+
+    public function changePaymentStatusStatus(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            "id" => "required",
+            "status" => "required"
+        ]);
+
+        if ($validate->fails()) {
+            $res["type"] = "error";
+            $res["message"] = "Validation Error";
+
+            return response()->json($res);
+        }
+
+        $res = $this->paymentMethodInterface->updateStatus($request);
+
+        return response()->json($res);
     }
 }

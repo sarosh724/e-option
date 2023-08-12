@@ -8,7 +8,8 @@
                     <label for="bank" class="form-label">
                         <span class="required">Bank</span>
                     </label>
-                    <input type="text" class="form-control" id="bank" name="bank" value="{{@$paymentMethod -> bank}}">
+                    <input type="text" class="form-control" id="bank" name="bank"
+                           placeholder="e.g Sadapay" value="{{@$paymentMethod -> bank}}">
                 </div>
             </div>
         </div>
@@ -18,7 +19,8 @@
                     <label for="account_title" class="form-label">
                         <span class="required">Account Title</span>
                     </label>
-                    <input type="text" class="form-control" id="account_title" name="account_title" value="{{@$paymentMethod -> account_title}}">
+                    <input type="text" class="form-control" id="account_title" name="account_title"
+                           placeholder="John Doe" value="{{@$paymentMethod -> account_title}}">
                 </div>
             </div>
         </div>
@@ -26,9 +28,10 @@
             <div class="fv-row">
                 <div class="field">
                     <label for="account_no" class="form-label">
-                        <span class="required">account_no</span>
+                        <span class="required">Account Number</span>
                     </label>
-                    <input type="number" class="form-control" id="account_no" name="account_no" value="{{@$paymentMethod->account_no}}">
+                    <input type="number" class="form-control" id="account_no" name="account_no"
+                           placeholder="34364356573654" value="{{@$paymentMethod->account_no}}">
                 </div>
             </div>
         </div>
@@ -36,9 +39,10 @@
             <div class="fv-row">
                 <div class="field">
                     <label for="mobile_no" class="form-label">
-                        <span class="required">mobile_no</span>
+                        <span class="required">Phone</span>
                     </label>
-                    <input type="number" class="form-control" id="mobile_no" name="mobile_no" value="{{@$paymentMethod->mobile_no}}">
+                    <input type="number" class="form-control" id="mobile_no" name="mobile_no"
+                           placeholder="xxxxxxxxxxx" value="{{@$paymentMethod->mobile_no}}">
                 </div>
             </div>
         </div>

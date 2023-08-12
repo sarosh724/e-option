@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <form method="post" name="deposit-form" id="deposit-form" action="{{url('deposit')}}">
                             @csrf
-                            <input type="hidden" name="user_id" value="">
+                            <input type="hidden" name="user_id" value="{{auth()->id()}}">
                             <div class="form-group">
                                 <label class="form-label required" for="amount">Amount</label>
                                 <input type="number" maxlength="11" class="form-control shadow-none" name="amount" id="amount" required>
@@ -23,17 +23,16 @@
                                 <select class="form-control shadow-none" name="payment_method" id="payment_method" onchange="showPaymentMethodDetail(this)"
                                         required="required">
                                     <option value="">Select Payment Method</option>
-                                    <option value="paypal">Paypal</option>
-                                    <option value="jazzcash">Jazzcash</option>
-                                    <option value="sadapay">Sadapay</option>
-                                    <option value="alfalah">Alfalah Bank</option>
-                                    <option value="hbl">HBL</option>
-                                    <option value="easypaisa">Easypaisa</option>
+                                    @if(count($payment_methods) > 0)
+                                        @foreach($payment_methods as $method)
+                                            <option value="{{$method->id}}">{{$method->bank}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 <label id="payment_method-error" class="error" for="payment_method"></label>
                             </div>
                             <div id="detail-box">
-                                <small class="text-danger">Here is Account Details where you can send money.<br>Once Admin approve deposit, you can do trading. Thank you</small>
+                                <small class="text-success">Here is Account Details where you can send money.<br>Once Admin approve deposit, you can do trading. Thank you</small>
                                 <div class="form-group">
                                     <label class="form-label required" for="bank">Bank</label>
                                     <input type="text" readonly class="form-control shadow-none" name="bank" id="bank">
@@ -131,18 +130,16 @@
 
         async function showPaymentMethodDetail(cwt) {
             let method = $("#"+cwt.id).val();
-            // let details = await getDetail(method);
-            $("#bank").val('shdsj');
-            $("#account_name").val('sdsds');
-            $("#account_number").val('sdsdsd');
+            let details = await getDetail(method);
+            $("#bank").val(details.bank);
+            $("#account_name").val(details.account_title);
+            $("#account_number").val(details.account_no);
             $("#detail-box").slideDown();
-            console.log(method);
-
         }
 
         function getDetail(id) {
             return $.ajax({
-                url: "{{url('payment-methods')}}" + '/' + id,
+                url: "{{url('payment-method')}}" + '/' + id,
                 type: 'GET',
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
