@@ -46,7 +46,7 @@
                 <th>Account Title</th>
                 <th>Account Number</th>
                 <th>Amount</th>
-                <th>Status</th>
+                <th width="10%">Status</th>
             </tr>
             </thead>
             <tbody></tbody>

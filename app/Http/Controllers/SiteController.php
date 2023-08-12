@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\PaymentMethodInterface;
 use App\Interfaces\SiteInterface;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -10,10 +12,12 @@ use Yajra\DataTables\DataTables;
 class SiteController extends Controller
 {
     protected SiteInterface $siteInterface;
+    protected PaymentMethodInterface $paymentMethodInterface;
 
-    public function __construct(SiteInterface $siteInterface)
+    public function __construct(SiteInterface $siteInterface, PaymentMethodInterface $paymentMethodInterface)
     {
         $this->siteInterface = $siteInterface;
+        $this->paymentMethodInterface = $paymentMethodInterface;
     }
 
     public function index()
@@ -60,7 +64,9 @@ class SiteController extends Controller
                 ->make(true);
         }
 
-        return view('site.pages.deposit');
+        $payment_methods = $this->paymentMethodInterface->paymentMethodListing(true);
+
+        return view('site.pages.deposit', compact(['payment_methods']));
     }
 
     public function withdrawal(Request $request)
@@ -150,5 +156,10 @@ class SiteController extends Controller
         $res = $this->siteInterface->storeWithdrawalAccount($request);
 
         return redirect(url('settings'))->with($res['type'], $res['message']);
+    }
+
+    public function getPaymentMethodDetail($id)
+    {
+        return PaymentMethod::find($id);
     }
 }
