@@ -12,5 +12,15 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Interfaces\SiteInterface',
             'App\Repositories\SiteRepository'
         );
+
+        $this->app->bind(
+            'App\Interfaces\CoinInterface',
+            'App\Repositories\CoinRepository'
+        );
+
+        $this->app->bind(
+            'App\Interfaces\PaymentMethodInterface',
+            'App\Repositories\PaymentMethodRepository'
+        );
     }
 }
