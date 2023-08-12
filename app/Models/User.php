@@ -22,9 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'google_id',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
+        'google_id'
     ];
 
     /**
