@@ -1,12 +1,85 @@
 @extends('admin.templates.index')
 
 @section('page-title')
-    Payment Methods
+    Payment Method
 @stop
 
 @section('title')
-    Payment Methods
+    Payment Method
+@stop
+
+@section('page-actions')
+    <a href="javascript:void(0);" class="btn btn-sm btn-add btn-primary">
+        <i class="far fa-plus-square mr-1"></i>Payment Method
+    </a>
 @stop
 
 @section('content')
+
+    <div class="table-responsive my-3">
+        <table id="data-table" class="table table-grid table-striped table-sm">
+            <thead class="bg-secondary">
+            <tr>
+                <th>Bank</th>
+                <th>Account Title</th>
+                <th>Account No</th>
+                <th>Mobile No</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+@stop
+
+@section('scripts')
+    <script>
+        $(document).ready(function (){
+            $('#data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                aaSorting: [],
+                columnsDefs: [{
+                    orderable: true
+                }],
+                ajax: {
+                    url: "{{url('admin/payment-methods')}}",
+                },
+                columns: [
+                    {
+                        data: 'bank',
+                        name: 'bank',
+                    }
+                    ,{
+                        data: 'account_title',
+                        name: 'account_title',
+                    }
+                    ,{
+                        data: 'account_no',
+                        name: 'account_no',
+                    }
+                    ,{
+                        data: 'mobile_no',
+                        name: 'mobile_no',
+                    }
+                    ,{
+                        data: 'actions',
+                        name: 'actions',
+                        orderable : false
+                    },
+                ]
+            });
+        });
+
+        $(".btn-add").click(function (){
+            open_modal('{{url('admin/payment-methods/modal')}}');
+        });
+
+        $("#data-table").on('click', '.btn-edit', function() {
+            var id = $(this).data('id');
+            open_modal('{{url('admin/payment-methods/modal')}}' + '/' + id);
+        });
+    </script>
 @stop
