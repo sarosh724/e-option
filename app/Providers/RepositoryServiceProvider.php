@@ -12,5 +12,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Interfaces\SiteInterface',
             'App\Repositories\SiteRepository'
         );
+
+        $this->app->bind(
+            'App\Interfaces\WithdrawalInterface',
+            'App\Repositories\WithdrawalRepository'
+        );
     }
 }

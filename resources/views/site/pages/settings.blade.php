@@ -12,43 +12,34 @@
                 <div class="card-body">
                     <form method="post" name="withdrawal-account-form" id="withdrawal-account-form" action="{{url('withdrawal-account')}}">
                         @csrf
-                        <input type="hidden" name="user_id" value="">
+                        <input type="hidden" name="user_id" value="{{auth()->id()}}">
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label class="form-label required" for="payment_method">Payment Method</label>
-                                    <select class="form-control shadow-none" name="payment_method" id="payment_method"
-                                            required="required">
-                                        <option value="">Select Payment Method</option>
-                                        <option value="paypal">Paypal</option>
-                                        <option value="jazzcash">Jazzcash</option>
-                                        <option value="sadapay">Sadapay</option>
-                                        <option value="alfalah">Alfalah Bank</option>
-                                        <option value="hbl">HBL</option>
-                                        <option value="easypaisa">Easypaisa</option>
-                                    </select>
-                                    <label id="payment_method-error" class="error" for="payment_method"></label>
+                                    <label class="form-label required" for="bank">Bank / Payment Method</label>
+                                    <input type="text" class="form-control shadow-none" name="bank" id="bank"
+                                           placeholder="e.g Sadapay">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label class="form-label required" for="account_name">Account Name</label>
+                                    <label class="form-label required" for="account_name">Account Title</label>
                                     <input type="text" class="form-control shadow-none" name="account_name" id="account_name"
-                                        placeholder="Account Name">
+                                        placeholder="John Doe">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="form-label required" for="account_number">Account Number</label>
                                     <input type="text" class="form-control shadow-none" name="account_number" id="account_number"
-                                        placeholder="Account Number">
+                                        placeholder="PK19AL353737346536">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="form-label required" for="phone">Phone Number</label>
                                     <input type="text" class="form-control shadow-none" name="phone" id="phone"
-                                        placeholder="Phone Number">
+                                        placeholder="xxxxxxxxxx">
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12">
@@ -62,7 +53,7 @@
                         <table class="table table-sm table-info table-hover" id="accounts-data-table">
                             <thead class="">
                             <tr>
-                                <th>Bank</th>
+                                <th width="25%">Bank</th>
                                 <th>Account Name</th>
                                 <th>Account Number</th>
                                 <th>Phone</th>
@@ -97,7 +88,7 @@
 
             $("#withdrawal-account-form").validate({
                 rules:{
-                    payment_method: {
+                    bank: {
                         required:true
                     },
                     account_name: {
@@ -111,8 +102,8 @@
                     }
                 },
                 messages:{
-                    payment_method: {
-                        required: "Please select Payment Method*"
+                    bank: {
+                        required: "Please select Bank*"
                     },
                     account_name: {
                         required: "Please enter Account Name*"

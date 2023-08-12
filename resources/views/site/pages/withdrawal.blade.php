@@ -13,23 +13,20 @@
                     <div class="card-body">
                         <form method="post" name="withdrawal-form" id="withdrawal-form" action="{{url('withdrawal')}}">
                             @csrf
-                            <input type="hidden" name="user_id" value="">
-
+                            <input type="hidden" name="user_id" value="{{auth()->id()}}">
+                            @if(count($accounts) < 1)
+                                <small class="text-danger">No withdrawal account is configure in settings. Please go to
+                                    <a href="{{url('settings')}}" style="text-decoration-line: underline;">settings</a></small>
+                            @endif
                             <div class="form-group">
                                 <label class="form-label required" for="account">Account</label>
                                 <select class="form-control shadow-none" name="account" id="account" required>
                                     <option value="">Select Account</option>
                                     @if(count($accounts) > 0)
                                         @foreach($accounts as $account)
-                                            <option value="{{$account->id}}">{{$account->payment_method?->name}}</option>
+                                            <option value="{{$account->id}}">{{$account->bank}}</option>
                                         @endforeach
                                     @endif
-                                    <option value="paypal">Paypal</option>
-                                    <option value="jazzcash">Jazzcash</option>
-                                    <option value="sadapay">Sadapay</option>
-                                    <option value="alfalah">Alfalah Bank</option>
-                                    <option value="hbl">HBL</option>
-                                    <option value="easypaisa">Easypaisa</option>
                                 </select>
                                 <label id="account-error" class="error" for="account"></label>
                             </div>
@@ -54,9 +51,9 @@
                             <table class="table table-sm table-info table-hover" id="data-table">
                                 <thead class="">
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
+                                    <th width="35%">Date</th>
+                                    <th width="35%">Amount</th>
+                                    <th width="30%">Status</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -92,7 +89,8 @@
             $("#withdrawal-form").validate({
                 rules:{
                     amount: {
-                        required:true
+                        required:true,
+                        min: 1
                     },
                     acount: {
                         required:true
@@ -100,7 +98,8 @@
                 },
                 messages:{
                     amount: {
-                        required:"Please enter amount*"
+                        required:"Please enter amount*",
+                        min: "Value must be greater then 0"
                     },
                     account: {
                         required: "Please select Account*"

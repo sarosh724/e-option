@@ -92,8 +92,7 @@ class SiteRepository implements SiteInterface
 
     public function withdrawalAccountListing($id)
     {
-        return UserAccount::with("payment_method")
-            ->where("user_id", $id)
+        return UserAccount::where("user_id", $id)
             ->orderBy("id", "desc")
             ->get();
     }
@@ -102,10 +101,20 @@ class SiteRepository implements SiteInterface
     {
         $res["type"] = "error";
         try {
+            $check = UserAccount::where("user_id", $request->user_id)
+                ->where("bank", $request->bank)
+                ->where("account_number", $request->account_number)
+                ->first();
+            if ($check) {
+                $res["type"] = "warning";
+                $res["message"] = "Account Already exists! Please create new one";
+
+                return $res;
+            }
             DB::beginTransaction();
             $account = new UserAccount();
             $account->user_id = $request->user_id;
-            $account->payment_method_id = $request->payment_method;
+            $account->bank = $request->bank;
             $account->account_name = $request->account_name;
             $account->account_number = $request->account_number;
             $account->phone = $request->phone;

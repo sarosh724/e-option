@@ -11,9 +11,4 @@ class UserAccount extends Model
 
     protected $table = "user_withdrawal_accounts";
     protected $guarded = [];
-
-    public function payment_method()
-    {
-        return $this->belongsTo(PaymentMethod::class, "payment_method_id");
-    }
 }
