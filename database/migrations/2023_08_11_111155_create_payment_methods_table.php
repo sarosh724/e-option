@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('payment_method_type_id');
             $table->string('mobile_no')->nullable();
             $table->string('account_title')->nullable();
             $table->string('account_no')->nullable();
             $table->string('bank')->nullable();
+            $table->enum("status", ["active", "disabled"])->default("active");
             $table->timestamps();
             $table->softDeletes();
         });

@@ -84,11 +84,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
 
     Route::prefix('coins')
         ->group(function () {
-            Route::get('/', [AdminController::class, 'getCoins']);
+            Route::get('/', [\App\Http\Controllers\CoinController::class, 'index']);
+            Route::get('/coin-modal', [\App\Http\Controllers\CoinController::class, 'coinModal']);
+            Route::get('/coin-modal/{id}', [\App\Http\Controllers\CoinController::class, 'coinModal']);
+            Route::post('/store', [\App\Http\Controllers\CoinController::class, 'store']);
         });
 
     Route::prefix('payment-methods')
         ->group(function () {
-            Route::get('/', [AdminController::class, 'getPaymentMethods']);
+            Route::get('/', [\App\Http\Controllers\PaymentMethodController::class, 'index']);
+            Route::get('/modal', [\App\Http\Controllers\PaymentMethodController::class, 'modal']);
+            Route::get('/modal/{id}', [\App\Http\Controllers\PaymentMethodController::class, 'modal']);
+            Route::post('/store', [\App\Http\Controllers\PaymentMethodController::class, 'store']);
         });
 });
