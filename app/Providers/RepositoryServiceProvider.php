@@ -14,6 +14,11 @@ class RepositoryServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            'App\Interfaces\WithdrawalInterface',
+            'App\Repositories\WithdrawalRepository'
+        );
+      
+        $this->app->bind(
             'App\Interfaces\CoinInterface',
             'App\Repositories\CoinRepository'
         );

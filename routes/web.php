@@ -79,6 +79,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
     Route::prefix('withdrawals')
         ->group(function () {
             Route::get('/', [AdminController::class, 'getWithdrawals']);
+            Route::post('/status', [AdminController::class, 'changeWithdrawalStatus']);
         });
 
     Route::prefix('coins')

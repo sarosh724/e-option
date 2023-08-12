@@ -64,9 +64,9 @@
                             <table class="table table-sm table-info table-hover" id="data-table">
                                 <thead class="">
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
+                                    <th width="35%">Date</th>
+                                    <th width="35%">Amount</th>
+                                    <th width="30%">Status</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -107,7 +107,8 @@
             $("#deposit-form").validate({
                 rules:{
                     amount: {
-                        required:true
+                        required:true,
+                        min: 1
                     },
                     payment_method: {
                         required:true
@@ -115,7 +116,8 @@
                 },
                 messages:{
                     amount: {
-                        required:"Please enter amount*"
+                        required:"Please enter amount*",
+                        min: "Value must be greater then 0"
                     },
                     payment_method: {
                         required: "Please select Payment Method*"

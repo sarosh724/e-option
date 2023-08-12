@@ -48,14 +48,15 @@ class SiteController extends Controller
             $data = $this->siteInterface->depositListing(null, 1);
             return DataTables::of($data)
                 ->addColumn('date', function ($data) {
-                    return $data->created_at;
+                    return showDate($data->created_at);
                 })
                 ->addColumn('amount', function ($data) {
                     return $data->amount;
                 })
                 ->addColumn('status', function ($data) {
-                    return $data->status;
+                    return statusBadge($data->status);
                 })
+                ->rawColumns(['status'])
                 ->make(true);
         }
 
@@ -84,14 +85,15 @@ class SiteController extends Controller
             $data = $this->siteInterface->withdrawalListing(null, 1);
             return DataTables::of($data)
                 ->addColumn('date', function ($data) {
-                    return $data->created_at;
+                    return showDate($data->created_at);
                 })
                 ->addColumn('amount', function ($data) {
                     return $data->amount;
                 })
                 ->addColumn('status', function ($data) {
-                    return $data->status;
+                    return statusBadge($data->status);
                 })
+                ->rawColumns(['status'])
                 ->make(true);
         }
 
@@ -116,7 +118,7 @@ class SiteController extends Controller
             $data = $this->siteInterface->withdrawalAccountListing(1);
             return DataTables::of($data)
                 ->addColumn('bank', function ($data) {
-                    return $data->payment_method_id;
+                    return $data->bank;
                 })
                 ->addColumn('account_name', function ($data) {
                     return $data->account_name;
@@ -135,7 +137,7 @@ class SiteController extends Controller
     {
         $validate = Validator::make($request->all(), [
             "user_id" => "required",
-            "payment_method" => "required",
+            "bank" => "required",
             "account_name" => "required",
             "account_number" => "required",
             "phone" => "required"

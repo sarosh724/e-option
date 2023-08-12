@@ -343,10 +343,8 @@
 
     $(function(){
         var current = location.pathname;
-        console.log("current = ", current)
         $('.nav .nav-item .nav-link').each(function(){
             var $this = $(this);
-            console.log("this = ", $this.attr('href').indexOf(current));
             // if the current path is like this link, make it active
             if($this.attr('href').indexOf(current) != -1){
                 $this.addClass('active');
