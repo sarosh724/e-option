@@ -25,29 +25,21 @@
                 @endif
                 <div class="form-group">
                     <label class="form-label required" for="username">Name</label>
-                    <input type="text" class="form-control shadow-none" name="name" id="username" required="">
+                    <input type="text" class="form-control shadow-none" placeholder="name" name="name" id="username" required="">
                 </div>
                 <div class="form-group">
                     <label class="form-label required" for="email">Email</label>
-                    <input type="email" class="form-control shadow-none" name="email" id="email" required="">
+                    <input type="email" class="form-control shadow-none" name="email" placeholder="email" id="email" required="">
                 </div>
-                <div class="form-group">
-                    <label class="form-label required" for="gender">Gender</label>
-                    <select class="form-control shadow-none" name="gender" id="gender" required>
-                        <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label required" for="mobile_no">Mobile No</label>
-                    <input type="number" maxlength="11" class="form-control shadow-none" name="mobile_no" id="mobile_no" required>
-                </div>
+{{--                <div class="form-group">--}}
+{{--                    <label class="form-label required" for="mobile_no">Mobile No</label>--}}
+{{--                    <input type="number" maxlength="11" class="form-control shadow-none" placeholder="03xxxxxxxxx" name="mobile_no" id="mobile_no" required>--}}
+{{--                </div>--}}
                 <div class="form-group">
                     <label class="form-label required" for="password">Password</label>
                     <div class="input-group">
                         <input type="password" class="form-control shadow-none"
-                               name="password" id="password">
+                               name="password" id="password" placeholder="password">
                         <div class="input-group-append">
                             <span class="input-group-text  cursor-pointer">
                                 <i class="fa eye fa-eye-slash toggle-password"></i>
@@ -60,7 +52,7 @@
                     <label class="form-label" for="c_password">Confirm Password</label>
                     <div class="input-group">
                         <input type="password" class="form-control shadow-none"
-                               name="c_password" id="c_password">
+                               name="c_password" id="c_password" placeholder="confirm password">
                         <div class="input-group-append">
                             <span class="input-group-text cursor-pointer">
                                 <i class="fa eye fa-eye-slash toggle-password-2"></i>
@@ -77,7 +69,7 @@
                 <span>
                     Already have an account?
                     <a href="{{url('/login')}}" style="text-decoration: underline;">
-                        Signin
+                        Sign In
                     </a>
                 </span>
             </div>
@@ -120,9 +112,9 @@
                     gender: {
                         required:true
                     },
-                    mobile_no: {
-                        required:true
-                    },
+                    // mobile_no: {
+                    //     required:true
+                    // },
                     email: {
                         required: true,
                         email: true
@@ -150,7 +142,7 @@
                         maxlength: "Password must be maximum 12 characters long"
                     },
                     c_password: {
-                        equalTo: "Password must be equal to New Password"
+                        equalTo: "Password must be equal to entered password"
                     },
                 },
                 submitHandler:function(form){

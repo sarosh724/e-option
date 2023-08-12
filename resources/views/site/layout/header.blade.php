@@ -9,7 +9,7 @@
     <meta name="description" content="Healdi - Medical & Health Template">
 
     <!-- ========== Page Title ========== -->
-    <title>E-Option Template</title>
+    <title>E-Option</title>
 
     <!-- ========== Favicon Icon ========== -->
     <link rel="shortcut icon" href="assets/site/img/favicon.png" type="image/x-icon">
@@ -78,21 +78,21 @@
             <!-- Start Attribute Navigation -->
             <div class="attr-nav extra-color">
                 <ul>
-{{--                    @if (!(auth()->check()))--}}
+                    @if (!(auth()->check()))
                         <li>
                             <a href="{{url('login')}}" class="btn-login"><i class="fa fa-sign-in-alt mr-1"></i>Login</a>
                         </li>
                         <li>
                             <a href="{{url('register')}}" class="btn-register"><i class="fa fa-sign-out-alt mr-1"></i>Register</a>
                         </li>
-{{--                    @else--}}
-{{--                        <li>--}}
-{{--                            <a href="javascript:void(0);" class="username"><small>Welcome: <b>Ahmed Sayyam</b></small></a>--}}
-{{--                        </li>--}}
-{{--                        <li>--}}
-{{--                            <a href="{{url('logout')}}" class="btn-logout"><i class="fa fa-sign-out-alt mr-1"></i>Logout</a>--}}
-{{--                        </li>--}}
-{{--                    @endif--}}
+                    @else
+                        <li>
+                            <a href="javascript:void(0);" class="username"><small>Welcome: <b>{{auth()->user()->name}}</b></small></a>
+                        </li>
+                        <li>
+                            <a href="{{url('logout')}}" class="btn-logout"><i class="fa fa-sign-out-alt mr-1"></i>Logout</a>
+                        </li>
+                    @endif
 {{--                    <li><a href="{{url('login')}}" class="font-weight-light px-0 mx-0">Login</a></li>--}}
 {{--                    <li><a href="{{url('register')}}" class="font-weight-light px-0 mx-0">Register</a></li>--}}
 {{--                    <li class="search"><a href="#"><i class="fas fa-search"></i></a></li>--}}
