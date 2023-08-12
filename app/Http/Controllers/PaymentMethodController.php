@@ -54,7 +54,7 @@ class PaymentMethodController extends Controller
             $res["html"]    = view('admin.payment-methods.form', compact(['paymentMethod']))->render();
         }
         else{
-            $res["title"]   = 'Add New PaymentMethod';
+            $res["title"]   = 'Add New Payment Method';
             $res["html"]    = view('admin.payment-methods.form')->render();
         }
 

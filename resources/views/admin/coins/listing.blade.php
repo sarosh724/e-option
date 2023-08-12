@@ -1,11 +1,11 @@
 @extends('admin.templates.index')
 
 @section('page-title')
-    Coin
+    Coins
 @stop
 
 @section('title')
-    Coin
+    Coins
 @stop
 
 @section('page-actions')
