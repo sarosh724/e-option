@@ -1,32 +1,14 @@
 @extends('site.templates.index')
 
 @section('content')
-    <!-- Start Breadcrumb
-    ============================================= -->
-    <div class="breadcrumb-area bg-gradient text-center">
-        <!-- Fixed BG -->
-        <div class="fixed-bg" style="background-image: url(assets/site/img/shape/9.png);"></div>
-        <!-- Fixed BG -->
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <h1>Deposit</h1>
-                    <ul class="breadcrumb">
-                        <li><a href="{{url('/')}}"><i class="fas fa-home"></i> Home</a></li>
-                        <li class="active">Deposit</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Breadcrumb -->
+    @include('site.sections.breadcrumb', ['title' => 'deposit'])
 
     <div class="container py-1 mb-2">
         <div class="row">
             <div class="col-md-6 mt-2">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="m-0">Create Deposit</h5>
+                        <h6 class="m-0 font-weight-bold">Create Deposit</h6>
                     </div>
                     <div class="card-body">
                         <form method="post" name="deposit-form" id="deposit-form" action="{{url('deposit')}}">
@@ -75,7 +57,7 @@
             <div class="col-md-6 mt-2">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="m-0">Deposit History</h5>
+                        <h6 class="m-0 font-weight-bold">Deposit History</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
