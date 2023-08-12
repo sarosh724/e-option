@@ -375,6 +375,19 @@
         }
     }
 
+    function toast(title, type) {
+        Swal.fire({
+            toast: true,
+            title: title,
+            text: '',
+            type: type,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            // timerProgressBar: true,
+        });
+    }
+
     function runAlert(title, message, flag){
         Swal.fire({
             title: title,
@@ -429,7 +442,9 @@
         }
     })();
 </script>
-
+<script>
+    @include('partials.response')
+</script>
 @yield('scripts');
 </body>
 </html>

@@ -34,7 +34,8 @@
     <script src="{{asset('assets/site/js/html5/html5shiv.min.js')}}"></script>
     <script src="{{asset('assets/site/js/html5/respond.min.js')}}"></script>
     <![endif]-->
-
+    <!-- Sweet alert -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <!-- ========== Google Fonts ========== -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
 

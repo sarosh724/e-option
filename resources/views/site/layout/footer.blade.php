@@ -152,8 +152,26 @@
 <script src="{{asset('assets/site/js/jquery.validate.min.js')}}"></script>
 <script src="{{asset('assets/site/js/bootsnav.js')}}"></script>
 <script src="{{asset('assets/site/js/main.js')}}"></script>
+<!-- Sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <!-- Datatables JS -->
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script>
+    function toast(title, type) {
+        Swal.fire({
+            toast: true,
+            title: title,
+            text: '',
+            type: type,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }
+</script>
+<script>
+    @include('partials.response')
+</script>
 @yield('scripts')
 </body>
 </html>

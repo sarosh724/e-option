@@ -41,12 +41,12 @@ Route::prefix('withdrawal')->group(function () {
 
 // Admin Panel Routes
 Route::prefix('admin')->group(function () {
-   Route::get('/', [AdminController::class, 'index']);
-   Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
+    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 
-   Route::prefix('users')->group(function () {
+    Route::prefix('users')->group(function () {
        Route::get('/', [AdminController::class, 'getUsers']);
-   });
+    });
 
     Route::prefix('deposits')->group(function () {
         Route::get('/', [AdminController::class, 'getDeposits']);

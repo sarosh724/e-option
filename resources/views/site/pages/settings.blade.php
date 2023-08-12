@@ -1,31 +1,13 @@
 @extends('site.templates.index')
 
 @section('content')
-    <!-- Start Breadcrumb
-    ============================================= -->
-    <div class="breadcrumb-area bg-gradient text-center">
-        <!-- Fixed BG -->
-        <div class="fixed-bg" style="background-image: url(assets/site/img/shape/9.png);"></div>
-        <!-- Fixed BG -->
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <h1>Settings</h1>
-                    <ul class="breadcrumb">
-                        <li><a href="{{url('/')}}"><i class="fas fa-home"></i> Home</a></li>
-                        <li class="active">Settings</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Breadcrumb -->
+    @include('site.sections.breadcrumb', ['title' => 'settings'])
 
     <div class="container mb-2">
         <div class="mt-2">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="m-0">Withdrawal Accounts</h5>
+                    <h6 class="m-0 font-weight-bold">Withdrawal Accounts</h6>
                 </div>
                 <div class="card-body">
                     <form method="post" name="withdrawal-account-form" id="withdrawal-account-form" action="{{url('withdrawal-account')}}">
