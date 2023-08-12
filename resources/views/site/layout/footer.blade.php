@@ -148,9 +148,12 @@
 <script src="{{asset('assets/site/js/imagesloaded.pkgd.min.js')}}"></script>
 <script src="{{asset('assets/site/js/count-to.js')}}"></script>
 <script src="{{asset('assets/site/js/YTPlayer.min.js')}}"></script>
-<script src="{{asset('assets/site/js/jquery.nice-select.min.js')}}"></script>
+{{--<script src="{{asset('assets/site/js/jquery.nice-select.min.js')}}"></script>--}}
+<script src="{{asset('assets/site/js/jquery.validate.min.js')}}"></script>
 <script src="{{asset('assets/site/js/bootsnav.js')}}"></script>
 <script src="{{asset('assets/site/js/main.js')}}"></script>
-
+<!-- Datatables JS -->
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+@yield('scripts')
 </body>
 </html>
