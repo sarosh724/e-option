@@ -16,7 +16,7 @@
                 @csrf
                 <div class="form-group">
                     <label class="form-label required" for="username">Email</label>
-                    <input type="text" class="form-control shadow-none" name="email" id="email" required="">
+                    <input type="email" class="form-control shadow-none" name="email" id="email" required="">
                 </div>
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
@@ -37,7 +37,12 @@
                     <label id="password-error" class="error" for="password"></label>
                 </div>
                 <div>
-                    <button class="btn btn-sm btn-gradient btn-block">Signin</button>
+                    <button class="btn btn-sm btn-gradient btn-block">Sign In</button>
+                </div>
+                <div class="flex items-center justify-end mt-4">
+                    <a href="{{ url('authorized/google') }}">
+                        <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" style="margin-left: 3em;">
+                    </a>
                 </div>
                 @if ($errors->any())
                     <div class="alert alert-danger">

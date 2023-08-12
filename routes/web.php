@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SiteController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SiteController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,52 +16,78 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/register', [AuthController::class, 'register']);
-Route::get('/forgot', [AuthController::class, 'forgot']);
-Route::get('/reset', [AuthController::class, 'reset']);
+/*
+ *   Authentication Routes
+ */
 
-// Site Routes
-Route::get('/', [SiteController::class, 'index']);
-Route::get('/trading', [SiteController::class, 'trading']);
-Route::get('/settings', [SiteController::class, 'settings']);
-Route::get('/about', [SiteController::class, 'about']);
+Route::controller(AuthController::class)->group(function () {
+        Route::match(['get', 'post'], '/login', 'login')
+            ->name('login');
+        Route::match(['get', 'post'], '/register', 'register');
+        Route::get('/forgot', 'forgot');
+        Route::get('/reset', 'reset');
+        Route::get('/logout', 'logout');
+        Route::get('authorized/google', 'redirectToGoogle')
+            ->name('auth.google');
+        Route::get('authorized/google/callback', 'handleGoogleCallback');
+    });
 
-Route::get('/withdrawal-accounts', [SiteController::class, 'getWithdrawalAccounts']);
-Route::post('/withdrawal-account', [SiteController::class, 'storeWithdrawalAccount']);
+/*
+ *   Site Routes
+ */
 
-Route::prefix('deposit')->group(function () {
-    Route::get('/', [SiteController::class, 'deposit']);
-    Route::post('/', [SiteController::class, 'deposit']);
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', [SiteController::class, 'index']);
+    Route::get('/trading', [SiteController::class, 'trading']);
+    Route::get('/settings', [SiteController::class, 'settings']);
+    Route::get('/about', [SiteController::class, 'about']);
+
+    Route::get('/withdrawal-accounts', [SiteController::class, 'getWithdrawalAccounts']);
+    Route::post('/withdrawal-account', [SiteController::class, 'storeWithdrawalAccount']);
+
+    Route::prefix('deposit')
+        ->group(function () {
+            Route::get('/', [SiteController::class, 'deposit']);
+            Route::post('/', [SiteController::class, 'deposit']);
+        });
+
+    Route::prefix('withdrawal')
+        ->group(function () {
+            Route::get('/', [SiteController::class, 'withdrawal']);
+            Route::post('/', [SiteController::class, 'withdrawal']);
+        });
 });
 
-Route::prefix('withdrawal')->group(function () {
-    Route::get('/', [SiteController::class, 'withdrawal']);
-    Route::post('/', [SiteController::class, 'withdrawal']);
-});
-
-// Admin Panel Routes
-Route::prefix('admin')->group(function () {
+/*
+ *   Admin Panel Routes
+ */
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], function () {
     Route::get('/', [AdminController::class, 'index']);
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])
+        ->name('admin-dashboard');
 
-    Route::prefix('users')->group(function () {
-       Route::get('/', [AdminController::class, 'getUsers']);
-    });
+    Route::prefix('users')
+        ->group(function () {
+            Route::get('/', [AdminController::class, 'getUsers']);
+        });
 
-    Route::prefix('deposits')->group(function () {
-        Route::get('/', [AdminController::class, 'getDeposits']);
-    });
+    Route::prefix('deposits')
+        ->group(function () {
+            Route::get('/', [AdminController::class, 'getDeposits']);
+        });
 
-    Route::prefix('withdrawals')->group(function () {
-        Route::get('/', [AdminController::class, 'getWithdrawals']);
-    });
+    Route::prefix('withdrawals')
+        ->group(function () {
+            Route::get('/', [AdminController::class, 'getWithdrawals']);
+        });
 
-    Route::prefix('coins')->group(function () {
-        Route::get('/', [AdminController::class, 'getCoins']);
-    });
+    Route::prefix('coins')
+        ->group(function () {
+            Route::get('/', [AdminController::class, 'getCoins']);
+        });
 
-    Route::prefix('payment-methods')->group(function () {
-        Route::get('/', [AdminController::class, 'getPaymentMethods']);
-    });
+    Route::prefix('payment-methods')
+        ->group(function () {
+            Route::get('/', [AdminController::class, 'getPaymentMethods']);
+        });
 });

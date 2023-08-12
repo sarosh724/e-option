@@ -18,10 +18,8 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'email' => 'admin@eoption.com',
-            'email_verified_at' => now(),
             'is_admin' => 1,
             'password' => Hash::make('admin@eoption'), // admin@eoption
-            'remember_token' => Str::random(10),
         ]);
     }
 }

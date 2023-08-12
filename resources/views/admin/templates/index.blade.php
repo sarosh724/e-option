@@ -140,7 +140,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-info elevation-4">
         <!-- Brand Logo -->
-        <a href="/" class="brand-link text-center">
+        <a href="{{'admin/dashboard'}}" class="brand-link text-center">
             <span class="brand-text font-weight-bold">E-Option</span>
         </a>
 
@@ -229,7 +229,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="/admin/logout" class="nav-link active bg-dark">
+                        <a href="{{url('logout')}}" class="nav-link active bg-dark">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>
                                 Logout
@@ -272,7 +272,7 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <strong>Copyright &copy; 2019-2023</strong>
+        <strong>Copyright &copy; {{date('Y')}}</strong>
         All rights reserved.
         {{--        <div class="float-right d-none d-sm-inline-block">--}}
         {{--            <b>Version</b> 3.2.0--}}
