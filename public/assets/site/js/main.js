@@ -1,9 +1,9 @@
 /* ===================================================================
-    
+
     Author          : Valid Theme
     Template Name   : Healdi - Medical & Health Template
     Version         : 1.0
-    
+
 * ================================================================= */
 
 (function($) {
@@ -23,7 +23,7 @@
             live: true // act on asynchronously loaded content (default is true)
         });
         wow.init();
-        
+
 
         /* ==================================================
             # Tooltip Init
@@ -40,8 +40,8 @@
             animation: true,
             html: true,
             template: tooltipTemplate
-        }); 
-        
+        });
+
 
 
         /* ==================================================
@@ -301,7 +301,9 @@
         /* ==================================================
             Nice Select Init
          ===============================================*/
-        $('select').niceSelect();
+        // $('select').niceSelect({
+        //     required: true
+        // });
 
 
 

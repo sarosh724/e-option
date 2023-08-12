@@ -23,9 +23,21 @@ Route::get('/reset', [AuthController::class, 'reset']);
 // Site Routes
 Route::get('/', [SiteController::class, 'index']);
 Route::get('/trading', [SiteController::class, 'trading']);
-Route::get('/deposit', [SiteController::class, 'deposit']);
-Route::get('/withdrawal', [SiteController::class, 'withdrawal']);
+Route::get('/settings', [SiteController::class, 'settings']);
 Route::get('/about', [SiteController::class, 'about']);
+
+Route::get('/withdrawal-accounts', [SiteController::class, 'getWithdrawalAccounts']);
+Route::post('/withdrawal-account', [SiteController::class, 'storeWithdrawalAccount']);
+
+Route::prefix('deposit')->group(function () {
+    Route::get('/', [SiteController::class, 'deposit']);
+    Route::post('/', [SiteController::class, 'deposit']);
+});
+
+Route::prefix('withdrawal')->group(function () {
+    Route::get('/', [SiteController::class, 'withdrawal']);
+    Route::post('/', [SiteController::class, 'withdrawal']);
+});
 
 // Admin Panel Routes
 Route::prefix('admin')->group(function () {

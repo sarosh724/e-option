@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class UserAccount extends Model
+{
+    use HasFactory;
+
+    protected $table = "user_withdrawal_accounts";
+    protected $guarded = [];
+
+    public function payment_method()
+    {
+        return $this->belongsTo(PaymentMethod::class, "payment_method_id");
+    }
+}

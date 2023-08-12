@@ -38,6 +38,9 @@
     <!-- ========== Google Fonts ========== -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- Datatable CSS -->
+    <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -126,6 +129,9 @@
                     </li>
                     <li>
                         <a href="{{url('withdrawal')}}">withdraw</a>
+                    </li>
+                    <li>
+                        <a href="{{url('settings')}}">Settings</a>
                     </li>
                     <li>
                         <a href="{{url('about')}}">about us</a>
