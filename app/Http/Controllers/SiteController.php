@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\PaymentMethodInterface;
+use App\Interfaces\SettingInterface;
 use App\Interfaces\SiteInterface;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
@@ -13,11 +14,16 @@ class SiteController extends Controller
 {
     protected SiteInterface $siteInterface;
     protected PaymentMethodInterface $paymentMethodInterface;
+    protected SettingInterface $settingInterface;
 
-    public function __construct(SiteInterface $siteInterface, PaymentMethodInterface $paymentMethodInterface)
-    {
+    public function __construct(
+        SiteInterface $siteInterface,
+        PaymentMethodInterface $paymentMethodInterface,
+        SettingInterface $settingInterface
+    ) {
         $this->siteInterface = $siteInterface;
         $this->paymentMethodInterface = $paymentMethodInterface;
+        $this->settingInterface = $settingInterface;
     }
 
     public function index()
@@ -85,6 +91,14 @@ class SiteController extends Controller
                 return redirect(url('withdrawal'))->withErrors($validate);
             }
 
+            if ($request->amount > auth()->user()->account_balance) {
+                return back()->with("warning", "Sorry, Your account balance is les than the withdrawal amount");
+            }
+
+            $setting = $this->settingInterface->show();
+            if ($request->amount < $setting->withdraw_limit) {
+                return back()->with("warning", "Sorry, Minimum Withdraw limit is ".$setting->withdraw_limit."$");
+            }
             $res = $this->siteInterface->storeWithdrawal($request);
 
             return redirect(url('withdrawal'))->with($res['type'], $res['message']);
@@ -107,7 +121,7 @@ class SiteController extends Controller
                 ->make(true);
         }
 
-        $accounts = $this->siteInterface->withdrawalAccountListing(1);
+        $accounts = $this->siteInterface->withdrawalAccountListing(auth()->id());
 
         return view('site.pages.withdrawal', compact(['accounts']));
     }
@@ -125,7 +139,8 @@ class SiteController extends Controller
     public function getWithdrawalAccounts(Request $request)
     {
         if ($request->ajax()) {
-            $data = $this->siteInterface->withdrawalAccountListing(1);
+            $id  = auth()->id();
+            $data = $this->siteInterface->withdrawalAccountListing($id);
             return DataTables::of($data)
                 ->addColumn('bank', function ($data) {
                     return $data->bank;

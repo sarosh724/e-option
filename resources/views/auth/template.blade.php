@@ -9,7 +9,7 @@
     <meta name="description" content="">
 
     <!-- ========== Page Title ========== -->
-    <title>@yield('page-title') | E-Option</title>
+    <title>@yield('page-title') | Easy Option</title>
     <!-- ========== Favicon Icon ========== -->
     <link rel="shortcut icon" href="{{asset('assets/s/hostel-finder-logo.png')}}" type="image/x-icon">
 

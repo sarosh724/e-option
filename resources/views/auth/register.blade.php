@@ -6,6 +6,9 @@
 
 @section('content')
     <div class="d-flex align-items-center justify-content-center bg-gradient" style="height: 100vh;">
+        <!-- Fixed BG -->
+        <div class="fixed-bg" style="background-image: url(assets/site/img/shape/9.png);"></div>
+        <!-- Fixed BG -->
         <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10 p-4 bg-white rounded">
             <div class="text-center">
                 <a href="{{url('/')}}">

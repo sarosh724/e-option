@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\DepositInterface;
 use App\Models\Deposit;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -41,6 +42,9 @@ class DepositRepository implements DepositInterface
             $deposit->status = $request->status;
             $deposit->save();
             DB::commit();
+            if ($deposit->status == "approved") {
+                $this->rechargeUserAccount($deposit);
+            }
             $res["type"] = "success";
             $res["message"] = "Status Updated Successfully";
         } catch (\Exception $e) {
@@ -49,5 +53,19 @@ class DepositRepository implements DepositInterface
         }
 
         return $res;
+    }
+
+    public function rechargeUserAccount($data)
+    {
+        try {
+            DB::beginTransaction();
+            $user = User::find($data->user_id);
+            $user->account_balance += $data->amount;
+            $user->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+        }
     }
 }

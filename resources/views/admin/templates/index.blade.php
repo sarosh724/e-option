@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link href="/assets/admin/dist/img/AdminLTELogo.png" rel="apple-touch-icon-precomposed">
     <link href="/assets/admin/dist/img/AdminLTELogo.png" rel="shortcut icon" type="image/png">
-    <title>@yield('page-title') | Admin | E-Option</title>
+    <title>@yield('page-title') | Admin | Easy Option</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -141,7 +141,7 @@
     <aside class="main-sidebar sidebar-dark-info elevation-4">
         <!-- Brand Logo -->
         <a href="{{'admin/dashboard'}}" class="brand-link text-center">
-            <span class="brand-text font-weight-bold">E-Option</span>
+            <span class="brand-text font-weight-bold">Easy Option</span>
         </a>
 
         <!-- Sidebar -->
@@ -224,6 +224,15 @@
                             <i class="nav-icon fas fa-user-circle"></i>
                             <p>
                                 Profile
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{url('admin/settings')}}" class="nav-link ">
+                            <i class="nav-icon fas fa-cogs"></i>
+                            <p>
+                                Settings
                             </p>
                         </a>
                     </li>

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -20,6 +21,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@eoption.com',
             'is_admin' => 1,
             'password' => Hash::make('admin@eoption'), // admin@eoption
+        ]);
+
+        Setting::create([
+            "withdraw_limit" => 100
         ]);
     }
 }

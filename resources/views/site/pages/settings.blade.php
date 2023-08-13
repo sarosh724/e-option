@@ -1,5 +1,9 @@
 @extends('site.templates.index')
 
+@section('page-title')
+    Settings
+@stop
+
 @section('content')
     @include('site.sections.breadcrumb', ['title' => 'settings'])
 

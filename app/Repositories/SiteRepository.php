@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\SiteInterface;
 use App\Models\Deposit;
+use App\Models\User;
 use App\Models\UserAccount;
 use App\Models\Withdraw;
 use Illuminate\Http\Request;

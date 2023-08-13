@@ -37,25 +37,19 @@
 
                 <div class="single-item col-lg-2 col-md-6 item">
                     <div class="f-item link">
-                        <h4 class="widget-title">Department</h4>
+                        <h4 class="widget-title">Earning</h4>
                         <ul>
                             <li>
-                                <a href="#">Medecine & Health</a>
+                                <a href="{{url('trading')}}">Trading</a>
                             </li>
                             <li>
-                                <a href="#">Dental Care</a>
+                                <a href="{{url('trading')}}">Buy & Sell</a>
                             </li>
                             <li>
-                                <a href="#">Eye Treatment</a>
+                                <a href="{{url('deposit')}}">Recharge</a>
                             </li>
                             <li>
-                                <a href="#">Children Chare</a>
-                            </li>
-                            <li>
-                                <a href="#">Traumatology</a>
-                            </li>
-                            <li>
-                                <a href="#">X-ray</a>
+                                <a href="{{url('withdrawal')}}">Make Withdrawal</a>
                             </li>
                         </ul>
                     </div>
@@ -63,22 +57,16 @@
 
                 <div class="single-item col-lg-2 col-md-6 item">
                     <div class="f-item link">
-                        <h4 class="widget-title">Usefull Links</h4>
+                        <h4 class="widget-title">Useful Links</h4>
                         <ul>
                             <li>
-                                <a href="departments.html">Departments</a>
+                                <a href="{{url('deposit')}}">Deposit History</a>
                             </li>
                             <li>
-                                <a href="doctors.html">Doctors</a>
+                                <a href="{{url('withdrawal')}}">Withdrawal History</a>
                             </li>
                             <li>
-                                <a href="blogs.html">Blogs</a>
-                            </li>
-                            <li>
-                                <a href="#">About Us</a>
-                            </li>
-                            <li>
-                                <a href="#">Contact</a>
+                                <a href="{{url('settings')}}">Withdrawal Account</a>
                             </li>
                         </ul>
                     </div>

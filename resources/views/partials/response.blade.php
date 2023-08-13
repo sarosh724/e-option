@@ -17,3 +17,7 @@
 @if(session()->has('warning'))
     toast('{{session()->get('warning')}}', 'warning');
 @endif
+
+@if(session()->has('info'))
+    toast('{{session()->get('info')}}', 'warning');
+@endif
