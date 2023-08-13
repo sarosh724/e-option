@@ -35,7 +35,7 @@ class CoinController extends Controller
                 })
                 ->addColumn('actions', function ($coin) {
                     return '<a href="javascript:void(0);" data-id="' . $coin->id . '"
-                    class="btn btn-sm btn-edit btn-primary mr-1" ><i class="fal fa-edit mr-1"></i>Edit</a>';
+                    class="btn btn-sm btn-edit btn-primary mr-1" ><i class="fas fa-edit mr-1"></i>Edit</a>';
                 })
                 ->rawColumns(['actions'])
                 ->make(true);
