@@ -44,6 +44,7 @@
                 <th>User</th>
                 <th>Bank</th>
                 <th>Amount</th>
+                <th>Payment Receipt</th>
                 <th width="10%">Status</th>
             </tr>
             </thead>
@@ -137,6 +138,10 @@
                     {
                         data: 'amount',
                         name: 'amount',
+                    },
+                    {
+                        data: 'photo',
+                        name: 'photo',
                     },
                     {
                         data: 'status',

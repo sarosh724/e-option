@@ -39,6 +39,12 @@ class SiteRepository implements SiteInterface
             $deposit->amount = $request->amount;
             $deposit->payment_method_id = $request->payment_method;
             $deposit->status = "pending";
+            if (isset($request->photo)) {
+                $photo = $request->file('photo');
+                $name = time().'_customer_'.$request->user_id.'_'.$request->amount.'_'.$photo->getClientOriginalName();
+                $photo->move(public_path('uploads/payment_receipts'), $name);
+                $deposit->photo = '/uploads/payment_receipts/'.$name;
+            }
             $deposit->save();
             DB::commit();
             $res["type"] = "success";

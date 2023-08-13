@@ -36,7 +36,8 @@ class SiteController extends Controller
             $validate = Validator::make($request->all(), [
                 "user_id" => "required",
                 "amount" => "required",
-                "payment_method" => "required"
+                "payment_method" => "required",
+                "photo" => "required"
             ]);
 
             if ($validate->fails()) {
@@ -49,7 +50,9 @@ class SiteController extends Controller
         }
 
         if ($request->ajax()) {
-            $data = $this->siteInterface->depositListing(null, 1);
+            $id = auth()->id();
+            $data = $this->siteInterface->depositListing(null, $id);
+
             return DataTables::of($data)
                 ->addColumn('date', function ($data) {
                     return showDate($data->created_at);
@@ -88,7 +91,8 @@ class SiteController extends Controller
         }
 
         if ($request->ajax()) {
-            $data = $this->siteInterface->withdrawalListing(null, 1);
+            $id = auth()->id();
+            $data = $this->siteInterface->withdrawalListing(null, $id);
             return DataTables::of($data)
                 ->addColumn('date', function ($data) {
                     return showDate($data->created_at);

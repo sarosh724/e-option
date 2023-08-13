@@ -77,7 +77,10 @@
                 processing: true,
                 serverSide: true,
                 destroy: true,
-                stateSave: true,
+                aaSorting: [[ 0, "desc" ]],
+                columnsDefs: [{
+                    orderable: true
+                }],
                 ajax: { url: "{{url('withdrawal')}}" },
                 columns: [
                     { data: 'date', name: 'date' },

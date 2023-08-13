@@ -49,10 +49,18 @@ class AdminController extends Controller
                 ->addColumn('amount', function ($data) {
                     return $data->amount;
                 })
+                ->addColumn('photo', function ($data) {
+                    $html = "N/A";
+                    if (!empty($data->photo)) {
+                        $html = '<a href="'.asset(''.$data->photo.'').'" target="_blank" class="ml-2">click here</a>';
+                    }
+
+                    return $html;
+                })
                 ->addColumn('status', function ($data) {
                     return statusDropdown("deposit", $data->status, $data->id);
                 })
-                ->rawColumns(['status'])
+                ->rawColumns(['status', 'photo'])
                 ->make(true);
         }
 
