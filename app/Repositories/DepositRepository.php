@@ -23,7 +23,8 @@ class DepositRepository implements DepositInterface
             "payment_methods.bank",
             "deposits.amount",
             "deposits.status",
-            "deposits.id"
+            "deposits.id",
+            "deposits.photo"
         )
             ->orderBy("deposits.id", "desc")
             ->get();

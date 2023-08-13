@@ -11,7 +11,7 @@
                         <h6 class="m-0 font-weight-bold">Create Deposit</h6>
                     </div>
                     <div class="card-body">
-                        <form method="post" name="deposit-form" id="deposit-form" action="{{url('deposit')}}">
+                        <form method="post" name="deposit-form" id="deposit-form" action="{{url('deposit')}}" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="user_id" value="{{auth()->id()}}">
                             <div class="form-group">
@@ -32,19 +32,27 @@
                                 <label id="payment_method-error" class="error" for="payment_method"></label>
                             </div>
                             <div id="detail-box">
-                                <small class="text-success">Here is Account Details where you can send money.<br>Once Admin approve deposit, you can do trading. Thank you</small>
+                                <small class="text-success">Here is Account Details where you can send money. Once Admin approve deposit, you can do trading. Thank you</small>
                                 <div class="form-group">
                                     <label class="form-label required" for="bank">Bank</label>
                                     <input type="text" readonly class="form-control shadow-none" name="bank" id="bank">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label required" for="account_name">Account Name</label>
+                                    <label class="form-label required" for="account_name">Account Title</label>
                                     <input type="text" readonly class="form-control shadow-none" name="account_name" id="account_name">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label required" for="account_number">Account Number</label>
                                     <input type="text" readonly class="form-control shadow-none" name="account_number" id="account_number">
                                 </div>
+                            </div>
+                            <div class="form-group" id="file-box">
+                                <label class="form-label required" for="photo">Photo</label>
+                                <input type="file" class="form-control" id="photo" name="photo" required onchange="setPhoto(this)">
+                            </div>
+                            <div id="photo-box">
+                                <img src="" width="100%" height="350px" id="profile-photo"
+                                     style="object-fit: contain;" class="border border-muted p-1 mb-1">
                             </div>
                             <div>
                                 <button class="btn btn-sm btn-gradient btn-block" type="submit">Deposit</button>
@@ -86,6 +94,8 @@
     <script>
         $(document).ready(function (){
             $("#detail-box").hide();
+            $("#file-box").hide();
+            $("#photo-box").hide();
             $("#bank").val('');
             $("#account_name").val('');
             $("#account_number").val('');
@@ -94,7 +104,10 @@
                 processing: true,
                 serverSide: true,
                 destroy: true,
-                stateSave: true,
+                aaSorting: [[ 0, "desc" ]],
+                columnsDefs: [{
+                    orderable: true
+                }],
                 ajax: { url: "{{url('deposit')}}" },
                 columns: [
                     { data: 'date', name: 'date' },
@@ -111,6 +124,9 @@
                     },
                     payment_method: {
                         required:true
+                    },
+                    photo: {
+                        required: true
                     }
                 },
                 messages:{
@@ -120,6 +136,9 @@
                     },
                     payment_method: {
                         required: "Please select Payment Method*"
+                    },
+                    photo: {
+                        required: "Please upload payment receipt screenshot*"
                     }
                 },
                 submitHandler:function(form){
@@ -135,6 +154,7 @@
             $("#account_name").val(details.account_title);
             $("#account_number").val(details.account_no);
             $("#detail-box").slideDown();
+            $("#file-box").show();
         }
 
         function getDetail(id) {
@@ -148,6 +168,18 @@
                 error: function (error) {
                 }
             });
+        }
+
+        function setPhoto(ins) {
+            const [file] = ins.files
+            if (file) {
+                var output = document.getElementById('profile-photo');
+                output.src = URL.createObjectURL(file);
+                output.onload = function() {
+                    URL.revokeObjectURL(output.src) // free memory
+                }
+                $("#photo-box").show();
+            }
         }
     </script>
 @stop
