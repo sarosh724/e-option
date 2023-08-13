@@ -32,5 +32,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Interfaces\DepositInterface',
             'App\Repositories\DepositRepository'
         );
+
+        $this->app->bind(
+            'App\Interfaces\SettingInterface',
+            'App\Repositories\SettingRepository'
+        );
     }
 }

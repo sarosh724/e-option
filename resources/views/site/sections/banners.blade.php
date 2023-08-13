@@ -6,7 +6,7 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner carousel-zoom">
             <div class="carousel-item active">
-                <div class="slider-thumb bg-cover" style="background-image: url(assets/site/img/banner-1.jpg);"></div>
+                <div class="slider-thumb bg-cover" style="background-image: url(assets/site/img/banner-2.jpg);"></div>
                 <div class="box-table">
                     <div class="box-cell shadow dark">
                         <div class="container">
@@ -15,7 +15,7 @@
                                     <div class="content">
                                         <h2 data-animation="animated slideInRight">Investing <strong>is</strong></h2>
                                         <h4 data-animation="animated slideInLeft">Even better now</h4>
-                                        <a data-animation="animated fadeInUp" class="btn btn-md btn-gradient" href="#">Discover More</a>
+                                        <a data-animation="animated fadeInUp" class="btn btn-md btn-gradient" href="{{url('trading')}}">Discover More</a>
                                     </div>
                                 </div>
                             </div>
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <div class="slider-thumb bg-cover" style="background-image: url(assets/site/img/2440x1578.png);"></div>
+                <div class="slider-thumb bg-cover" style="background-image: url(assets/site/img/banner-3.jpg);"></div>
                 <div class="box-table">
                     <div class="box-cell shadow dark">
                         <div class="container">
@@ -33,7 +33,25 @@
                                     <div class="content">
                                         <h2 data-animation="animated slideInRight">Meet the <strong>Best Hospital</strong></h2>
                                         <h4 data-animation="animated slideInLeft">Best institution, Good services</h4>
-                                        <a data-animation="animated fadeInUp" class="btn btn-md btn-gradient" href="#">Discover More</a>
+                                        <a data-animation="animated fadeInUp" class="btn btn-md btn-gradient" href="{{url('trading')}}">Discover More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="slider-thumb bg-cover" style="background-image: url(assets/site/img/banner-4.jpg);"></div>
+                <div class="box-table">
+                    <div class="box-cell shadow dark">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-10 offset-lg-1">
+                                    <div class="content">
+                                        <h2 data-animation="animated slideInRight">Meet the <strong>Best Hospital</strong></h2>
+                                        <h4 data-animation="animated slideInLeft">Best institution, Good services</h4>
+                                        <a data-animation="animated fadeInUp" class="btn btn-md btn-gradient" href="{{url('trading')}}">Discover More</a>
                                     </div>
                                 </div>
                             </div>

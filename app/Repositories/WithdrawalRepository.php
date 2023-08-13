@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Interfaces\WithdrawalInterface;
+use App\Models\User;
 use App\Models\Withdraw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +43,9 @@ class WithdrawalRepository implements WithdrawalInterface
             $withdrawal->status = $request->status;
             $withdrawal->save();
             DB::commit();
+            if ($withdrawal->status == "approved") {
+                $this->withdrawFromUserAccount($withdrawal);
+            }
             $res["type"] = "success";
             $res["message"] = "Status Updated Successfully";
         } catch (\Exception $e) {
@@ -50,5 +54,19 @@ class WithdrawalRepository implements WithdrawalInterface
         }
 
         return $res;
+    }
+
+    public function withdrawFromUserAccount($data)
+    {
+        try {
+            DB::beginTransaction();
+            $user = User::find($data->user_id);
+            $user->account_balance -= $data->amount;
+            $user->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+        }
     }
 }

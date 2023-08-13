@@ -1,5 +1,9 @@
 @extends('site.templates.index')
 
+@section('page-title')
+    Withdraw
+@stop
+
 @section('content')
     @include('site.sections.breadcrumb', ['title' => 'Withdraw'])
 

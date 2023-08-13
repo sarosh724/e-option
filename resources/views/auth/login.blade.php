@@ -6,6 +6,9 @@
 
 @section('content')
     <div class="d-flex align-items-center justify-content-center bg-gradient" style="height: 100vh;">
+        <!-- Fixed BG -->
+        <div class="fixed-bg" style="background-image: url(assets/site/img/shape/9.png);"></div>
+        <!-- Fixed BG -->
         <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10 p-4 bg-white rounded">
             <div class="mb-3 text-center">
                 <a href="{{url('/')}}">
@@ -36,14 +39,6 @@
                     </div>
                     <label id="password-error" class="error" for="password"></label>
                 </div>
-                <div>
-                    <button class="btn btn-sm btn-gradient btn-block">Sign In</button>
-                </div>
-                <div class="flex items-center justify-end mt-4">
-                    <a href="{{ url('authorized/google') }}">
-                        <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" style="margin-left: 3em;">
-                    </a>
-                </div>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -53,6 +48,14 @@
                         </ul>
                     </div>
                 @endif
+                <div>
+                    <button class="btn btn-sm btn-gradient btn-block">Sign In</button>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{{ url('authorized/google') }}">
+                        <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" style="margin-left: 3em;">
+                    </a>
+                </div>
             </form>
             <div class="mt-2 text-center">
                 <span>
