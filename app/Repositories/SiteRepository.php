@@ -97,11 +97,14 @@ class SiteRepository implements SiteInterface
         return $res;
     }
 
-    public function withdrawalAccountListing($id)
+    public function withdrawalAccountListing($userId, $id)
     {
-        return UserAccount::where("user_id", $id)
-            ->orderBy("id", "desc")
-            ->get();
+        $data = UserAccount::where("user_id", $userId);
+            if($id){
+                $data = $data->where('id', $id);
+            }
+
+        return $data->orderBy("id", "desc")->get();
     }
 
     public function storeWithdrawalAccount(Request $request)

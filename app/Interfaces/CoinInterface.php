@@ -6,6 +6,6 @@ use Illuminate\Http\Request;
 
 interface CoinInterface
 {
-    public function coinListing(Request $request);
+    public function coinListing(Request $request, $id);
     public function storeCoin(Request $request);
 }
