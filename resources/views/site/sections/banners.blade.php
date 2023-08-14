@@ -31,8 +31,8 @@
                             <div class="row">
                                 <div class="col-lg-10 offset-lg-1">
                                     <div class="content">
-                                        <h2 data-animation="animated slideInRight">Meet the <strong>Best Hospital</strong></h2>
-                                        <h4 data-animation="animated slideInLeft">Best institution, Good services</h4>
+                                        <h2 data-animation="animated slideInRight">Investing <strong>is</strong></h2>
+                                        <h4 data-animation="animated slideInLeft">Even better now</h4>
                                         <a data-animation="animated fadeInUp" class="btn btn-md btn-gradient" href="{{url('trading')}}">Discover More</a>
                                     </div>
                                 </div>
@@ -49,8 +49,8 @@
                             <div class="row">
                                 <div class="col-lg-10 offset-lg-1">
                                     <div class="content">
-                                        <h2 data-animation="animated slideInRight">Meet the <strong>Best Hospital</strong></h2>
-                                        <h4 data-animation="animated slideInLeft">Best institution, Good services</h4>
+                                        <h2 data-animation="animated slideInRight">Investing <strong>is</strong></h2>
+                                        <h4 data-animation="animated slideInLeft">Even better now</h4>
                                         <a data-animation="animated fadeInUp" class="btn btn-md btn-gradient" href="{{url('trading')}}">Discover More</a>
                                     </div>
                                 </div>

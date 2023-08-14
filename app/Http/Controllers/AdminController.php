@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\DashboardInterface;
 use App\Interfaces\DepositInterface;
+use App\Interfaces\UserInterface;
 use App\Interfaces\WithdrawalInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,11 +14,19 @@ class AdminController extends Controller
 {
     protected WithdrawalInterface $withdrawalInterface;
     protected DepositInterface $depositInterface;
+    protected UserInterface $userInterface;
+    protected DashboardInterface $dashboardInterface;
 
-    public function __construct(WithdrawalInterface $withdrawalInterface, DepositInterface $depositInterface)
-    {
+    public function __construct(
+        WithdrawalInterface $withdrawalInterface,
+        DepositInterface $depositInterface,
+        UserInterface $userInterface,
+        DashboardInterface $dashboardInterface
+    ) {
         $this->withdrawalInterface = $withdrawalInterface;
         $this->depositInterface = $depositInterface;
+        $this->userInterface = $userInterface;
+        $this->dashboardInterface = $dashboardInterface;
     }
 
     public function index()
@@ -26,11 +36,58 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return view('admin.dashboard.dashboard');
+        $data['users'] = $this->dashboardInterface->totalUsers();
+        $data['pending_deposits'] = $this->dashboardInterface->pendingDeposits();
+        $data['completed_deposits'] = $this->dashboardInterface->completedDeposits();
+        $data['completed_withdrawals'] = $this->dashboardInterface->completedWithdrawals();
+
+        return view('admin.dashboard.dashboard', compact(['data']));
     }
 
-    public function getUsers()
+    public function profile(Request $request)
     {
+        if ($request->post()) {
+            $validate = Validator::make($request->all(), [
+                "name" => "required",
+                "email" => "required"
+            ]);
+
+            if ($validate->fails()) {
+                return redirect(url('admin/profile'))->withErrors($validate);
+            }
+
+            $res = $this->userInterface->update($request);
+
+            return redirect(url('admin/profile'))->with($res['type'], $res['message']);
+        }
+
+        return view("admin.dashboard.profile");
+    }
+
+    public function getUsers(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $this->userInterface->listing();
+
+            return DataTables::of($data)
+                ->addColumn('name', function ($data) {
+                    return $data->name;
+                })
+                ->addColumn('email', function ($data) {
+                    return $data->email;
+                })
+                ->addColumn('balance', function ($data) {
+                    return $data->account_balance;
+                })
+//                ->addColumn('actions', function ($data) {
+//                    $html = "";
+//
+//                    return $html;
+//                })
+//                ->rawColumns(['actions'])
+                ->make(true);
+        }
+
         return view('admin.users.listing');
     }
 

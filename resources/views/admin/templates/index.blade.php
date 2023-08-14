@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link href="/assets/admin/dist/img/AdminLTELogo.png" rel="apple-touch-icon-precomposed">
     <link href="/assets/admin/dist/img/AdminLTELogo.png" rel="shortcut icon" type="image/png">
-    <title>@yield('page-title') | Admin | Easy Option</title>
+    <title>@yield('page-title') | Easy Option</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -115,9 +115,9 @@
 <div class="wrapper">
 
     <!-- Preloader -->
-{{--    <div class="preloader flex-column justify-content-center align-items-center">--}}
-{{--        <img class="animation__shake" src="{{asset('assets/images/logo.png')}}" alt="AdminLTELogo" height="200px" width="300px">--}}
-{{--    </div>--}}
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__pulse" src="{{asset('assets/site/img/preloader.gif')}}" alt="Easy Option Logo" >
+    </div>
 
 <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -158,7 +158,7 @@
                 </div>
                 <div class="info">
 {{--                    <a href="#" class="d-block">{{auth()->user()->name}}</a>--}}
-                    <a href="#" class="d-block">Admin</a>
+                    <a class="d-block">{{auth()->user()->name}}</a>
                 </div>
             </div>
 
