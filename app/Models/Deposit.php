@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +12,13 @@ class Deposit extends Model
 
     protected $table = "deposits";
     protected $guarded = [];
+
+    protected function photo(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => url('').$value,
+        );
+    }
 
     public function user()
     {

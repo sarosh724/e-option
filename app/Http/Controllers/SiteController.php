@@ -92,7 +92,7 @@ class SiteController extends Controller
             }
 
             if ($request->amount > auth()->user()->account_balance) {
-                return back()->with("warning", "Sorry, Your account balance is les than the withdrawal amount");
+                return back()->with("warning", "Sorry, Your account balance is less than the withdrawal amount");
             }
 
             $setting = $this->settingInterface->show();
@@ -121,7 +121,7 @@ class SiteController extends Controller
                 ->make(true);
         }
 
-        $accounts = $this->siteInterface->withdrawalAccountListing(auth()->id());
+        $accounts = $this->siteInterface->withdrawalAccountListing(auth()->id(), $id=null);
 
         return view('site.pages.withdrawal', compact(['accounts']));
     }
@@ -136,11 +136,11 @@ class SiteController extends Controller
         return view('site.pages.about');
     }
 
-    public function getWithdrawalAccounts(Request $request)
+    public function getWithdrawalAccounts(Request $request, $id = null)
     {
         if ($request->ajax()) {
-            $id  = auth()->id();
-            $data = $this->siteInterface->withdrawalAccountListing($id);
+            $userId  = auth()->id();
+            $data = $this->siteInterface->withdrawalAccountListing($userId, $id);
             return DataTables::of($data)
                 ->addColumn('bank', function ($data) {
                     return $data->bank;

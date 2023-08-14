@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\DB;
 
 class CoinRepository implements CoinInterface
 {
-    public function coinListing($request)
+    public function coinListing($request, $id)
     {
+        if($id){
+        return Coin::find($id);
+        }
         return Coin::all();
     }
 

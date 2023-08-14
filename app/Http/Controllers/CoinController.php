@@ -21,10 +21,10 @@ class CoinController extends Controller
         $this->coinInterface = $coinInterface;
     }
 
-    public function index(Request $request)
+    public function index(Request $request, $id = null)
     {
         if ($request->ajax()) {
-            $coin = $this->coinInterface->coinListing($request);
+            $coin = $this->coinInterface->coinListing($request, $id);
 
             return DataTables::of($coin)
                 ->addColumn('name', function ($coin) {
