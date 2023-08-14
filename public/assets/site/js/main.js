@@ -274,7 +274,7 @@
             nav: false,
             margin:30,
             dots: true,
-            autoplay: false,
+            autoplay: true,
             items: 1,
             navText: [
                 "<i class='fa fa-angle-left'></i>",

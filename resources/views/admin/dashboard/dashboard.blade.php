@@ -14,8 +14,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>0{{@$dashboardData['completed_orders']}}</h3>
-
+                    <h3>{{@$data['users']}}</h3>
                     <p>Total Users</p>
                 </div>
                 <div class="icon">
@@ -28,9 +27,8 @@
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>0{{@$dashboardData['today_orders']}}</h3>
-
-                    <p>Pending Pending Deposits</p>
+                    <h3>{{@$data['pending_deposits']}}</h3>
+                    <p>Pending Deposits</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -42,8 +40,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>0{{@$dashboardData['products']}}</h3>
-
+                    <h3>{{@$data['completed_withdrawals']}}</h3>
                     <p>Completed Withdrawals</p>
                 </div>
                 <div class="icon">
@@ -56,8 +53,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>0{{@$dashboardData['customers']}}</h3>
-
+                    <h3>{{@$data['completed_deposits']}}</h3>
                     <p>Completed Deposits</p>
                 </div>
                 <div class="icon">

@@ -68,8 +68,12 @@ Route::group(['middleware' => ['auth']], function () {
  */
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], function () {
     Route::get('/', [AdminController::class, 'index']);
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])
-        ->name('admin-dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
+
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [AdminController::class, 'profile']);
+        Route::post('/', [AdminController::class, 'profile']);
+    });
 
     Route::prefix('users')
         ->group(function () {
