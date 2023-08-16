@@ -112,7 +112,7 @@
                 </button>
                 <a class="navbar-brand" href="{{url('/')}}">
                     <img src="{{asset('assets/site/img/logo-light.png')}}" class="logo logo-display" alt="Logo" width="165" height="50">
-                    <img src="{{asset('assets/site/img/logo.png')}}" class="logo logo-scrolled" alt="Logo" width="165" height="50">
+                    <img src="{{asset('assets/site/img/logo-2.png')}}" class="logo logo-scrolled" alt="Logo" width="165" height="50">
                 </a>
             </div>
             <!-- End Header Navigation -->

@@ -24,6 +24,10 @@
             ).then(response => response.json());
 
             Highcharts.stockChart('container', {
+                chart: {
+                    // type: 'bar',
+                    backgroundColor: '#000'
+                },
                 rangeSelector: {
                     selected: 1
                 },
