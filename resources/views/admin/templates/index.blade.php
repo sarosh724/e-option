@@ -238,7 +238,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{url('logout')}}" class="nav-link active bg-dark">
+                        <a href="{{url('logout')}}" class="nav-link bg-dark">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>
                                 Logout

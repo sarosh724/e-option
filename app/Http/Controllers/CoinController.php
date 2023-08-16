@@ -33,6 +33,15 @@ class CoinController extends Controller
                 ->addColumn('price', function ($coin) {
                     return $coin->price;
                 })
+                ->addColumn('min_price', function ($coin) {
+                    return $coin->min_value;
+                })
+                ->addColumn('max_price', function ($coin) {
+                    return $coin->max_value;
+                })
+                ->addColumn('profit', function ($coin) {
+                    return $coin->profit_percentage;
+                })
                 ->addColumn('actions', function ($coin) {
                     return '<a href="javascript:void(0);" data-id="' . $coin->id . '"
                     class="btn btn-sm btn-edit btn-primary mr-1" ><i class="fas fa-edit mr-1"></i>Edit</a>';
@@ -61,7 +70,10 @@ class CoinController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'min_value' => 'required',
+            'max_value' => 'required',
+            'profit_percentage' => 'required'
         ]);
         if (!$validator->fails()) {
             $res = $this->coinInterface->storeCoin($request);

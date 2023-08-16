@@ -28,6 +28,9 @@ class CoinRepository implements CoinInterface
             $coin = isset($request->id) ? Coin::find($request->id) : new Coin();
             $coin->name = $request->name;
             $coin->price = $request->price;
+            $coin->min_value = $request->min_value;
+            $coin->max_value = $request->max_value;
+            $coin->profit_percentage = $request->profit_percentage;
             $coin->save();
             DB::commit();
             $res["status"] = true;

@@ -20,9 +20,12 @@
         <table id="data-table" class="table table-grid table-striped table-sm">
             <thead class="bg-secondary">
             <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Actions</th>
+                <th width="20%">Name</th>
+                <th width="16%">Price</th>
+                <th width="16%">Minimum Price</th>
+                <th width="16%">Maximum Price</th>
+                <th width="16%">Profit Percentage</th>
+                <th width="16%">Actions</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -49,16 +52,28 @@
                     {
                         data: 'name',
                         name: 'name',
-                    }
-                    ,{
+                    },
+                    {
                         data: 'price',
                         name: 'price',
-                    }
-                    ,{
+                    },
+                    {
+                        data: 'min_price',
+                        name: 'min_price',
+                    },
+                    {
+                        data: 'max_price',
+                        name: 'max_price',
+                    },
+                    {
+                        data: 'profit',
+                        name: 'profit',
+                    },
+                    {
                         data: 'actions',
                         name: 'actions',
                         orderable : false
-                    },
+                    }
                 ]
             });
         });
