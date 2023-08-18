@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\CoinInterface;
+use App\Jobs\ProcessCoinRate;
 use App\Models\Coin;
 use App\Models\CoinRate;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -90,21 +93,50 @@ class CoinController extends Controller
     }
 
     public function generateCoinRateData(Request $request, $id){
-//        ini_set('max_execution_time', 0);
+        ini_set('max_execution_time', 0);
         date_default_timezone_set('UTC');
-        $date = '2023-08-16 00:00:00';
-        $end_date = '2023-08-16 01:59:59';
+        $date = strtotime('2023-08-19 02:00:00');
+        $end_date = strtotime('2023-08-19 03:59:59');
         $arr = [];
         $coin = Coin::find($id);
 
-        while (strtotime($date) <= strtotime($end_date)) {
+        while ($date <= $end_date) {
             $rate = rand($coin->min_value, $coin->max_value);
-            array_push($arr, ['rate' => $rate, 'coin_id' => $id, 'created_at' => $date]);
-            $date = date ("Y-m-d H:i:s", strtotime("+1 second", strtotime($date)));
+            array_push($arr, ['rate' => $rate, 'coin_id' => $id, 'timestamp' => $date]);
+//            $date = date ("Y-m-d H:i:s", strtotime("+1 second", strtotime($date)));
+            $date = strtotime("+1 second", $date);
         }
 
-        CoinRate::insert($arr);
+        if(dispatch(new ProcessCoinRate($arr))){
+            return redirect('admin/dashboard')->with('success', 'data generated !');
+        }
 
-        return redirect('admin/dashboard')->with('success', 'data generated !');
+        return redirect('admin/dashboard')->with('error', 'something went wrong !');
+    }
+
+    public function getCoinRateData(Request $request, $coinId){
+        $priceData = DB::table('coin_rates')->selectRaw("
+            (FLOOR((timestamp) / 5) * 5) AS interval_start,
+            MIN(rate) AS low_price,
+            MAX(rate) AS high_price,
+            SUBSTRING_INDEX(GROUP_CONCAT(rate ORDER BY timestamp ASC), ',', 1) AS open_price,
+            SUBSTRING_INDEX(GROUP_CONCAT(rate ORDER BY timestamp DESC), ',', 1) AS close_price")
+            ->groupBy('interval_start')
+            ->orderBy('interval_start')
+            ->get()->toArray();
+
+        // Prepare data for the chart
+        $candleData = [];
+        foreach ($priceData as $price) {
+            $candleData[] = [
+                ($price->interval_start) * 1000, // Convert to milliseconds
+                (int) $price->open_price,
+                $price->high_price,
+                $price->low_price,
+                (int) $price->close_price,
+            ];
+        }
+
+        return response()->json($candleData);
     }
 }

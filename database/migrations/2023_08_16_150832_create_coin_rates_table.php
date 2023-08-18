@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('coin_id');
             $table->double('rate');
-            $table->timestamps();
+            $table->bigInteger('timestamp');
         });
     }
 

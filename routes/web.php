@@ -42,6 +42,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [SiteController::class, 'index']);
     Route::get('/trading', [SiteController::class, 'trading']);
+    Route::get('/trading/coin-rate/{coinId}', [CoinController::class, 'getCoinRateData']);
     Route::get('/settings', [SiteController::class, 'settings']);
     Route::get('/about', [SiteController::class, 'about']);
 
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', [SiteController::class, 'withdrawal']);
             Route::post('/', [SiteController::class, 'withdrawal']);
         });
+
 
     Route::get('payment-method/{id}', [SiteController::class, 'getPaymentMethodDetail']);
 });
