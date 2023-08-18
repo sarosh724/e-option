@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 item">
                     <div class="f-item about">
-                        <img src="assets/site/img/logo-light.png" alt="Logo">
+                        <img src="assets/site/img/logo-2.png" alt="Logo">
                         <p>
                             Required honoured trifling eat pleasure man relation. Assurance yet bed was improving furniture man. Distrusts delighted
                         </p>

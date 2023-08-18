@@ -20,10 +20,14 @@
 
             // Load the dataset
             const data = await fetch(
-                'https://demo-live-data.highcharts.com/aapl-ohlcv.json'
+                'http://127.0.0.1:8000/trading/coin-rate/1'
             ).then(response => response.json());
 
             Highcharts.stockChart('container', {
+                chart: {
+                    // type: 'bar',
+                    backgroundColor: '#000'
+                },
                 rangeSelector: {
                     selected: 1
                 },
