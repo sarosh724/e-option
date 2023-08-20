@@ -38,9 +38,12 @@ Route::controller(AuthController::class)->group(function () {
 /*
  *   Site Routes
  */
+Route::get('/', [SiteController::class, 'index']);
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', [SiteController::class, 'index']);
+    Route::get('/trade', [SiteController::class, 'trade']);
+    Route::get('/trade/{tab}', [SiteController::class, 'trade']);
+
     Route::get('/trading', [SiteController::class, 'trading']);
     Route::get('/trading/coin-rate/{coinId}', [CoinController::class, 'getCoinRateData']);
     Route::get('/settings', [SiteController::class, 'settings']);
