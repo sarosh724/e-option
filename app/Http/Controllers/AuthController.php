@@ -66,7 +66,7 @@ class AuthController extends Controller
                 $request->session()
                     ->regenerate();
 
-                return redirect()->intended('/');
+                return redirect(url('/trade'));
             }
 
             return back()
@@ -76,7 +76,8 @@ class AuthController extends Controller
                 ->onlyInput('email');
         }
 
-        return view('auth.login');
+//        return view('auth.login');
+        return view('user-site.login');
     }
 
     public function logout(Request $request)
@@ -119,21 +120,21 @@ class AuthController extends Controller
                     $request->session()
                         ->regenerate();
 
-                    return redirect()->intended('/');
+                    return redirect(url('/trade'));
                 }
             }
         }
 
-        return view('auth.register');
+        return view('user-site.register');
     }
 
     public function forgot()
     {
-        return view('auth.forgot');
+        return view('user-site.forgot');
     }
 
     public function reset()
     {
-        return view('auth.reset');
+        return view('user-site.reset');
     }
 }
