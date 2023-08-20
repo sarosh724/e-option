@@ -7,6 +7,7 @@ use App\Interfaces\SettingInterface;
 use App\Interfaces\SiteInterface;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -28,7 +29,11 @@ class SiteController extends Controller
 
     public function index()
     {
-        return view('site.pages.home');
+        if (Auth::check()) {
+            return redirect()->intended('/trade');
+        }
+
+        return view('user-site.home');
     }
 
     public function trading()
@@ -52,7 +57,7 @@ class SiteController extends Controller
 
             $res = $this->siteInterface->storeDeposit($request);
 
-            return redirect(url('deposit'))->with($res['type'], $res['message']);
+            return redirect(url('trade'))->with($res['type'], $res['message']);
         }
 
         if ($request->ajax()) {
@@ -174,11 +179,35 @@ class SiteController extends Controller
 
         $res = $this->siteInterface->storeWithdrawalAccount($request);
 
-        return redirect(url('settings'))->with($res['type'], $res['message']);
+        return redirect(url('trade'))->with($res['type'], $res['message']);
     }
 
     public function getPaymentMethodDetail($id)
     {
         return PaymentMethod::find($id);
+    }
+
+    public function trade(Request $request, $tab = null)
+    {
+        if ($request->ajax()) {
+            switch ($tab) {
+                case "deposit":
+                    $payment_methods = $this->paymentMethodInterface->paymentMethodListing(true);
+
+                    return view("user-site.trade.deposit", compact(['payment_methods']));
+                case "withdrawal":
+                    $accounts = $this->siteInterface->withdrawalAccountListing(auth()->id(), $id=null);
+
+                    return view("user-site.trade.withdrawal", compact(['accounts']));
+                case "transactions":
+                    return view("user-site.trade.transactions");
+                case "trades":
+                    return view("user-site.trade.trades");
+                case "account":
+                    return view("user-site.trade.account");
+            }
+        }
+
+        return view('user-site.trade.index');
     }
 }

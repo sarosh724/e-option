@@ -14,7 +14,7 @@
     <script src="{{asset('assets/site/highcharts/highstock.js')}}"></script>
     <script src="{{asset('assets/site/highcharts/highstock.js')}}"></script>
     <script src="{{asset('assets/site/highcharts/hollowcandlestick.js')}}"></script>
-    <script src="{{asset('assets/site/highcharts/accessibility.js.js')}}"></script>
+    <script src="{{asset('assets/site/highcharts/accessibility.js')}}"></script>
     <script>
         (async () => {
 
@@ -23,6 +23,7 @@
                 'http://127.0.0.1:8000/trading/coin-rate/1'
             ).then(response => response.json());
 
+            console.log(data);
             Highcharts.stockChart('container', {
                 chart: {
                     // type: 'bar',

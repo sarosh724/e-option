@@ -44,7 +44,7 @@
 
 </head>
 
-<body>
+<body class="bg-dark">
 <!-- Preloader Start -->
 <div class="se-pre-con"></div>
 <!-- Preloader Ends -->
