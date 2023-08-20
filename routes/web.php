@@ -103,7 +103,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
             Route::get('/coin-modal', [CoinController::class, 'coinModal']);
             Route::get('/coin-modal/{id}', [CoinController::class, 'coinModal']);
             Route::post('/store', [CoinController::class, 'store']);
-            Route::get('/generate-data/{id}', [CoinController::class, 'generateCoinRateData']);
+            Route::get('/generate-data/{id}/{date}', [CoinController::class, 'generateCoinRateData']);
         });
 
     Route::prefix('payment-methods')
