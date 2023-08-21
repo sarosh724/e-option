@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SiteController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\PaymentMethodController;
@@ -119,4 +120,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
         Route::get('/', [SettingController::class, 'index']);
         Route::post('/', [SettingController::class, 'store']);
     });
+});
+
+# reset
+Route::get('reset', function (){
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
 });
