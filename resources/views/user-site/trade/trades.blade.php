@@ -140,7 +140,7 @@
     am5.ready(async function () {
 
         coin_data = await fetch(
-            'http://127.0.0.1:8000/trading/coin-rate/1'
+            {{url('trading/trading/coin-rate/1')}}
         ).then(response => response.json());
 
 
