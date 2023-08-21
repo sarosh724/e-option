@@ -104,7 +104,7 @@ body {
 
 .singin-box {
     padding: 2.5rem;
-    background-color: rgba(110,110,110,0.3);
+    background-color: transparent;
 }
 
 .form-label {
@@ -142,6 +142,42 @@ label.error {
 }
 .form-check-input:focus{
     box-shadow: none !important;
+}
+
+.footer-col h6 {
+    font-family: med;
+    color: #ffffff;
+}
+
+.footer-col ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.footer-col ul li a {
+    color: gray;
+    text-decoration: none;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.footer-txt p {
+    color: gray;
+    font-size: 13px;
+    margin: 0;
+}
+
+.accordion-item, .accordion-header, .accordion-button {
+    background-color: rgba(110,110,110,0.3) !important;
+    color: #ffffff !important;
+}
+
+.accordion-button:focus {
+    box-shadow: none !important;
+}
+
+.accordion-body {
+    color: gray;
 }
 
 @media screen and (max-width: 576px) {
