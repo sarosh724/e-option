@@ -140,7 +140,7 @@
     am5.ready(async function () {
 
         coin_data = await fetch(
-            {{url('trading/trading/coin-rate/1')}}
+            '{{url('trading/coin-rate/1')}}'
         ).then(response => response.json());
 
 
