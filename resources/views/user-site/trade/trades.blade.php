@@ -1,4 +1,5 @@
 <div>
+    <div id="chartcontrols"></div>
     <div class="container-fluid my-4" id="container"></div>
 </div>
 
@@ -116,6 +117,12 @@
 
 <!-- Styles -->
 <style>
+    #chartcontrols {
+        height: auto;
+        padding: 5px 5px 0 16px;
+        max-width: 100%;
+    }
+
     #container {
         width: 100%;
         height: 600px;
@@ -128,7 +135,14 @@
 
 <!-- Chart code -->
 <script>
-    am5.ready(function() {
+    let coin_data = [];
+
+    am5.ready(async function () {
+
+        coin_data = await fetch(
+            'http://127.0.0.1:8000/trading/coin-rate/1'
+        ).then(response => response.json());
+
 
 // Create root element
 // -------------------------------------------------------------------------------
@@ -171,7 +185,7 @@
                 renderer: am5xy.AxisRendererY.new(root, {
                     pan: "zoom"
                 }),
-                extraMin: 0.1, // adds some space for for main series
+                extraMin: 0.1, // adds some space for main series
                 tooltip: am5.Tooltip.new(root, {}),
                 numberFormat: "#,###.00",
                 extraTooltipPrecision: 2
@@ -190,18 +204,18 @@
         );
 
 // add range which will show current value
-        var currentValueDataItem = valueAxis.createAxisRange(valueAxis.makeDataItem({ value: 0 }));
+        var currentValueDataItem = valueAxis.createAxisRange(valueAxis.makeDataItem({value: 0}));
         var currentLabel = currentValueDataItem.get("label");
         if (currentLabel) {
             currentLabel.setAll({
                 fill: am5.color(0xffffff),
-                background: am5.Rectangle.new(root, { fill: am5.color(0x000000) })
+                background: am5.Rectangle.new(root, {fill: am5.color(0x000000)})
             })
         }
 
         var currentGrid = currentValueDataItem.get("grid");
         if (currentGrid) {
-            currentGrid.setAll({ strokeOpacity: 0.5, strokeDasharray: [2, 5] });
+            currentGrid.setAll({strokeOpacity: 0.5, strokeDasharray: [2, 5]});
         }
 
 
@@ -300,16 +314,57 @@
             fillOpacity: 0.3
         });
 
+        // Set up series type switcher
+// -------------------------------------------------------------------------------
+// https://www.amcharts.com/docs/v5/charts/stock/toolbar/series-type-control/
+        var seriesSwitcher = am5stock.SeriesTypeControl.new(root, {
+            stockChart: stockChart
+        });
+
+        seriesSwitcher.events.on("selected", function(ev) {
+            setSeriesType(ev.item.id);
+        });
+
+        // Stock toolbar
+// -------------------------------------------------------------------------------
+// https://www.amcharts.com/docs/v5/charts/stock/toolbar/
+        var toolbar = am5stock.StockToolbar.new(root, {
+            container: document.getElementById("chartcontrols"),
+            stockChart: stockChart,
+            controls: [
+                // am5stock.IndicatorControl.new(root, {
+                //     stockChart: stockChart,
+                //     legend: valueLegend
+                // }),
+                // am5stock.DateRangeSelector.new(root, {
+                //     stockChart: stockChart
+                // }),
+                am5stock.PeriodSelector.new(root, {
+                    stockChart: stockChart
+                }),
+                // seriesSwitcher,
+                // am5stock.DrawingControl.new(root, {
+                //     stockChart: stockChart
+                // }),
+                // am5stock.ResetControl.new(root, {
+                //     stockChart: stockChart
+                // }),
+                am5stock.SettingsControl.new(root, {
+                    stockChart: stockChart
+                })
+            ]
+        })
+
 // Data generator
         var firstDate = new Date();
         var lastDate;
-        var value = 1200;
+        var value = coin_data.coin_price;
 
 // data
         function generateChartData() {
             var chartData = [];
 
-            for (var i = 0; i < 50; i++) {
+            for (var i = 0; i < coin_data.diff_in_min; i++) {
                 var newDate = new Date(firstDate);
                 newDate.setMinutes(newDate.getMinutes() - i);
 
@@ -341,7 +396,7 @@
 // update data
         var previousDate;
 
-        setInterval(function() {
+        setInterval(function () {
             var valueSeries = stockChart.get("stockSeries");
             var date = Date.now();
             var lastDataObject = valueSeries.data.getIndex(valueSeries.data.length - 1);
@@ -393,14 +448,18 @@
                 }
                 // update current value
                 if (currentLabel) {
-                    currentValueDataItem.animate({ key: "value", to: value, duration: 500, easing: am5.ease.out(am5.ease.cubic) });
+                    currentValueDataItem.animate({
+                        key: "value",
+                        to: value,
+                        duration: 500,
+                        easing: am5.ease.out(am5.ease.cubic)
+                    });
                     currentLabel.set("text", stockChart.getNumberFormatter().format(value));
                     var bg = currentLabel.get("background");
                     if (bg) {
-                        if(value < open){
+                        if (value < open) {
                             bg.set("fill", root.interfaceColors.get("negative"));
-                        }
-                        else{
+                        } else {
                             bg.set("fill", root.interfaceColors.get("positive"));
                         }
                     }
@@ -409,5 +468,6 @@
         }, 1000);
 
     }); // end am5.ready()
+
 </script>
 

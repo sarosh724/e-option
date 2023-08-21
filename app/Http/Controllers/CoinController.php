@@ -141,27 +141,37 @@ class CoinController extends Controller
 
         date_default_timezone_set('Asia/Karachi');
         $coin = Coin::find($coinId);
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', $coin->created_at)->timestamp;
-        $endDate = Carbon::now()->timestamp;
-        $chartData = [];
-        $res = [];
-        $i = 0;
-        while ($date <= $endDate) {
-            $open = rand($coin->min_value, $coin->max_value);
-            $close = rand($coin->min_value, $coin->max_value);
-            $high = max(range($open, $close));
-            $low = min(range($open, $close));
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $coin->created_at);
+        $now = Carbon::now();
 
-            $chartData[$i]['x'] = [$date];
-            $chartData[$i]['y'] = [$open, $high, $low, $close];
+        $diffInMinutes = $now->diffInMinutes($date);
 
+        $res = [
+            'coin_price' => $coin->price,
+            'coin_max_price' => $coin->max_value,
+            'coin_min_value' => $coin->min_value,
+            'diff_in_min' => $diffInMinutes
+        ];
 
+//        $chartData = [];
+//        $res = [];
+//        $i = 0;
+//        while ($date <= $endDate) {
+//            $open = rand($coin->min_value, $coin->max_value);
+//            $close = rand($coin->min_value, $coin->max_value);
+//            $high = max(range($open, $close));
+//            $low = min(range($open, $close));
+//
+//            $chartData[$i]['x'] = [$date];
+//            $chartData[$i]['y'] = [$open, $high, $low, $close];
+//
+//
+//
+//            $date = strtotime("+1 second", $date);
+//            $i++;
+//        }
 
-            $date = strtotime("+1 second", $date);
-            $i++;
-        }
-
-        $res = $chartData;
+//        $res = $chartData;
 
         return response()->json($res);
     }

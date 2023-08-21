@@ -162,11 +162,11 @@
 <!-- Datatables JS -->
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <!-- Highcharts JS -->
-<script src="{{asset('assets/site/highcharts/highstock.js')}}"></script>
-<script src="{{asset('assets/site/highcharts/highstock.js')}}"></script>
-<script src="{{asset('assets/site/highcharts/hollowcandlestick.js')}}"></script>
-<script src="{{asset('assets/site/highcharts/accessibility.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+{{--<script src="{{asset('assets/site/highcharts/highstock.js')}}"></script>--}}
+{{--<script src="{{asset('assets/site/highcharts/highstock.js')}}"></script>--}}
+{{--<script src="{{asset('assets/site/highcharts/hollowcandlestick.js')}}"></script>--}}
+{{--<script src="{{asset('assets/site/highcharts/accessibility.js')}}"></script>--}}
+{{--<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>--}}
 
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
