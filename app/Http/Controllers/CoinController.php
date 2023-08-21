@@ -145,15 +145,20 @@ class CoinController extends Controller
         $endDate = Carbon::now()->timestamp;
         $chartData = [];
         $res = [];
-
+        $i = 0;
         while ($date <= $endDate) {
             $open = rand($coin->min_value, $coin->max_value);
             $close = rand($coin->min_value, $coin->max_value);
             $high = max(range($open, $close));
             $low = min(range($open, $close));
 
-            $chartData[] = [$date, $open, $high, $low, $close];
+            $chartData[$i]['x'] = [$date];
+            $chartData[$i]['y'] = [$open, $high, $low, $close];
+
+
+
             $date = strtotime("+1 second", $date);
+            $i++;
         }
 
         $res = $chartData;

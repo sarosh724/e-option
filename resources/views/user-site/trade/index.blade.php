@@ -166,6 +166,12 @@
 <script src="{{asset('assets/site/highcharts/highstock.js')}}"></script>
 <script src="{{asset('assets/site/highcharts/hollowcandlestick.js')}}"></script>
 <script src="{{asset('assets/site/highcharts/accessibility.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/stock.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
 <script type="text/javascript">
     $(function () {
