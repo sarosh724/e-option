@@ -7,8 +7,7 @@
             @csrf
             <input type="hidden" name="user_id" value="{{auth()->id()}}">
             @if(count($accounts) < 1)
-                <small class="text-danger">No withdrawal account is configure in settings. Please go to
-                    <a href="{{url('settings')}}" style="text-decoration-line: underline;">settings</a></small>
+                <small class="text-danger">No withdrawal account is configure in settings. Please go to Account menu to set the withdrawal account.</small>
             @endif
             <div class="row">
                 <div class="col-md-6 form-group">
