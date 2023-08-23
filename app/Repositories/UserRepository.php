@@ -22,6 +22,7 @@ class UserRepository implements UserInterface
             $user = User::find($request->id);
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->country = $request->country;
             $user->save();
             DB::commit();
             $res['type'] = "success";

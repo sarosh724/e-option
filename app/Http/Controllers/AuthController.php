@@ -110,6 +110,7 @@ class AuthController extends Controller
                 $newUser->email = preg_replace('/\s+/', '', strtolower($request->email));
                 $newUser->password = password_hash($request->password, PASSWORD_DEFAULT);
                 $newUser->name = $request->name;
+                $newUser->country = $request->country;
                 $newUser->save();
             } catch (\Exception $e) {
                 return redirect('register');
