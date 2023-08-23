@@ -18,7 +18,7 @@ class AuthController extends BaseController
      * @return JsonResponse
      */
 
-    public function register(Request $request): JsonResponse
+    public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
