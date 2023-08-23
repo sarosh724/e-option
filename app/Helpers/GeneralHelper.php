@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Coin;
 use Carbon\Carbon;
 
 function showDateTime($datetime)
@@ -81,4 +82,8 @@ function statusDropdown($entity, $status, $id) {
     $html .= '</select>';
 
     return $html;
+}
+
+function getCoins(){
+    return Coin::all();
 }
