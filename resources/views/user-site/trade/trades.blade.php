@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-4 col-lg-8">
+    <div class="col-md-4 col-lg-4">
     <select class="form-control" name="coin" id="coin" onChange="loadChart()">
         <option value="">--- SELECT COIN ---</option>
         @foreach(getCoins() as $coin)
@@ -7,10 +7,17 @@
         @endforeach
     </select>
     </div>
+    <div class="col-md-4 col-lg-4">
+        <select class="form-control" name="time-type" id="time-type" onChange="loadChart()">
+            <option value="">--- View As ---</option>
+                <option value="second">Second Wise</option>
+                <option value="minute" selected>Minute Wise</option>
+        </select>
+    </div>
 </div>
 
 <div class="mt-2 chart-div">
-    <div id="chartcontrols"></div>
+    <div id="chart_controls"></div>
     <div class="container-fluid my-4" id="container"></div>
 </div>
 
@@ -128,7 +135,7 @@
 
 <!-- Styles -->
 <style>
-    #chartcontrols {
+    #chart_controls {
         height: auto;
         padding: 5px 5px 0 16px;
         max-width: 100%;
@@ -143,16 +150,23 @@
 
 <!-- Chart code -->
 <script>
+    var root;
 
     $(document).ready(function () {
-       $("#chart-div").hide();
+        $("#time-type").hide();
+        $("#chart-div").hide();
+        root = am5.Root.new("container");
     });
 
     function loadChart() {
 
+        let date_axis_time_value = $("#time-type").val()
+
+        root.dispose();
+
         var coin_id = $("#coin").val();
         let coin_data = [];
-
+        $("#time-type").fadeIn();
         $("#chart-div").fadeIn();
 
         am5.ready(async function () {
@@ -165,7 +179,7 @@
 // Create root element
 // -------------------------------------------------------------------------------
 // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-            var root = am5.Root.new("container");
+            root = am5.Root.new("container");
 
 // Set themes
 // -------------------------------------------------------------------------------
@@ -213,7 +227,7 @@
             var dateAxis = mainPanel.xAxes.push(
                 am5xy.GaplessDateAxis.new(root, {
                     baseInterval: {
-                        timeUnit: "minute",
+                        timeUnit: date_axis_time_value,
                         count: 1
                     },
                     renderer: am5xy.AxisRendererX.new(root, {}),
@@ -305,7 +319,7 @@
             var sbDateAxis = scrollbar.chart.xAxes.push(
                 am5xy.GaplessDateAxis.new(root, {
                     baseInterval: {
-                        timeUnit: "minute",
+                        timeUnit: date_axis_time_value,
                         count: 1,
                     },
                     renderer: am5xy.AxisRendererX.new(root, {})
@@ -347,7 +361,7 @@
 // -------------------------------------------------------------------------------
 // https://www.amcharts.com/docs/v5/charts/stock/toolbar/
             var toolbar = am5stock.StockToolbar.new(root, {
-                container: document.getElementById("chartcontrols"),
+                container: document.getElementById("chart_controls"),
                 stockChart: stockChart,
                 controls: [
                     // am5stock.IndicatorControl.new(root, {
@@ -391,9 +405,16 @@
                 var low = 0;
                 var high = 0;
 
-                for (var i = 0; i < coin_data.diff_in_min; i++) {
+                let loop_var = date_axis_time_value == 'minute' ? coin_data.diff_in_min : coin_data.diff_in_min * 60;
+                for (var i = 0; i < loop_var; i++) {
                     var newDate = new Date(firstDate);
-                    newDate.setMinutes(newDate.getMinutes() - i);
+                    if(date_axis_time_value == 'minute'){
+                        newDate.setMinutes(newDate.getMinutes() - i);
+                    }
+                    else{
+                        newDate.setSeconds(newDate.getSeconds() - i);
+                    }
+
 
                     // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
                         value += Math.round((Math.random() < 0.49 ? 1 : -1) * Math.random() * 10);
@@ -447,7 +468,7 @@
                     var low = lastDataObject.Low;
                     var open = lastDataObject.Open;
 
-                    if (am5.time.checkChange(date, previousDate, "minute")) {
+                    if (am5.time.checkChange(date, previousDate, date_axis_time_value)) {
                         open = value;
                         high = value;
                         low = value;
