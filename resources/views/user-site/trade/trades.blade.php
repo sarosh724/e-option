@@ -306,7 +306,7 @@
                 am5xy.GaplessDateAxis.new(root, {
                     baseInterval: {
                         timeUnit: "minute",
-                        count: 1
+                        count: 1,
                     },
                     renderer: am5xy.AxisRendererX.new(root, {})
                 })
@@ -358,7 +358,13 @@
                     //     stockChart: stockChart
                     // }),
                     am5stock.PeriodSelector.new(root, {
-                        stockChart: stockChart
+                        stockChart: stockChart,
+                        periods: [
+                            { timeUnit: "second", count: 5, name: "5S" },
+                            { timeUnit: "second", count: 10, name: "10S" },
+                            { timeUnit: "minute", count: 1, name: "1Min" },
+                            { timeUnit: "hour", count: 1, name: "1Hr" },
+                        ]
                     }),
                     // seriesSwitcher,
                     // am5stock.DrawingControl.new(root, {
