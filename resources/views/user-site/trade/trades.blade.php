@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-1 col-lg-1">
         <select class="form-control bg-dark" name="coin" id="coin" onChange="loadChart()">
-            <option value="">COIN</option>
+            <option value="">coin</option>
             @foreach(getCoins() as $coin)
                 <option value="{{$coin->id}}">{{$coin->name}}</option>
             @endforeach
@@ -9,7 +9,7 @@
     </div>
     <div class="col-md-1 col-lg-1">
         <select class="form-control bg-dark" name="time-type" id="time-type" onChange="loadChart()">
-            <option value="">Filter</option>
+            <option value="">filter</option>
             <option value="second">Second</option>
             <option value="minute" selected>Minute</option>
         </select>
@@ -20,8 +20,33 @@
 </div>
 
 <div class="mt-2 chart-div">
-    <div id="chart_controls"></div>
+    <div class="text-white" id="chart_controls"></div>
     <div class="container-fluid my-4" id="container"></div>
+</div>
+
+<div class="mt-3 col-md-12" id="history-box">
+    <div class="card border-0">
+        <div class="card-header bg-success">
+            <h6 class="m-0 text-white" style="font-family: med;">Trading History</h6>
+        </div>
+        <div class="card-body bg-black border border-dark">
+            <div class="table-responsive p-0">
+                <table class="table table-sm table-dark table-striped table-hover" id="trading-data-table">
+                    <thead class="">
+                    <tr>
+                        <th width="20%">Coin</th>
+                        <th width="20%">Amount Invested</th>
+                        <th width="20%">Time Period</th>
+                        <th width="20%">Type</th>
+                        <th width="20%">Result</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -78,6 +103,9 @@
                     </div>
                     <div class="col-md-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="h" data-period="1" style="width: 100% !important;">1H</button>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="h" data-period="2" style="width: 100% !important;">2H</button>
                     </div>
                 </div>
             </div>
@@ -221,12 +249,35 @@
 <script src="//cdn.amcharts.com/lib/5/themes/Dark.js"></script>
 <script>
     var root;
+    $("#history-box").hide();
 
     $(document).ready(function () {
         $("#time-type").hide();
         $("#chart-div").hide();
         root = am5.Root.new("container");
+
+        // loadChart();
     });
+
+    function loadTradingHistory(coin_id) {
+        $('#trading-data-table').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            aaSorting: [[0, "desc"]],
+            columnsDefs: [{
+                orderable: true
+            }],
+            ajax: {url: "{{url('trading/history').'/'.auth()->user()->id}}"+"/"+coin_id},
+            columns: [
+                {data: 'coin', name: 'coin'},
+                {data: 'amount_invested', name: 'amount_invested'},
+                {data: 'time_period', name: 'time_period'},
+                {data: 'type', name: 'type'},
+                {data: 'result', name: 'result'}
+            ]
+        });
+    }
 
     function loadChart() {
 
@@ -239,13 +290,14 @@
         $("#time-type").fadeIn();
         $("#chart-div").fadeIn();
 
+        $("#history-box").show();
+        loadTradingHistory(coin_id);
+
         am5.ready(async function () {
 
             coin_data = await fetch(
                 '{{url('trading/coin-rate/')}}' + '/' + coin_id
             ).then(response => response.json());
-
-            console.log(coin_data);
 
             // Create root element
             // -------------------------------------------------------------------------------
@@ -413,7 +465,6 @@
 
             buy.events.on("click", function(ev) {
                 var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
-                console.log("last = ", last);
                 $("#label").val("buy");
                 $("#coin_id").val(coin_data.id);
                 $("#coin_name").val(coin_data.name);
@@ -497,7 +548,6 @@
             });
 
             seriesSwitcher.events.on("selected", function (ev) {
-                console.log("selected");
                 setSeriesType(ev.item.id);
             });
 
@@ -520,8 +570,13 @@
                         periods: [
                             {timeUnit: "second", count: 5, name: "5S"},
                             {timeUnit: "second", count: 10, name: "10S"},
+                            {timeUnit: "second", count: 30, name: "30S"},
                             {timeUnit: "minute", count: 1, name: "1Min"},
+                            {timeUnit: "minute", count: 5, name: "5Min"},
+                            {timeUnit: "minute", count: 15, name: "15Min"},
+                            {timeUnit: "minute", count: 30, name: "30Min"},
                             {timeUnit: "hour", count: 1, name: "1Hr"},
+                            {timeUnit: "hour", count: 2, name: "2Hr"},
                         ]
                     }),
                     // seriesSwitcher,
@@ -572,6 +627,7 @@
 
                 let period = $(this).data('period');
                 let type = $(this).data('type');
+                let time_period = period+type;
                 let seconds = 0;
                 let milliseconds = 0;
                 if (type == "s") {
@@ -588,7 +644,7 @@
                 milliseconds = seconds * 1000;
 
                 // autoUpdate = false;
-                runTimer(seconds);
+                runTimer(seconds, time_period, type);
                 $("#tradePeriod").modal("hide");
                 // updateChart(milliseconds);
 
@@ -597,11 +653,10 @@
 
             });
             $("#time").hide();
-            function runTimer(seconds) {
+            function runTimer(seconds, time_period, type) {
                 let count = new Date();
                 count.setSeconds(count.getSeconds() + seconds);
                 var countDown = count.getTime();
-                console.log(countDown);
                 var update = setInterval(function () {
                     var now = new Date().getTime();
                     var diff = countDown - now;
@@ -609,15 +664,26 @@
                     var hrs = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                    document.getElementById("time").innerHTML =
-                        days + "-D: " + hrs + "-H: " + minutes + "-M: " + seconds + "-S ";
+
+                    let html = '';
+                    if (type == 's') {
+                        html += `Time: Second: ${seconds}`;
+                    }
+
+                    if (type == 'm') {
+                        html += `Time: Minute: ${minutes} Second: ${seconds}`;
+                    }
+
+                    if (type == 'h') {
+                        html += `Time: Hour: ${hrs} Minute: ${minutes} Second: ${seconds}`;
+                    }
+                    document.getElementById("time").innerHTML = html;
                     document.getElementById("time").style.background = "black";
                     document.getElementById("time").style.color = "#ffffff";
                     $("#time").show();
                     if (diff < 0) {
                         clearInterval(update);
                         $("#time").hide();
-                        // document.getElementById("time").innerHTML = "";
                         let latest = valueSeries.data.getIndex(valueSeries.data.length - 1);
                         let label = $("#label").val();
                         let coin_id = $("#coin_id").val();
@@ -625,16 +691,15 @@
                         let close_value = $("#close").val();
                         let amt_percent = $("#amt_percent").val();
                         $("#amt_percent").val(0);
-                        alert(latest.Close);
-
-                        calculate(label, coin_id, coin_name, close_value, latest, amt_percent);
+                        calculate(label, coin_id, coin_name, close_value, latest.Close, amt_percent, time_period);
                     }
                 }, 1000);
             }
 
-            function calculate(label, coin_id, coin_name, close_value, latest, amt_percent) {
+            function calculate(label, coin_id, coin_name, close_value, latest, amt_percent, time_period) {
                 let user_balance = {{auth()->user()->account_balance}};
-                let amount_invested = user_balance * (amt_percent / 100);
+                let amount_invested = (user_balance * (amt_percent / 100)).toFixed(2);
+
                 $.ajax({
                     url: "{{url('trading/user-trade')}}",
                     type: "POST",
@@ -643,29 +708,24 @@
                         close_value: close_value,
                         latest: latest,
                         label: label,
-                        coin_id: coin_id
+                        coin_id: coin_id,
+                        time_period: time_period
                     }),
                     cache: false,
                     processData: false,
                     contentType: "application/json; charset=UTF-8",
                     success: function (res) {
-
+                        if (res.success == 1) {
+                            toast(res.message, "success");
+                        } else {
+                            toast(res.message, "info");
+                        }
+                        window.location.reload();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         alert(textStatus+' : '+errorThrown);
                     }
                 });
-                if (label == "buy") {
-
-                }
-
-                if (label == "sell") {
-                    if (latest > close_value) {
-                        alert("You earned profit of ");
-                    } else {
-                        alert("you lose");
-                    }
-                }
             }
 
             // data
@@ -676,7 +736,7 @@
                 var high = 0;
 
                 let loop_var = date_axis_time_value == 'minute' ? coin_data.diff_in_min : coin_data.diff_in_min * 60;
-                loop_var = 100;
+                loop_var = 300;
                 for (var i = 0; i < loop_var; i++) {
                     var newDate = new Date(firstDate);
                     if (date_axis_time_value == 'minute') {
@@ -716,7 +776,6 @@
             }
 
             var data = generateChartData();
-            console.log(data);
 
             // set data to all series
             valueSeries.data.setAll(data);

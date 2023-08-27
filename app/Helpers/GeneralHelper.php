@@ -43,6 +43,7 @@ function statusBadge($status)
     $color = "secondary";
     switch ($status) {
         case "pending":
+        case "sell":
             $color = "primary";
             break;
         case "active":
@@ -52,6 +53,9 @@ function statusBadge($status)
         case "disabled":
         case "rejected":
             $color = "danger";
+            break;
+        case "buy":
+            $color = "dark";
             break;
         default:
             break;
@@ -84,6 +88,8 @@ function statusDropdown($entity, $status, $id) {
     return $html;
 }
 
-function getCoins(){
+function getCoins($first = false) {
+    if ($first)    return Coin::first();
+
     return Coin::all();
 }

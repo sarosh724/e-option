@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\SiteInterface;
 use App\Models\Deposit;
+use App\Models\Trade;
 use App\Models\User;
 use App\Models\UserAccount;
 use App\Models\Withdraw;
@@ -143,23 +144,45 @@ class SiteRepository implements SiteInterface
     public function storeUserTrade(Request $request)
     {
         $res["success"] = 0;
+        $result = '';
         try {
             DB::beginTransaction();
+            $user = User::find(auth()->user()->id);
             if ($request->label == "buy") {
-                if ($request->latest > $request->close_value) {
-
+                if ($request->latest < $request->close_value) {
+                    $user->account_balance += $request->amount_invested;
+                    $res['success'] = 1;
+                    $res['message'] = 'Congratulations, You earned profit of $'.$request->amount_invested;
+                    $result = 'Profit';
                 } else {
-
+                    $user->account_balance -= $request->amount_invested;
+                    $res['message'] = 'Sorry, You Lose $'.$request->amount_invested;
+                    $result = 'Lose';
                 }
             }
 
             if ($request->label == "sell") {
                 if ($request->latest > $request->close_value) {
-
+                    $user->account_balance += $request->amount_invested;
+                    $res['success'] = 1;
+                    $res['message'] = 'Congratulations, You earned profit of $'.$request->amount_invested;
+                    $result = 'Profit';
                 } else {
-
+                    $user->account_balance -= $request->amount_invested;
+                    $res['message'] = 'Sorry, You Lose $'.$request->amount_invested;
+                    $result = 'Lose';
                 }
             }
+            $user->save();
+
+            $trade = new Trade();
+            $trade->user_id = $user->id;
+            $trade->coin_id = $request->coin_id;
+            $trade->label = $request->label;
+            $trade->amount_invested = $request->amount_invested;
+            $trade->time_period = $request->time_period;
+            $trade->result = $result;
+            $trade->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -167,5 +190,21 @@ class SiteRepository implements SiteInterface
         }
 
         return $res;
+    }
+
+    public function getTradingHistory($user_id, $coin_id = null)
+    {
+        $data = Trade::join("coins", "trades.coin_id", "coins.id");
+
+        if (isset($coin_id)) {
+            $data = $data->where("trades.coin_id", $coin_id);
+        }
+
+        $data = $data->where("trades.user_id", $user_id);
+        return $data->select(
+            "trades.*",
+            "coins.name as coin_name"
+        )
+        ->orderBy("trades.id", "desc");
     }
 }

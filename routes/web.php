@@ -45,9 +45,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/trade', [SiteController::class, 'trade']);
     Route::get('/trade/{tab}', [SiteController::class, 'trade']);
 
-    Route::get('/trading', [SiteController::class, 'trading']);
-    Route::get('/trading/coin-rate/{coinId}', [CoinController::class, 'getCoinRateData']);
-    Route::post('/trading/user-trade', [SiteController::class, 'storeUserTrade']);
+    Route::prefix('trading')->group(function () {
+        Route::get('/', [SiteController::class, 'trading']);
+        Route::get('/coin-rate/{coinId}', [CoinController::class, 'getCoinRateData']);
+        Route::post('/user-trade', [SiteController::class, 'storeUserTrade']);
+        Route::get('/history/{id}', [SiteController::class, 'getTradingHistory']);
+        Route::get('/history/{id}/{coinId}', [SiteController::class, 'getTradingHistory']);
+    });
 
     Route::get('/settings', [SiteController::class, 'settings']);
     Route::get('/about', [SiteController::class, 'about']);

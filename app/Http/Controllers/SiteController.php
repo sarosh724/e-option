@@ -218,7 +218,8 @@ class SiteController extends Controller
             "close_value" => "required",
             "latest" => "required",
             "label" => "required",
-            "coin_id" => "required"
+            "coin_id" => "required",
+            "time_period" => "required"
         ]);
 
         if ($validate->fails()) {
@@ -229,5 +230,35 @@ class SiteController extends Controller
         }
 
         $res = $this->siteInterface->storeUserTrade($request);
+
+        return response()->json($res);
+    }
+
+    public function getTradingHistory(Request $request, $id, $coinId = null)
+    {
+        if ($request->ajax()) {
+            $data = $this->siteInterface->getTradingHistory($id, $coinId);
+            return DataTables::of($data)
+                ->addColumn('coin', function ($data) {
+                    return $data->coin_name;
+                })
+                ->addColumn('amount_invested', function ($data) {
+                    return $data->amount_invested;
+                })
+                ->addColumn('time_period', function ($data) {
+                    return $data->time_period;
+                })
+                ->addColumn('type', function ($data) {
+                    return statusBadge($data->label);
+                })
+                ->addColumn('result', function ($data) {
+                    $class = $data->result == 'Profit' ? "btn-success" : "btn-danger";
+                    $icon = $data->result == 'Profit' ? "fa-arrow-up" : "fa-arrow-down";
+
+                    return '<a class="btn btn-sm '.$class.'"><i class="fa '.$icon.' text-white mr-1"></i>'.$data->result.'</a>';
+                })
+                ->rawColumns(['result', 'type'])
+                ->make(true);
+        }
     }
 }
