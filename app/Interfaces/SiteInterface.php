@@ -13,4 +13,5 @@ interface SiteInterface
     public function withdrawalListing($id = null, $user_id = null);
     public function storeWithdrawal(Request $request);
     public function storeUserTrade(Request $request);
+    public function getTradingHistory($user_id, $coin_id = null);
 }
