@@ -210,4 +210,24 @@ class SiteController extends Controller
 
         return view('user-site.trade.index');
     }
+
+    public function storeUserTrade(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            "amount_invested" => "required",
+            "close_value" => "required",
+            "latest" => "required",
+            "label" => "required",
+            "coin_id" => "required"
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                "success" => 0,
+                "message" => "Validation Error"
+            ]);
+        }
+
+        $res = $this->siteInterface->storeUserTrade($request);
+    }
 }

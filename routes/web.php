@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/trading', [SiteController::class, 'trading']);
     Route::get('/trading/coin-rate/{coinId}', [CoinController::class, 'getCoinRateData']);
+    Route::post('/trading/user-trade', [SiteController::class, 'storeUserTrade']);
+
     Route::get('/settings', [SiteController::class, 'settings']);
     Route::get('/about', [SiteController::class, 'about']);
 

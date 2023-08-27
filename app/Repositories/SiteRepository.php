@@ -139,4 +139,33 @@ class SiteRepository implements SiteInterface
 
         return $res;
     }
+
+    public function storeUserTrade(Request $request)
+    {
+        $res["success"] = 0;
+        try {
+            DB::beginTransaction();
+            if ($request->label == "buy") {
+                if ($request->latest > $request->close_value) {
+
+                } else {
+
+                }
+            }
+
+            if ($request->label == "sell") {
+                if ($request->latest > $request->close_value) {
+
+                } else {
+
+                }
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $res["message"] = "Internal Server Error";
+        }
+
+        return $res;
+    }
 }

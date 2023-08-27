@@ -140,7 +140,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-info elevation-4">
         <!-- Brand Logo -->
-        <a href="{{'admin/dashboard'}}" class="brand-link text-center">
+        <a href="{{'/'}}" class="brand-link text-center">
             <span class="brand-text font-weight-bold">Easy Option</span>
         </a>
 
