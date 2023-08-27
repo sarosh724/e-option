@@ -12,4 +12,5 @@ interface SiteInterface
     public function storeWithdrawalAccount(Request $request);
     public function withdrawalListing($id = null, $user_id = null);
     public function storeWithdrawal(Request $request);
+    public function storeUserTrade(Request $request);
 }

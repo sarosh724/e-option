@@ -11,8 +11,6 @@
     <!-- ========== Page Title ========== -->
     <title>Easy Option</title>
     <link rel="shortcut icon" href="assets/site/img/favicon.png" type="image/x-icon">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <!-- ========== Start Stylesheet ========== -->
     <link href="{{asset('assets/user/css/bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/user/css/sidebars.css')}}" rel="stylesheet" />
