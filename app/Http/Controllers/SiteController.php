@@ -215,6 +215,7 @@ class SiteController extends Controller
     {
         $validate = Validator::make($request->all(), [
             "amount_invested" => "required",
+            "profit" => "required",
             "close_value" => "required",
             "latest" => "required",
             "label" => "required",
@@ -252,10 +253,17 @@ class SiteController extends Controller
                     return statusBadge($data->label);
                 })
                 ->addColumn('result', function ($data) {
-                    $class = $data->result == 'Profit' ? "btn-success" : "btn-danger";
-                    $icon = $data->result == 'Profit' ? "fa-arrow-up" : "fa-arrow-down";
+                    $class = "btn-danger";
+                    $icon = "fa-minus";
+                    $txt = '$'.$data->amount_invested . " " . $data->result;
 
-                    return '<a class="btn btn-sm '.$class.'"><i class="fa '.$icon.' text-white mr-1"></i>'.$data->result.'</a>';
+                    if ($data->result == "Profit") {
+                        $class = "btn-success";
+                        $icon = "fa-plus";
+                        $txt = '$'.$data->profit . " " . $data->result;
+                    }
+
+                    return '<a class="btn btn-sm '.$class.'"><i class="far '.$icon.' text-white mr-1" style="font-size: 12px;"></i>'.$txt.'</a>';
                 })
                 ->rawColumns(['result', 'type'])
                 ->make(true);

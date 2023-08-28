@@ -40,8 +40,11 @@ class CoinController extends Controller
                 ->addColumn('max_price', function ($coin) {
                     return $coin->max_value;
                 })
-                ->addColumn('profit', function ($coin) {
-                    return $coin->profit_percentage;
+                ->addColumn('buy_profit', function ($coin) {
+                    return $coin->buy_profit;
+                })
+                ->addColumn('sell_profit', function ($coin) {
+                    return $coin->sell_profit;
                 })
                 ->addColumn('actions', function ($coin) {
                     return '<a href="javascript:void(0);" data-id="' . $coin->id . '"
@@ -75,7 +78,8 @@ class CoinController extends Controller
             'price' => 'required',
             'min_value' => 'required',
             'max_value' => 'required',
-            'profit_percentage' => 'required'
+            'buy_profit' => 'required',
+            'sell_profit' => 'required'
         ]);
         if (!$validator->fails()) {
             $res = $this->coinInterface->storeCoin($request);
@@ -153,7 +157,8 @@ class CoinController extends Controller
             'coin_max_price' => $coin->max_value,
             'coin_min_value' => $coin->min_value,
             'diff_in_min' => $diffInMinutes,
-            'profit' => $coin->profit_percentage
+            'buy_profit' => $coin->buy_profit,
+            'sell_profit' => $coin->sell_profit
         ];
 
 //        $chartData = [];

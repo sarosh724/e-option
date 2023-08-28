@@ -30,7 +30,8 @@ class CoinRepository implements CoinInterface
             $coin->price = $request->price;
             $coin->min_value = $request->min_value;
             $coin->max_value = $request->max_value;
-            $coin->profit_percentage = $request->profit_percentage;
+            $coin->buy_profit = $request->buy_profit;
+            $coin->sell_profit = $request->sell_profit;
             $coin->save();
             DB::commit();
             $res["status"] = true;
