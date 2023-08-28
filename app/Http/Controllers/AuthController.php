@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Referral;
+use App\Models\Setting;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -105,6 +108,8 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return back()->withErrors($validator);
             }
+
+            DB::beginTransaction();
             try {
                 $newUser = new User();
                 $newUser->email = preg_replace('/\s+/', '', strtolower($request->email));
@@ -112,8 +117,21 @@ class AuthController extends Controller
                 $newUser->name = $request->name;
                 $newUser->country = $request->country;
                 $newUser->save();
+
+                if ($request->refCode) {
+                    $refAmount = Setting::first()->referral_sign_up_amount;
+                    User::where('id', base64_decode($request->refCode))
+                        ->update(['account_balance' => $refAmount]);
+                    # adding record in referral table
+                    Referral::create(['referred_by' => base64_decode($request->refCode), 'referral' => $newUser->id]);
+                }
+
+                DB::commit();
             } catch (\Exception $e) {
-                return redirect('register');
+                DB::rollBack();
+
+                //dd($e);
+                return redirect(url('register'));
             }
 
             if ($newUser) {
@@ -126,7 +144,9 @@ class AuthController extends Controller
             }
         }
 
-        return view('user-site.register');
+        $refCode = $request->get('refcode');
+
+        return view('user-site.register', compact('refCode'));
     }
 
     public function forgot()

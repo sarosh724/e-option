@@ -21,6 +21,7 @@ class SettingRepository implements SettingInterface
             DB::beginTransaction();
             $setting = isset($request->id) ? Setting::find($request->id) : new Setting();
             $setting->withdraw_limit = $request->withdraw_limit;
+            $setting->referral_sign_up_amount = $request->referral_sign_up_amount;
             $setting->save();
             DB::commit();
             $res["type"] = "success";
