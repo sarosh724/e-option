@@ -120,6 +120,7 @@
 {{--                        </li>--}}
                     </ul>
                     <div>
+                        <a href="javascript:void(0);" class="referral-link px-4 py-2 mr-1" title="get referral link" data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;"><i class="fal fa-clipboard mr-1"></i>Get Referral Link</a>
                         <a class="btn bg-black text-white px-4 py-2 mr-1" style="font-family: med;font-size: 14px;">Balance: ${{auth()->user()->account_balance}}</a>
                         <button class="btn btn-deposit btn-success text-white px-4 py-2 mr-1" data-tab="deposit"
                                 style="font-family: med; font-size: 14px;">
@@ -270,8 +271,39 @@
         });
     }
 
+    // copy referral link to clipboard
+
+    $(".referral-link").on('click', function () {
+
+        const textToCopy = $(this).data('link');
+
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        textarea.style.position = 'fixed';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        toast('Link copied to clipboard', 'success');
+    });
+
     @include('partials.response')
 </script>
 </body>
+
+<style>
+    /* Define the default link color */
+    a.referral-link {
+        color: #ffffff;
+        text-decoration: none; /* Remove the underline if desired */
+    }
+
+    /* Change the link color when hovered over */
+    a.referral-link:hover {
+        color: #0d5c93; /* Change to the desired hover color */
+    }
+
+</style>
 
 </html>

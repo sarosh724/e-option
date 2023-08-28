@@ -27,7 +27,7 @@ use App\Http\Controllers\SettingController;
 Route::controller(AuthController::class)->group(function () {
         Route::match(['get', 'post'], '/login', 'login')
             ->name('login');
-        Route::match(['get', 'post'], '/register', 'register');
+        Route::match(['get', 'post'], '/register/{refcode?}', 'register');
         Route::get('/forgot', 'forgot');
         Route::get('/reset', 'reset');
         Route::get('/logout', 'logout');

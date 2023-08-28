@@ -6,6 +6,9 @@
         <div class="singin-box rounded">
             <form method="POST" action="{{url('register')}}" name="register-form" id="register-form">
                 @csrf
+                @if(@$refCode)
+                <input type="hidden" name="refCode" value="{{@$refCode}}">
+                @endif
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
