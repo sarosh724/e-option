@@ -42,13 +42,23 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="fv-row">
                 <div class="field">
-                    <label for="profit_percentage" class="form-label">
-                        <span class="required">Profit Percentage</span>
+                    <label for="buy_profit" class="form-label">
+                        <span class="required">Buy Profit (%)</span>
                     </label>
-                    <input type="number" step="any" class="form-control" id="profit_percentage" name="profit_percentage" value="{{@$coin->profit_percentage}}">
+                    <input type="number" step="any" class="form-control" id="buy_profit" name="buy_profit" value="{{@$coin->buy_profit}}">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="fv-row">
+                <div class="field">
+                    <label for="sell_profit" class="form-label">
+                        <span class="required">Sell Profit (%)</span>
+                    </label>
+                    <input type="number" step="any" class="form-control" id="sell_profit" name="sell_profit" value="{{@$coin->sell_profit}}">
                 </div>
             </div>
         </div>
@@ -78,7 +88,11 @@
                     required: true,
                     min: 1
                 },
-                profit_percentage: {
+                buy_profit: {
+                    required: true,
+                    min: 1
+                },
+                sell_profit: {
                     required: true,
                     min: 1
                 },
@@ -99,8 +113,12 @@
                     required: 'Maximum Price is required',
                     min: "Value must be greater then 0"
                 },
-                profit_percentage: {
-                    required: 'Profit Percentage is required',
+                buy_profit: {
+                    required: 'Buy Profit Percentage is required',
+                    min: "Value must be greater then 0"
+                },
+                sell_profit: {
+                    required: 'Sell Profit Percentage is required',
                     min: "Value must be greater then 0"
                 },
                 name: {

@@ -20,12 +20,13 @@
         <table id="data-table" class="table table-grid table-striped table-sm">
             <thead class="bg-secondary">
             <tr>
-                <th width="20%">Name</th>
-                <th width="16%">Price</th>
-                <th width="16%">Minimum Price</th>
-                <th width="16%">Maximum Price</th>
-                <th width="16%">Profit Percentage</th>
-                <th width="16%">Actions</th>
+                <th width="15%">Name</th>
+                <th width="10%">Price</th>
+                <th width="15%">Minimum Price</th>
+                <th width="15%">Maximum Price</th>
+                <th width="15%">Buy Profit (%)</th>
+                <th width="15%">Sell Profit (%)</th>
+                <th width="15%">Actions</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -66,8 +67,12 @@
                         name: 'max_price',
                     },
                     {
-                        data: 'profit',
-                        name: 'profit',
+                        data: 'buy_profit',
+                        name: 'buy_profit',
+                    },
+                    {
+                        data: 'sell_profit',
+                        name: 'sell_profit',
                     },
                     {
                         data: 'actions',

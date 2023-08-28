@@ -67,19 +67,24 @@
                 <input type="hidden" name="close" id="close" value="">
                 <input type="hidden" name="amt_percent" id="amt_percent" value="0">
                 <div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="text-white">Select Amount*</span>
-                        <span class="rounded text-white px-3 py-1" style="background: black;">Balance: ${{auth()->user()->account_balance}}</span>
+                    <div class="d-flex justify-content-end align-items-center">
+                        <span class="rounded text-white px-4 py-2" style="background: black;"><small>Balance:</small>  ${{auth()->user()->account_balance}}</span>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                        <button class="btn btn-sm btn-outline-secondary btn_percent mr-1" style="width: 25%;" data-value="25">25%</button>
-                        <button class="btn btn-sm btn-outline-secondary btn_percent mr-1" style="width: 25%;" data-value="50">50%</button>
-                        <button class="btn btn-sm btn-outline-secondary btn_percent mr-1" style="width: 25%;" data-value="75">75%</button>
-                        <button class="btn btn-sm btn-outline-secondary btn_percent" style="width: 25%;" data-value="100">100%</button>
+                    <div class="d-flex justify-content-between align-items-center mt-1">
+                        <div style="width: 50%;" class="mr-2">
+                            <label class="form-label" for="amt">Enter Amount</label>
+                            <input type="number" step="0.01" class="form-control form-control-sm" minlength="1"
+                                   required id="amt" name="amt" value="0">
+                        </div>
+                        <div style="width: 50%;">
+                            <label class="form-label" for="profit">Profit</label>
+                            <input type="text" class="form-control form-control-sm bg-secondary" readonly id="profit" name="profit" value="0">
+                        </div>
+
                     </div>
                 </div>
-                <span class="mt-3 text-white d-block">Select Period*</span>
-                <div class="row mt-2">
+                <label class="form-label mt-3">Select Period</label>
+                <div class="row mt-1">
                     <div class="col-md-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="s" data-period="5" style="width: 100% !important;">5S</button>
                     </div>
@@ -241,6 +246,14 @@
         width: 100%;
         height: 500px;
         max-width: 100%
+    }
+
+    .am5stock-control-label,
+    .am5stock-control-icon,
+    .am5stock-control,
+    .am5stock-control-button,
+    .am5stock-control-dropdown	 {
+        color: #ffffff;
     }
 </style>
 
@@ -423,7 +436,7 @@
                 dy: 350,
                 layer: 40,
                 label: am5.Label.new(root, {
-                    text: `${coin_data.profit}% Buy`,
+                    text: `${coin_data.buy_profit}% Buy`,
                     fontSize: 15,
                     fontWeight: "600",
                     paddingTop: 0,
@@ -445,7 +458,7 @@
                 dy: 350,
                 layer: 40,
                 label: am5.Label.new(root, {
-                    text: `${coin_data.profit}% Sell`,
+                    text: `${coin_data.sell_profit}% Sell`,
                     fontSize: 15,
                     fontWeight: "600",
                     paddingTop: 0,
@@ -469,18 +482,22 @@
                 $("#coin_id").val(coin_data.id);
                 $("#coin_name").val(coin_data.name);
                 $("#close").val(last.Close);
-                $("#amt_percent").val(0);
+                $("#amt").val(0);
+                $("#profit").val(0);
                 $("#tradePeriod").modal("show");
                 // calculate("buy", last, coin_data);
             });
 
             sell.events.on('click', function (e) {
                 var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
+                // console.log(e);
+                // return;
                 $("#label").val("sell");
                 $("#coin_id").val(coin_data.id);
                 $("#coin_name").val(coin_data.name);
                 $("#close").val(last.Close);
-                $("#amt_percent").val(0);
+                $("#amt").val(0);
+                $("#profit").val(0);
                 $("#tradePeriod").modal("show");
                 // calculate("sell", last, coin_data);
             });
@@ -580,9 +597,9 @@
                         ]
                     }),
                     // seriesSwitcher,
-                    // am5stock.DrawingControl.new(root, {
-                    //     stockChart: stockChart
-                    // }),
+                    am5stock.DrawingControl.new(root, {
+                        stockChart: stockChart
+                    }),
                     // am5stock.ResetControl.new(root, {
                     //     stockChart: stockChart
                     // }),
@@ -599,31 +616,36 @@
 
             var autoUpdate = true;
 
-            function clearPercent() {
-                $(".btn_percent").each(function() {
-                    if ($(this).hasClass('active')) {
-                        $(this).removeClass('active')
-                    }
-                });
-            }
+            $("#amt").on('keyup', function () {
+                let amount = $("#amt").val();
+                let user_balance = {{auth()->user()->account_balance}};
+                if (user_balance < amount) {
+                    toast("You don't have enough balance. Please deposit money", "warning");
+                    return;
+                }
 
-            $(".btn_percent").on('click', function () {
-                clearPercent();
+                let profit_percent = 0;
+                if ($("#label").val() == "buy") {
+                    profit_percent = coin_data.buy_profit;
+                } else {
+                    profit_percent = coin_data.sell_profit;
+                }
 
-               let value = $(this).data('value');
-               $("#amt_percent").val(value);
+                console.log("percent = ", profit_percent);
+                let profit = (Number(amount) * (Number(profit_percent) / 100)).toFixed(2);
+                console.log("profit = ", profit);
+                let total = (Number(amount) + Number(profit)).toFixed(2);
+                $("#profit").val(total);
 
-               if (!$(this).hasClass("active")) {
-                   $(this).addClass("active");
-               }
+
+                console.log();
             });
 
             $(".btn_trade_period").on('click', function () {
-                if ($("#amt_percent").val() == 0) {
-                    toast("Please select Amount", "info");
+                if ($("#amt").val() < 1) {
+                    toast("Please enter amount", "info");
                     return;
                 }
-                clearPercent();
 
                 let period = $(this).data('period');
                 let type = $(this).data('type');
@@ -667,15 +689,15 @@
 
                     let html = '';
                     if (type == 's') {
-                        html += `Time: Second: ${seconds}`;
+                        html += `<small>Time:</small> Second: ${seconds}`;
                     }
 
                     if (type == 'm') {
-                        html += `Time: Minute: ${minutes} Second: ${seconds}`;
+                        html += `<small>Time:</small> Minute: ${minutes} Second: ${seconds}`;
                     }
 
                     if (type == 'h') {
-                        html += `Time: Hour: ${hrs} Minute: ${minutes} Second: ${seconds}`;
+                        html += `<small>Time:</small> Hour: ${hrs} Minute: ${minutes} Second: ${seconds}`;
                     }
                     document.getElementById("time").innerHTML = html;
                     document.getElementById("time").style.background = "black";
@@ -689,22 +711,22 @@
                         let coin_id = $("#coin_id").val();
                         let coin_name = $("#coin_name").val();
                         let close_value = $("#close").val();
-                        let amt_percent = $("#amt_percent").val();
-                        $("#amt_percent").val(0);
-                        calculate(label, coin_id, coin_name, close_value, latest.Close, amt_percent, time_period);
+                        let amt = $("#amt").val();
+                        let profit = $("#profit").val();
+                        $("#amt").val(0);
+                        $("#profit").val(0);
+                        calculate(label, coin_id, coin_name, close_value, latest.Close, amt, profit, time_period);
                     }
                 }, 1000);
             }
 
-            function calculate(label, coin_id, coin_name, close_value, latest, amt_percent, time_period) {
-                let user_balance = {{auth()->user()->account_balance}};
-                let amount_invested = (user_balance * (amt_percent / 100)).toFixed(2);
-
+            function calculate(label, coin_id, coin_name, close_value, latest, amt, profit, time_period) {
                 $.ajax({
                     url: "{{url('trading/user-trade')}}",
                     type: "POST",
                     data: JSON.stringify({
-                        amount_invested: amount_invested,
+                        amount_invested: amt,
+                        profit: profit,
                         close_value: close_value,
                         latest: latest,
                         label: label,
@@ -736,7 +758,7 @@
                 var high = 0;
 
                 let loop_var = date_axis_time_value == 'minute' ? coin_data.diff_in_min : coin_data.diff_in_min * 60;
-                // loop_var = 300;
+                // loop_var = 100;
                 for (var i = 0; i < loop_var; i++) {
                     var newDate = new Date(firstDate);
                     if (date_axis_time_value == 'minute') {

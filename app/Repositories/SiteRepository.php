@@ -149,10 +149,10 @@ class SiteRepository implements SiteInterface
             DB::beginTransaction();
             $user = User::find(auth()->user()->id);
             if ($request->label == "buy") {
-                if ($request->latest < $request->close_value) {
-                    $user->account_balance += $request->amount_invested;
+                if ($request->latest > $request->close_value) {
+                    $user->account_balance += $request->profit;
                     $res['success'] = 1;
-                    $res['message'] = 'Congratulations, You earned profit of $'.$request->amount_invested;
+                    $res['message'] = 'Congratulations, You earned profit of $'.$request->profit;
                     $result = 'Profit';
                 } else {
                     $user->account_balance -= $request->amount_invested;
@@ -162,10 +162,10 @@ class SiteRepository implements SiteInterface
             }
 
             if ($request->label == "sell") {
-                if ($request->latest > $request->close_value) {
-                    $user->account_balance += $request->amount_invested;
+                if ($request->latest < $request->close_value) {
+                    $user->account_balance += $request->profit;
                     $res['success'] = 1;
-                    $res['message'] = 'Congratulations, You earned profit of $'.$request->amount_invested;
+                    $res['message'] = 'Congratulations, You earned profit of $'.$request->profit;
                     $result = 'Profit';
                 } else {
                     $user->account_balance -= $request->amount_invested;
@@ -180,6 +180,7 @@ class SiteRepository implements SiteInterface
             $trade->coin_id = $request->coin_id;
             $trade->label = $request->label;
             $trade->amount_invested = $request->amount_invested;
+            $trade->profit = $request->profit;
             $trade->time_period = $request->time_period;
             $trade->result = $result;
             $trade->save();
