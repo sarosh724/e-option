@@ -258,8 +258,7 @@
 </style>
 
 <!-- Chart code -->
-<script src="//cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
-<script src="//cdn.amcharts.com/lib/5/themes/Dark.js"></script>
+
 <script>
     var root;
     $("#history-box").hide();
