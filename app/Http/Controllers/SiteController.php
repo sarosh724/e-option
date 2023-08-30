@@ -191,6 +191,8 @@ class SiteController extends Controller
     {
         if ($request->ajax()) {
             switch ($tab) {
+                case "market":
+                    return view("user-site.trade.market");
                 case "deposit":
                     $payment_methods = $this->paymentMethodInterface->paymentMethodListing(true);
 
@@ -205,6 +207,8 @@ class SiteController extends Controller
                     return view("user-site.trade.trades");
                 case "account":
                     return view("user-site.trade.account");
+                case "referral":
+                    return view("user-site.trade.referral");
             }
         }
 

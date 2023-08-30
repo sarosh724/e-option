@@ -77,7 +77,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" data-toggle="tooltip" data-placement="right" title="Market">
+                <a href="javascript:void(0);" class="btn-market" data-tab="market" data-toggle="tooltip" data-placement="right" title="Market">
                     <i class="fas fa-funnel-dollar"></i>
                 </a>
             </li>
@@ -120,7 +120,7 @@
 {{--                        </li>--}}
                     </ul>
                     <div>
-                        <a href="javascript:void(0);" class="referral-link px-4 py-2 mr-1" title="get referral link" data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;"><i class="fal fa-clipboard mr-1"></i>Get Referral Link</a>
+                        <a href="javascript:void(0);" class="referral-link px-4 py-2 mr-1" title="Get Referral Link" data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;"><i class="fal fa-clipboard mr-1"></i>Get Referral Link</a>
                         <a class="btn bg-black text-white px-4 py-2 mr-1" style="font-family: med;font-size: 14px;">Balance: ${{auth()->user()->account_balance}}</a>
                         <button class="btn btn-deposit btn-success text-white px-4 py-2 mr-1" data-tab="deposit"
                                 style="font-family: med; font-size: 14px;">
@@ -138,11 +138,13 @@
         <div class="px-2">
             <div class="mt-2">
                 <div class="d-inline-flex justify-content-start bg-dark p-2 rounded">
+                    <button class="btn btn-sm btn-dark btn-tab-item mr-3 p-2" data-tab="market">Market</button>
                     <button class="btn btn-sm btn-dark btn-tab-item mr-3 p-2" data-tab="deposit">Deposit</button>
                     <button class="btn btn-sm btn-dark btn-tab-item mr-3 p-2" data-tab="withdrawal">Withdrawal</button>
                     <button class="btn btn-sm btn-dark btn-tab-item mr-3 p-2" data-tab="transactions">Transactions</button>
                     <button class="btn btn-sm btn-dark btn-tab-item mr-3 p-2" data-tab="trades">Trades</button>
                     <button class="btn btn-sm btn-dark btn-tab-item mr-3 p-2" data-tab="account">Account</button>
+                    <button class="btn btn-sm btn-dark btn-tab-item mr-3 p-2" data-tab="referral">Referrals</button>
                 </div>
                 <div class="my-2" id="content-box">
                 </div>
@@ -193,7 +195,7 @@
             $('#sidebar').toggleClass('active');
         });
 
-        $(".btn-deposit, .btn-withdrawal, .btn-account, .btn-trade").on('click', function () {
+        $(".btn-deposit, .btn-withdrawal, .btn-account, .btn-trade, .btn-market, .btn-referral").on('click', function () {
             let currentTab = $(this).data('tab');
 
             $(".btn-tab-item").each(function(){
