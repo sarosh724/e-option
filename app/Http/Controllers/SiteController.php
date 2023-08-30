@@ -6,6 +6,8 @@ use App\Interfaces\PaymentMethodInterface;
 use App\Interfaces\SettingInterface;
 use App\Interfaces\SiteInterface;
 use App\Models\PaymentMethod;
+use App\Models\Referral;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -208,7 +210,10 @@ class SiteController extends Controller
                 case "account":
                     return view("user-site.trade.account");
                 case "referral":
-                    return view("user-site.trade.referral");
+                    $referrals = Referral::where("referred_by", auth()->user()->id)->count();
+                    $referrer_amount = Setting::select("referral_sign_up_amount")->pluck("referral_sign_up_amount")->first();
+
+                    return view("user-site.trade.referral", compact(['referrals', 'referrer_amount']));
             }
         }
 
