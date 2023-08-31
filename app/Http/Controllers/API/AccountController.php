@@ -45,7 +45,7 @@ class AccountController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function getpaymentMethod(Request $request): JsonResponse
+    public function getPaymentMethod(Request $request): JsonResponse
     {
         $data = $this->paymentMethodInterface->paymentMethodListing();
 

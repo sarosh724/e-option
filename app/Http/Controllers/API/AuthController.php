@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
+use App\Models\Referral;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends BaseController
@@ -31,9 +34,26 @@ class AuthController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
+        DB::beginTransaction();
+        try {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+
+        if ($request->refcode) {
+            $refAmount = Setting::first()->referral_sign_up_amount;
+            $u = User::where("id", base64_decode($request->refcode))->first();
+            $u->account_balance +=  $refAmount;
+            $u->save();
+            # adding record in referral table
+            Referral::create(['referred_by' => base64_decode($request->refcode), 'referral' => $user->id]);
+        }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->sendError('something went wrong', 'User register Unsuccessful.');
+        }
+
         $success['token'] = $user->createToken('EOption')->plainTextToken;
         $success['name'] = $user->name;
 

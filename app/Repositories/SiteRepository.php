@@ -156,7 +156,7 @@ class SiteRepository implements SiteInterface
                     $result = 'Profit';
                 } else {
                     $user->account_balance -= $request->amount_invested;
-                    $res['message'] = 'Sorry, You Lose $'.$request->amount_invested;
+                    $res['message'] = 'Sorry, You Lost $'.$request->amount_invested;
                     $result = 'Lose';
                 }
             }
@@ -169,7 +169,7 @@ class SiteRepository implements SiteInterface
                     $result = 'Profit';
                 } else {
                     $user->account_balance -= $request->amount_invested;
-                    $res['message'] = 'Sorry, You Lose $'.$request->amount_invested;
+                    $res['message'] = 'Sorry, You Lost $'.$request->amount_invested;
                     $result = 'Lose';
                 }
             }

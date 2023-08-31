@@ -19,13 +19,15 @@ use App\Http\Controllers\API\AuthController;
 */
 
 Route::controller(AuthController::class)->group(function(){
-    Route::post('register', 'register');
+    Route::post('register/{refCode?}', 'register');
     Route::post('login', 'login');
 });
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::get('logout', [AuthController::class, 'logout']);
     Route::get('get-user', [UserController::class, 'getUser']);
+    Route::get('get-referral-link', [UserController::class, 'getReferralLink']);
+    Route::get('get-referral-detail', [UserController::class, 'getReferralDetails']);
     Route::get('get-withdrawal-account', [AccountController::class, 'getWithdrawalAccount']);
     Route::get('get-withdrawal-account/{id}', [AccountController::class, 'getWithdrawalAccount']);
     Route::post('store-withdrawal-account', [AccountController::class, 'storeWithdrawalAccount']);
