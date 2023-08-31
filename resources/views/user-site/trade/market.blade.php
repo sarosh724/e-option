@@ -150,11 +150,12 @@
     $("#history-box").hide();
 
     $(document).ready(function () {
+        var coin_id = $('#coin option:eq(1)').prop('selected', true);
         $("#time-type").hide();
         $("#chart-div").hide();
         root = am5.Root.new("container");
 
-        // loadChart();
+        loadChart();
     });
 
     function loadTradingHistory(coin_id) {
@@ -183,7 +184,7 @@
 
         root.dispose();
 
-        var coin_id = $("#coin").val();
+        coin_id = $("#coin").val();
         let coin_data = [];
         $("#time-type").fadeIn();
         $("#chart-div").fadeIn();
