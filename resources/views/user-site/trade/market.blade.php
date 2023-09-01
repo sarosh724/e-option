@@ -36,6 +36,8 @@
                     <tr>
                         <th width="20%">Coin</th>
                         <th width="20%">Amount Invested</th>
+                        <th width="20%">Starting Price</th>
+                        <th width="20%">Closing Price</th>
                         <th width="20%">Time Period</th>
                         <th width="20%">Type</th>
                         <th width="20%">Result</th>
@@ -171,6 +173,8 @@
             columns: [
                 {data: 'coin', name: 'coin'},
                 {data: 'amount_invested', name: 'amount_invested'},
+                {data: 'starting_price', name: 'starting_price'},
+                {data: 'closing_price', name: 'closing_price'},
                 {data: 'time_period', name: 'time_period'},
                 {data: 'type', name: 'type'},
                 {data: 'result', name: 'result'}
@@ -336,7 +340,7 @@
                 cornerRadiusTR: 0,
                 cornerRadiusBR: 0,
                 cornerRadiusBL: 0,
-                fill: '#dc3545',
+                fill: '#28a745',
                 fillOpacity: 0.7
             })
             var sell = mainPanel.plotContainer.children.push(am5.Button.new(root, {
@@ -358,7 +362,7 @@
                 cornerRadiusTR: 0,
                 cornerRadiusBR: 0,
                 cornerRadiusBL: 0,
-                fill: '#28a745',
+                fill: '#dc3545',
                 fillOpacity: 0.7
             })
 
@@ -404,44 +408,44 @@
             // Add scrollbar
             // -------------------------------------------------------------------------------
             // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-            var scrollbar = mainPanel.set(
-                "scrollbarX",
-                am5xy.XYChartScrollbar.new(root, {
-                    orientation: "horizontal",
-                    height: 50
-                })
-            );
-            stockChart.toolsContainer.children.push(scrollbar);
+            // var scrollbar = mainPanel.set(
+            //     "scrollbarX",
+            //     am5xy.XYChartScrollbar.new(root, {
+            //         orientation: "horizontal",
+            //         height: 50
+            //     })
+            // );
+            // stockChart.toolsContainer.children.push(scrollbar);
 
-            var sbDateAxis = scrollbar.chart.xAxes.push(
-                am5xy.GaplessDateAxis.new(root, {
-                    baseInterval: {
-                        timeUnit: date_axis_time_value,
-                        count: 1,
-                    },
-                    renderer: am5xy.AxisRendererX.new(root, {})
-                })
-            );
+            // var sbDateAxis = scrollbar.chart.xAxes.push(
+            //     am5xy.GaplessDateAxis.new(root, {
+            //         baseInterval: {
+            //             timeUnit: date_axis_time_value,
+            //             count: 1,
+            //         },
+            //         renderer: am5xy.AxisRendererX.new(root, {})
+            //     })
+            // );
 
-            var sbValueAxis = scrollbar.chart.yAxes.push(
-                am5xy.ValueAxis.new(root, {
-                    renderer: am5xy.AxisRendererY.new(root, {})
-                })
-            );
+            // var sbValueAxis = scrollbar.chart.yAxes.push(
+            //     am5xy.ValueAxis.new(root, {
+            //         renderer: am5xy.AxisRendererY.new(root, {})
+            //     })
+            // );
 
-            var sbSeries = scrollbar.chart.series.push(
-                am5xy.LineSeries.new(root, {
-                    valueYField: "Close",
-                    valueXField: "Date",
-                    xAxis: sbDateAxis,
-                    yAxis: sbValueAxis
-                })
-            );
-
-            sbSeries.fills.template.setAll({
-                visible: true,
-                fillOpacity: 0.3
-            });
+            // var sbSeries = scrollbar.chart.series.push(
+            //     am5xy.LineSeries.new(root, {
+            //         valueYField: "Close",
+            //         valueXField: "Date",
+            //         xAxis: sbDateAxis,
+            //         yAxis: sbValueAxis
+            //     })
+            // );
+            //
+            // sbSeries.fills.template.setAll({
+            //     visible: true,
+            //     fillOpacity: 0.3
+            // });
 
             // Set up series type switcher
             // -------------------------------------------------------------------------------
@@ -628,7 +632,8 @@
                         } else {
                             toast(res.message, "info");
                         }
-                        window.location.reload();
+                        loadTradingHistory(coin_id);
+                        setAccountBalance();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         alert(textStatus+' : '+errorThrown);
@@ -687,7 +692,7 @@
 
             // set data to all series
             valueSeries.data.setAll(data);
-            sbSeries.data.setAll(data);
+            // sbSeries.data.setAll(data);
 
             // update data
             var previousDate;
@@ -720,7 +725,7 @@
                             };
 
                             valueSeries.data.push(dObj1);
-                            sbSeries.data.push(dObj1);
+                            // sbSeries.data.push(dObj1);
                             previousDate = date;
                         } else {
                             if (value > high) {
@@ -740,7 +745,7 @@
                             };
 
                             valueSeries.data.setIndex(valueSeries.data.length - 1, dObj2);
-                            sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
+                            // sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
                         }
                         // update current value
                         if (currentLabel) {
@@ -793,7 +798,7 @@
                             };
 
                             valueSeries.data.push(dObj1);
-                            sbSeries.data.push(dObj1);
+                            // sbSeries.data.push(dObj1);
                             previousDate = date;
                         } else {
                             if (value > high) {
@@ -813,7 +818,7 @@
                             };
 
                             valueSeries.data.setIndex(valueSeries.data.length - 1, dObj2);
-                            sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
+                            // sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
                         }
                         // update current value
                         if (currentLabel) {

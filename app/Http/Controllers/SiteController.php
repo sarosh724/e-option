@@ -8,6 +8,7 @@ use App\Interfaces\SiteInterface;
 use App\Models\PaymentMethod;
 use App\Models\Referral;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -255,6 +256,12 @@ class SiteController extends Controller
                 ->addColumn('amount_invested', function ($data) {
                     return $data->amount_invested;
                 })
+                ->addColumn('starting_price', function ($data) {
+                    return $data->starting_price;
+                })
+                ->addColumn('closing_price', function ($data) {
+                    return $data->closing_price;
+                })
                 ->addColumn('time_period', function ($data) {
                     return $data->time_period;
                 })
@@ -277,5 +284,12 @@ class SiteController extends Controller
                 ->rawColumns(['result', 'type'])
                 ->make(true);
         }
+    }
+
+    function getAccountBalance(Request $request)
+    {
+        $balance = User::where('id', auth()->user()->id)->first()->account_balance;
+
+        return response()->json(['success' => 1, 'data' => $balance]);
     }
 }

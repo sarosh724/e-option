@@ -180,6 +180,8 @@ class SiteRepository implements SiteInterface
             $trade->coin_id = $request->coin_id;
             $trade->label = $request->label;
             $trade->amount_invested = $request->amount_invested;
+            $trade->starting_price = $request->close_value;
+            $trade->closing_price = $request->latest;
             $trade->profit = $request->profit;
             $trade->time_period = $request->time_period;
             $trade->result = $result;

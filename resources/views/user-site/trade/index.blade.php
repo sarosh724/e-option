@@ -121,7 +121,7 @@
                     </ul>
                     <div>
                         <a href="javascript:void(0);" class="referral-link px-4 py-2 mr-1" title="Get Referral Link" data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;"><i class="fal fa-clipboard mr-1"></i>Get Referral Link</a>
-                        <a class="btn bg-black text-white px-4 py-2 mr-1" style="font-family: med;font-size: 14px;">Balance: ${{auth()->user()->account_balance}}</a>
+                        <a class="btn bg-black text-white px-4 py-2 mr-1" id="account-balance" style="font-family: med;font-size: 14px;">Balance: ${{auth()->user()->account_balance}}</a>
                         <button class="btn btn-deposit btn-success text-white px-4 py-2 mr-1" data-tab="deposit"
                                 style="font-family: med; font-size: 14px;">
                             <i class="fa fa-plus mr-1" style="font-size: 13px;"></i>Deposit
@@ -191,6 +191,7 @@
     });
 
     $(document).ready(function () {
+
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
@@ -272,6 +273,24 @@
             timer: 3000,
             background: '#6c757d',
             color: '#ffffff'
+        });
+    }
+
+    function setAccountBalance(){
+        $.ajax({
+            url: "{{url('get-account-balance')}}",
+            type: "GET",
+            cache: false,
+            processData: false,
+            contentType: "application/json; charset=UTF-8",
+            success: function (res) {
+                if (res.success == 1) {
+                    $('#account-balance').html('Balance: $' + res.data);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert(textStatus+' : '+errorThrown);
+            }
         });
     }
 

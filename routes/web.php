@@ -44,6 +44,7 @@ Route::get('/', [SiteController::class, 'index']);
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/trade', [SiteController::class, 'trade']);
     Route::get('/trade/{tab}', [SiteController::class, 'trade']);
+    Route::get('/get-account-balance', [SiteController::class, 'getAccountBalance']);
 
     Route::prefix('trading')->group(function () {
         Route::get('/', [SiteController::class, 'trading']);
