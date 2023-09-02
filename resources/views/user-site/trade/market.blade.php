@@ -70,7 +70,7 @@
                 <input type="hidden" name="amt_percent" id="amt_percent" value="0">
                 <div>
                     <div class="d-flex justify-content-end align-items-center">
-                        <span class="rounded text-white px-4 py-2" style="background: black;"><small>Balance:</small>  ${{auth()->user()->account_balance}}</span>
+                        <span class="rounded text-white px-4 py-2" style="background: black;"><small>Balance:</small>  ${{sprintf("%0.2f", (auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance)}}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-1">
                         <div style="width: 50%;" class="mr-2">
@@ -82,7 +82,6 @@
                             <label class="form-label" for="profit">Profit</label>
                             <input type="text" class="form-control form-control-sm bg-secondary" readonly id="profit" name="profit" value="0">
                         </div>
-
                     </div>
                 </div>
                 <label class="form-label mt-3">Select Period</label>
@@ -380,8 +379,6 @@
 
             sell.events.on('click', function (e) {
                 var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
-                // console.log(e);
-                // return;
                 $("#label").val("sell");
                 $("#coin_id").val(coin_data.id);
                 $("#coin_name").val(coin_data.name);
@@ -508,7 +505,7 @@
 
             $("#amt").on('keyup', function () {
                 let amount = $("#amt").val();
-                let user_balance = {{auth()->user()->account_balance}};
+                let user_balance = {{(auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance}};
                 if (user_balance < amount) {
                     toast("You don't have enough balance. Please deposit money", "warning");
                     return;
@@ -521,9 +518,7 @@
                     profit_percent = coin_data.sell_profit;
                 }
 
-                console.log("percent = ", profit_percent);
                 let profit = (Number(amount) * (Number(profit_percent) / 100)).toFixed(2);
-                console.log("profit = ", profit);
                 let total = (Number(amount) + Number(profit)).toFixed(2);
                 $("#profit").val(total);
 

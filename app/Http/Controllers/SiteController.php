@@ -65,7 +65,12 @@ class SiteController extends Controller
 
         if ($request->ajax()) {
             $id = auth()->id();
-            $data = $this->siteInterface->depositListing(null, $id);
+
+            if (\auth()->user()->is_demo_account) {
+                $data = [];
+            } else {
+                $data = $this->siteInterface->depositListing(null, $id);
+            }
 
             return DataTables::of($data)
                 ->addColumn('date', function ($data) {
@@ -114,7 +119,13 @@ class SiteController extends Controller
 
         if ($request->ajax()) {
             $id = auth()->id();
-            $data = $this->siteInterface->withdrawalListing(null, $id);
+
+            if (\auth()->user()->is_demo_account) {
+                $data = [];
+            } else {
+                $data = $this->siteInterface->withdrawalListing(null, $id);
+            }
+
             return DataTables::of($data)
                 ->addColumn('date', function ($data) {
                     return showDate($data->created_at);
@@ -254,13 +265,13 @@ class SiteController extends Controller
                     return $data->coin_name;
                 })
                 ->addColumn('amount_invested', function ($data) {
-                    return $data->amount_invested;
+                    return '$'.sprintf("%0.2f", @$data->amount_invested);
                 })
                 ->addColumn('starting_price', function ($data) {
-                    return $data->starting_price;
+                    return '$'.@$data->starting_price;
                 })
                 ->addColumn('closing_price', function ($data) {
-                    return $data->closing_price;
+                    return '$'.@$data->closing_price;
                 })
                 ->addColumn('time_period', function ($data) {
                     return $data->time_period;
@@ -271,12 +282,12 @@ class SiteController extends Controller
                 ->addColumn('result', function ($data) {
                     $class = "btn-danger";
                     $icon = "fa-minus";
-                    $txt = '$'.$data->amount_invested . " " . $data->result;
+                    $txt = '$'.sprintf("%0.2f", $data->amount_invested) . " " . $data->result;
 
                     if ($data->result == "Profit") {
                         $class = "btn-success";
                         $icon = "fa-plus";
-                        $txt = '$'.$data->profit . " " . $data->result;
+                        $txt = '$'.sprintf("%0.2f", $data->profit) . " " . $data->result;
                     }
 
                     return '<a class="btn btn-sm '.$class.'"><i class="far '.$icon.' text-white mr-1" style="font-size: 12px;"></i>'.$txt.'</a>';
@@ -286,10 +297,34 @@ class SiteController extends Controller
         }
     }
 
-    function getAccountBalance(Request $request)
+    public function getAccountBalance(Request $request)
     {
-        $balance = User::where('id', auth()->user()->id)->first()->account_balance;
+        $user = User::where('id', auth()->user()->id)
+            ->select(
+                "is_demo_account",
+                "account_balance",
+                "demo_account_balance"
+            )
+            ->first();
 
-        return response()->json(['success' => 1, 'data' => $balance]);
+        return response()->json(['success' => 1, 'data' => $user]);
+    }
+
+    public function changeUserAccount(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            "type" => "required"
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                "success" => 0,
+                "message" => "Validation Error"
+            ]);
+        }
+
+        $res = $this->siteInterface->changeUserAccount($request);
+
+        return response()->json($res);
     }
 }

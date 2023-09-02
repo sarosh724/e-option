@@ -26,7 +26,9 @@ class SettingController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            "withdraw_limit" => "required"
+            "withdraw_limit" => "required",
+            "referral_sign_up_amount" => "required",
+            "demo_account_balance" => "required"
         ]);
 
         if ($validate->fails()) {

@@ -3,6 +3,11 @@
 {{--        <h6 class="m-0 font-weight-bold">Create Withdrawal</h6>--}}
 {{--    </div>--}}
     <div class="card-body bg-black">
+        @if(auth()->user()->is_demo_account)
+            <div class="alert alert-danger">
+                <b>Note:</b><span class="ml-1">Sorry, you cannot make <b>Withdraw</b> from demo account.</span>
+            </div>
+        @endif
         <form method="post" name="withdrawal-form" id="withdrawal-form" action="{{url('withdrawal')}}">
             @csrf
             <input type="hidden" name="user_id" value="{{auth()->id()}}">
@@ -29,7 +34,7 @@
             </div>
 
             <div class="text-center">
-                <button class="btn px-4 btn-success" style="font-family: med;" type="submit">Withdraw</button>
+                <button class="btn px-4 btn-success" style="font-family: med;" type="submit" {{(auth()->user()->is_demo_account) ? "disabled" : ""}}>Withdraw</button>
             </div>
         </form>
     </div>
@@ -43,7 +48,7 @@
                     required:true,
                     min: 1
                 },
-                acount: {
+                account: {
                     required:true
                 }
             },

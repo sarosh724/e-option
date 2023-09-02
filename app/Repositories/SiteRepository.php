@@ -150,12 +150,20 @@ class SiteRepository implements SiteInterface
             $user = User::find(auth()->user()->id);
             if ($request->label == "buy") {
                 if ($request->latest > $request->close_value) {
-                    $user->account_balance += $request->profit;
+                    if (auth()->user()->is_demo_account) {
+                        $user->demo_account_balance += $request->profit;
+                    } else {
+                        $user->account_balance += $request->profit;
+                    }
                     $res['success'] = 1;
                     $res['message'] = 'Congratulations, You earned profit of $'.$request->profit;
                     $result = 'Profit';
                 } else {
-                    $user->account_balance -= $request->amount_invested;
+                    if (auth()->user()->is_demo_account) {
+                        $user->demo_account_balance -= $request->amount_invested;
+                    } else {
+                        $user->account_balance -= $request->amount_invested;
+                    }
                     $res['message'] = 'Sorry, You Lost $'.$request->amount_invested;
                     $result = 'Lose';
                 }
@@ -163,12 +171,20 @@ class SiteRepository implements SiteInterface
 
             if ($request->label == "sell") {
                 if ($request->latest < $request->close_value) {
-                    $user->account_balance += $request->profit;
+                    if (auth()->user()->is_demo_account) {
+                        $user->demo_account_balance += $request->profit;
+                    } else {
+                        $user->account_balance += $request->profit;
+                    }
                     $res['success'] = 1;
                     $res['message'] = 'Congratulations, You earned profit of $'.$request->profit;
                     $result = 'Profit';
                 } else {
-                    $user->account_balance -= $request->amount_invested;
+                    if (auth()->user()->is_demo_account) {
+                        $user->demo_account_balance -= $request->amount_invested;
+                    } else {
+                        $user->account_balance -= $request->amount_invested;
+                    }
                     $res['message'] = 'Sorry, You Lost $'.$request->amount_invested;
                     $result = 'Lose';
                 }
@@ -182,6 +198,7 @@ class SiteRepository implements SiteInterface
             $trade->amount_invested = $request->amount_invested;
             $trade->starting_price = $request->close_value;
             $trade->closing_price = $request->latest;
+            $trade->account_type = (auth()->user()->is_demo_account) ? "demo" : "live";
             $trade->profit = $request->profit;
             $trade->time_period = $request->time_period;
             $trade->result = $result;
@@ -197,17 +214,38 @@ class SiteRepository implements SiteInterface
 
     public function getTradingHistory($user_id, $coin_id = null)
     {
+        $type = "live";
         $data = Trade::join("coins", "trades.coin_id", "coins.id");
 
         if (isset($coin_id)) {
             $data = $data->where("trades.coin_id", $coin_id);
         }
 
-        $data = $data->where("trades.user_id", $user_id);
+        if (auth()->user()->is_demo_account)    $type = "demo";
+
+        $data = $data->where("trades.user_id", $user_id)
+            ->where("account_type", $type);
         return $data->select(
             "trades.*",
             "coins.name as coin_name"
         )
         ->orderBy("trades.id", "desc");
+    }
+
+    public function changeUserAccount(Request $request)
+    {
+        $res['success'] = 0;
+        try {
+            DB::beginTransaction();
+            User::where("id", \auth()->user()->id)
+                ->update(["is_demo_account" => ($request->type == "demo") ? 1 : 0]);
+            DB::commit();
+            $res['success'] = 1;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $res['message'] = "Internal Server Error";
+        }
+
+        return $res;
     }
 }

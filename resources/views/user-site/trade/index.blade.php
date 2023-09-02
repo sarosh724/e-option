@@ -20,6 +20,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <!-- Datatable CSS -->
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <style>
+        #live-acc-btn, #demo-acc-btn {
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #live-acc-btn, #demo-acc-btn i {
+            font-size: 12px;
+        }
+
+        #live-acc-btn, #demo-acc-btn, .live-acc-label, .demo-acc-label:hover {
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -53,37 +72,37 @@
 
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Support">
-                    <i class="fas fa-question-circle"></i>
+                    <i class="far fa-question-circle"></i>
                 </a>
             </li>
             <li>
                 <a href="javascript:void(0);" class="btn-trade" data-tab="trades" data-toggle="tooltip" data-placement="right" title="Trade">
-                    <i class="fas fa-signal"></i>
+                    <i class="far fa-signal"></i>
                 </a>
             </li>
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Demo">
-                    <i class="fas fa-graduation-cap"></i>
+                    <i class="far fa-graduation-cap"></i>
                 </a>
             </li>
             <li>
                 <a href="javascript:void(0);" class="btn-account" data-tab="account" data-toggle="tooltip" data-placement="right" title="Account">
-                    <i class="fas fa-user"></i>
+                    <i class="far fa-user"></i>
                 </a>
             </li>
             <li>
                 <a href="#" data-toggle="tooltip" data-placement="right" title="Analytics">
-                    <i class="fas fa-chart-pie"></i>
+                    <i class="far fa-chart-pie"></i>
                 </a>
             </li>
             <li>
                 <a href="javascript:void(0);" class="btn-market" data-tab="market" data-toggle="tooltip" data-placement="right" title="Market">
-                    <i class="fas fa-funnel-dollar"></i>
+                    <i class="far fa-funnel-dollar"></i>
                 </a>
             </li>
             <li>
                 <a href="{{url('logout')}}" data-toggle="tooltip" data-placement="right" title="Logout">
-                    <i class="fas fa-sign-out-alt"></i>
+                    <i class="far fa-sign-out-alt"></i>
                 </a>
             </li>
         </ul>
@@ -115,20 +134,78 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" href="#">Page</a>--}}
-{{--                        </li>--}}
                     </ul>
-                    <div>
-                        <a href="javascript:void(0);" class="referral-link px-4 py-2 mr-1" title="Get Referral Link" data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;"><i class="fal fa-clipboard mr-1"></i>Get Referral Link</a>
-                        <a class="btn bg-black text-white px-4 py-2 mr-1" id="account-balance" style="font-family: med;font-size: 14px;">Balance: ${{auth()->user()->account_balance}}</a>
-                        <button class="btn btn-deposit btn-success text-white px-4 py-2 mr-1" data-tab="deposit"
-                                style="font-family: med; font-size: 14px;">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <a href="javascript:void(0);" class="referral-link px-4 py-2 mr-1" title="Get Referral Link"
+                           data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;">
+                            <i class="fal fa-clipboard mr-1"></i>Get Referral Link
+                        </a>
+
+                        <div class="dropdown mr-1 p-0">
+                            <button class="btn bg-black d-flex justify-content-between align-items-center btn-drp-account p-0"
+                                    type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" style="padding: 4.5px 15px !important;">
+                                <div class="pr-1">
+                                    <span><i class="fa fa-location-arrow text-success"></i></span>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="text-left px-3">
+                                            <small class="m-0 d-block text-secondary" style="font-size: 11px; font-family: med;">{{(auth()->user()->is_demo_account) ? "Demo Account" : "Live Account"}}</small>
+                                            <h6 class="m-0 text-white" id="balance" style="font-family: bold;">${{sprintf("%0.2f", (auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance)}}</h6>
+                                        </div>
+                                        <span class="pl-1 text-white"><i class="far fa-chevron-down" id="account-icon" style="font-size: 13px;"></i></span>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="dropdown-menu bg-black shadow p-0" style="min-width: 250px;" aria-labelledby="dropdownMenuButton">
+                                <div class="px-3 py-2">
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <small class="text-secondary mr-2 d-block">Name:</small>
+                                        <p class="m-0 text-white text-capitalize" style="font-size: 14px; font-family: med;">{{auth()->user()->name}}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <small class="text-secondary mr-2 d-block">Email:</small>
+                                        <span class="m-0 text-success">{{auth()->user()->email}}</span>
+                                    </div>
+                                </div>
+                                <hr style="background: #4f4e4d; margin: 0;">
+
+                                <div class="d-flex justify-content-start px-3 py-2">
+                                    <div>
+                                        <label id="live-acc-btn" data-type="live"><i class="far fa-check"></i></label>
+                                    </div>
+                                    <div class="ml-2">
+                                        <span class="live-acc-label text-white" data-type="live" style="font-size: 15px; font-family: med;" for="live-acc-btn">Live Account</span>
+                                        <span class="text-secondary d-block" id="live-balance" style="font-family: bold;">${{sprintf("%0.2f", auth()->user()->account_balance)}}</span>
+                                    </div>
+                                </div>
+                                <hr style="background: #4f4e4d; margin: 0;">
+                                <div class="d-flex justify-content-start px-3 py-2">
+                                    <div>
+                                        <label id="demo-acc-btn" data-type="demo"><i class="far fa-check"></i></label>
+                                    </div>
+                                    <div class="ml-2">
+                                        <span class="demo-acc-label text-white" data-type="demo" style="font-size: 15px; font-family: med;" for="demo-acc-btn">Demo Account</span>
+                                        <span class="text-secondary d-block" id="demo-balance" style="font-family: bold;">${{sprintf("%0.2f", auth()->user()->demo_account_balance)}}</span>
+                                    </div>
+                                </div>
+                                <hr style="background: #4f4e4d; margin: 0;">
+                                <div class="px-3 py-2">
+                                    <a href="{{url('logout')}}" class="text-danger">
+                                        <i class="far fa-sign-out-alt text-danger mr-1"></i>Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-deposit btn-success text-white mr-1 p-0" data-tab="deposit"
+                                style="font-family: med; font-size: 14px; padding: 11px 15px !important;">
                             <i class="fa fa-plus mr-1" style="font-size: 13px;"></i>Deposit
                         </button>
-                        <button class="btn btn-withdrawal btn-secondary text-white px-4 py-2" data-tab="withdrawal"
-                                style="font-family: med;font-size: 14px;">
-                            Withdrawal
+
+                        <button class="btn btn-withdrawal btn-secondary text-white p-0" data-tab="withdrawal"
+                                style="font-family: med;font-size: 14px; padding: 11px 15px !important;">Withdrawal
                         </button>
                     </div>
                 </div>
@@ -186,14 +263,78 @@
         }
     });
 
+    $(".dropdown-menu").click(function(e){
+        e.stopPropagation();
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
 
     $(document).ready(function () {
+        let is_demo = {{auth()->user()->is_demo_account}};
+        if (is_demo) {
+            $("#live-acc-btn").css("border", "1px solid #ffffff");
+            $("#live-acc-btn").css("background", "transparent");
+            $("#demo-acc-btn").css("border", "1px solid #0275d8");
+            $("#demo-acc-btn").css("background", "#0275d8");
+            $("#demo-acc-btn i").css("color", "#ffffff");
+        } else {
+            $("#demo-acc-btn").css("border", "1px solid #ffffff");
+            $("#demo-acc-btn").css("background", "transparent");
+            $("#live-acc-btn").css("border", "1px solid #0275d8");
+            $("#live-acc-btn").css("background", "#0275d8");
+            $("#live-acc-btn i").css("color", "#ffffff");
+        }
+
+        $("#live-acc-btn, .live-acc-label, #demo-acc-btn, .demo-acc-label").on('click', function () {
+            let type = $(this).data('type');
+            if (is_demo && type == "demo") {
+                return;
+            }
+
+            if (!is_demo && type == "live") {
+                return;
+            }
+
+            $.ajax({
+                url: "{{url('change-user-account')}}",
+                type: "POST",
+                data: JSON.stringify({
+                    type: type,
+                }),
+                cache: false,
+                processData: false,
+                contentType: "application/json; charset=UTF-8",
+                success: function (res) {
+                    if (res.success == 1) {
+                        window.location.reload();
+                    } else {
+                        toast(res.message, "error");
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert(textStatus+' : '+errorThrown);
+                }
+            });
+        });
+
+        // $("#demo-acc-btn, .demo-acc-label").on('click', function () {
+        //     alert("demo account")
+        // });
 
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
+        });
+
+        $(".btn-drp-account").on('click', function () {
+           if ($("#account-icon").hasClass("fa-chevron-down")) {
+               $("#account-icon").removeClass("fa-chevron-down");
+               $("#account-icon").addClass("fa-chevron-up");
+           } else {
+               $("#account-icon").removeClass("fa-chevron-up");
+               $("#account-icon").addClass("fa-chevron-down");
+           }
         });
 
         $(".btn-deposit, .btn-withdrawal, .btn-account, .btn-trade, .btn-market, .btn-referral").on('click', function () {
@@ -285,7 +426,13 @@
             contentType: "application/json; charset=UTF-8",
             success: function (res) {
                 if (res.success == 1) {
-                    $('#account-balance').html('Balance: $' + res.data);
+                    if (res.data.is_demo_account) {
+                        $('#balance').html(parseFloat(res.data.demo_account_balance).toFixed(2));
+                        $('#demo-balance').html(parseFloat(res.data.demo_account_balance).toFixed(2));
+                    } else {
+                        $('#balance').html(parseFloat(res.data.account_balance).toFixed(2));
+                        $('#live-balance').html(parseFloat(res.data.account_balance).toFixed(2));
+                    }
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
