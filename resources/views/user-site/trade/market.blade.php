@@ -148,6 +148,10 @@
 
 <script>
     var root;
+    var is_pump = false;
+    var pump_type = '';
+    var pump_start = '';
+    var pump_end = '';
     $("#history-box").hide();
 
     $(document).ready(function () {
@@ -156,8 +160,49 @@
         $("#chart-div").hide();
         root = am5.Root.new("container");
 
+        function getCoinPump() {
+            $.ajax({
+                url: "{{url('trading/get-coin-pump')}}" + "/" + $("#coin").val(),
+                type: "GET",
+                cache: false,
+                processData: false,
+                contentType: "application/json; charset=UTF-8",
+                success: function (res) {
+                    if (res.success == true) {
+                        pump_type = res.data['pump_type'];
+                        pump_start = res.data['start_date_time'];
+                        pump_end = res.data['end_date_time'];
+
+                        const current_date_time = formatDateTime(new Date());
+
+                        if (pump_start <= current_date_time && pump_end >= current_date_time) {
+                            is_pump = true;
+                        } else {
+                            is_pump = false;
+                        }
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert(textStatus+' : '+errorThrown);
+                }
+            });
+        }
+
+       setInterval(getCoinPump, 10000);
+
         loadChart();
     });
+
+    function formatDateTime(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding 1 to month because it's zero-based
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
 
     function loadTradingHistory(coin_id) {
         $('#trading-data-table').DataTable({
@@ -402,48 +447,6 @@
                 })
             );
 
-            // Add scrollbar
-            // -------------------------------------------------------------------------------
-            // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-            // var scrollbar = mainPanel.set(
-            //     "scrollbarX",
-            //     am5xy.XYChartScrollbar.new(root, {
-            //         orientation: "horizontal",
-            //         height: 50
-            //     })
-            // );
-            // stockChart.toolsContainer.children.push(scrollbar);
-
-            // var sbDateAxis = scrollbar.chart.xAxes.push(
-            //     am5xy.GaplessDateAxis.new(root, {
-            //         baseInterval: {
-            //             timeUnit: date_axis_time_value,
-            //             count: 1,
-            //         },
-            //         renderer: am5xy.AxisRendererX.new(root, {})
-            //     })
-            // );
-
-            // var sbValueAxis = scrollbar.chart.yAxes.push(
-            //     am5xy.ValueAxis.new(root, {
-            //         renderer: am5xy.AxisRendererY.new(root, {})
-            //     })
-            // );
-
-            // var sbSeries = scrollbar.chart.series.push(
-            //     am5xy.LineSeries.new(root, {
-            //         valueYField: "Close",
-            //         valueXField: "Date",
-            //         xAxis: sbDateAxis,
-            //         yAxis: sbValueAxis
-            //     })
-            // );
-            //
-            // sbSeries.fills.template.setAll({
-            //     visible: true,
-            //     fillOpacity: 0.3
-            // });
-
             // Set up series type switcher
             // -------------------------------------------------------------------------------
             // https://www.amcharts.com/docs/v5/charts/stock/toolbar/series-type-control/
@@ -642,7 +645,7 @@
                 var high = 0;
 
                 let loop_var = date_axis_time_value == 'minute' ? coin_data.diff_in_min : coin_data.diff_in_min * 60;
-                loop_var = 200;
+                loop_var = 300;
                 for (var i = 0; i < loop_var; i++) {
                     var newDate = new Date(firstDate);
                     if (date_axis_time_value == 'minute') {
@@ -653,7 +656,7 @@
 
 
                     // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
-                    value += Math.round((Math.random() < 0.49 ? 1 : -1) * Math.random() * 10);
+                    value += Math.round((Math.random() < 0.49 ? .5 : -.5) * Math.random() * 10);
                     // }
 
                     // while(open >= coin_data.coin_min_price && open <= coin_data.coin_max_price) {
@@ -690,78 +693,6 @@
             // update data
             var previousDate;
 
-            // function updateChart(interval) {
-            //     setInterval(function () {
-            //         var valueSeries = stockChart.get("stockSeries");
-            //         var date = Date.now();
-            //         var lastDataObject = valueSeries.data.getIndex(valueSeries.data.length - 1);
-            //         if (lastDataObject) {
-            //             var previousDate = lastDataObject.Date;
-            //             var previousValue = lastDataObject.Close;
-            //             value = am5.math.round(previousValue + (Math.random() < 0.5 ? 1 : -1) * Math.random() * 2, 2);
-            //
-            //             var high = lastDataObject.High;
-            //             var low = lastDataObject.Low;
-            //             var open = lastDataObject.Open;
-            //
-            //             if (am5.time.checkChange(date, previousDate, date_axis_time_value)) {
-            //                 open = value;
-            //                 high = value;
-            //                 low = value;
-            //
-            //                 var dObj1 = {
-            //                     Date: date,
-            //                     Close: value,
-            //                     Open: value,
-            //                     Low: value,
-            //                     High: value
-            //                 };
-            //
-            //                 valueSeries.data.push(dObj1);
-            //                 // sbSeries.data.push(dObj1);
-            //                 previousDate = date;
-            //             } else {
-            //                 if (value > high) {
-            //                     high = value;
-            //                 }
-            //
-            //                 if (value < low) {
-            //                     low = value;
-            //                 }
-            //
-            //                 var dObj2 = {
-            //                     Date: date,
-            //                     Close: value,
-            //                     Open: open,
-            //                     Low: low,
-            //                     High: high
-            //                 };
-            //
-            //                 valueSeries.data.setIndex(valueSeries.data.length - 1, dObj2);
-            //                 // sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
-            //             }
-            //             // update current value
-            //             if (currentLabel) {
-            //                 currentValueDataItem.animate({
-            //                     key: "value",
-            //                     to: value,
-            //                     duration: 500,
-            //                     easing: am5.ease.out(am5.ease.cubic)
-            //                 });
-            //                 currentLabel.set("text", stockChart.getNumberFormatter().format(value));
-            //                 var bg = currentLabel.get("background");
-            //                 if (bg) {
-            //                     if (value < open) {
-            //                         bg.set("fill", root.interfaceColors.get("negative"));
-            //                     } else {
-            //                         bg.set("fill", root.interfaceColors.get("positive"));
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }, interval);
-            // }
-
             // let pump = true;
             setInterval(function () {
                 if (autoUpdate) {
@@ -772,11 +703,15 @@
                         var previousDate = lastDataObject.Date;
                         var previousValue = lastDataObject.Close;
 
-                        // if (pump) {
-                        //     value = am5.math.round(previousValue + (.5) * Math.random() * 1, 4);
-                        // } else {
-                            value = am5.math.round(previousValue + (Math.random() < 0.5 ? 1 : -1) * Math.random() * 2, 2);
-                        // }
+                        if (is_pump && pump_type == 'up') {
+                            value = am5.math.round(previousValue + (.25) * Math.random() * 1, 4);
+                        }
+                        else if (is_pump && pump_type == 'down') {
+                            value = am5.math.round(previousValue - (.25) * Math.random() * 1, 4);
+                        }
+                        else {
+                            value = am5.math.round(previousValue + (Math.random() < 0.5 ? .25 : -.25) * Math.random() * 2, 4);
+                        }
 
 
                         var high = lastDataObject.High;

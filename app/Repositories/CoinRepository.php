@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CoinInterface;
 use App\Models\Coin;
+use App\Models\CoinPricePump;
 use App\Models\Deposit;
 use App\Models\UserAccount;
 use App\Models\Withdraw;
@@ -37,6 +38,32 @@ class CoinRepository implements CoinInterface
             $res["status"] = true;
         } catch (\Exception $e) {
             DB::rollBack();
+        }
+
+        return $res;
+    }
+
+    public function storeCoinPump(Request $request): array
+    {
+        $res["status"] = false;
+        try {
+            DB::beginTransaction();
+
+            # deleting previous pump(s) created
+            $coinPump = CoinPricePump::where('coin_id', $request->coin_id)->delete();
+
+                $coin = new CoinPricePump();
+                $coin->coin_id = $request->coin_id;
+                $coin->pump_type = $request->pump_type;
+                $coin->start_date_time = $request->start_date_time;
+                $coin->end_date_time = $request->end_date_time;
+                $coin->save();
+
+            DB::commit();
+            $res["status"] = true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
         }
 
         return $res;

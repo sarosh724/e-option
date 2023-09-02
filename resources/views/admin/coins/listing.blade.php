@@ -20,13 +20,13 @@
         <table id="data-table" class="table table-grid table-striped table-sm">
             <thead class="bg-secondary">
             <tr>
-                <th width="15%">Name</th>
+                <th width="20%">Name</th>
                 <th width="10%">Price</th>
                 <th width="15%">Minimum Price</th>
                 <th width="15%">Maximum Price</th>
-                <th width="15%">Buy Profit (%)</th>
-                <th width="15%">Sell Profit (%)</th>
-                <th width="15%">Actions</th>
+                <th width="10%">Buy Profit (%)</th>
+                <th width="10%">Sell Profit (%)</th>
+                <th width="20%">Actions</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -90,6 +90,16 @@
         $("#data-table").on('click', '.btn-edit', function() {
             var id = $(this).data('id');
             open_modal('{{url('admin/coins/coin-modal')}}' + '/' + id);
+        });
+
+        $("#data-table").on('click', '.btn-create-pump', function() {
+            var id = $(this).data('id');
+            open_modal('{{url('admin/coins/pump-modal')}}' + '/' + id);
+        });
+
+        $("#data-table").on('click', '.btn-view-pump', function() {
+            var id = $(this).data('id');
+            open_modal('{{url('admin/coins/view-pump-modal')}}' + '/' + id);
         });
     </script>
 @stop
