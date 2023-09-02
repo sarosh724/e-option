@@ -119,16 +119,50 @@
 {{--                            <a class="nav-link" href="#">Page</a>--}}
 {{--                        </li>--}}
                     </ul>
-                    <div>
-                        <a href="javascript:void(0);" class="referral-link px-4 py-2 mr-1" title="Get Referral Link" data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;"><i class="fal fa-clipboard mr-1"></i>Get Referral Link</a>
-                        <a class="btn bg-black text-white px-4 py-2 mr-1" style="font-family: med;font-size: 14px;">Balance: ${{auth()->user()->account_balance}}</a>
-                        <button class="btn btn-deposit btn-success text-white px-4 py-2 mr-1" data-tab="deposit"
-                                style="font-family: med; font-size: 14px;">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <a href="javascript:void(0);" class="referral-link px-4 py-2 mr-1" title="Get Referral Link"
+                           data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;">
+                            <i class="fal fa-clipboard mr-1"></i>Get Referral Link
+                        </a>
+
+                        <div class="dropdown mr-1 p-0">
+                            <button class="btn bg-black d-flex justify-content-between align-items-center btn-drp-account p-0"
+                                    type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" style="padding: 4.5px 15px !important;">
+                                <div class="pr-1">
+                                    <span><i class="fa fa-location-arrow text-success"></i></span>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="text-left px-3">
+                                            <small class="m-0 d-block text-secondary" style="font-size: 11px; font-family: med;">{{(auth()->user()->is_demo_account) ? "Demo" : "Live"}}</small>
+                                            <h6 class="m-0 text-white" style="font-family: bold;">${{(auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance}}</h6>
+                                        </div>
+                                        <span class="pl-1 text-white"><i class="far fa-chevron-down" id="account-icon" style="font-size: 13px;"></i></span>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="dropdown-menu bg-black" aria-labelledby="dropdownMenuButton">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+
+                                    </div>
+                                    <div>
+
+                                    </div>
+                                </div>
+                                <a class="dropdown-item text-white" href="#">Something else here</a>
+                            </div>
+                        </div>
+{{--                        <a class="btn bg-black text-white px-4 py-2 mr-1" style="font-family: med;font-size: 14px;">Balance: ${{auth()->user()->account_balance}}</a>--}}
+
+                        <button class="btn btn-deposit btn-success text-white mr-1 p-0" data-tab="deposit"
+                                style="font-family: med; font-size: 14px; padding: 11px 15px !important;">
                             <i class="fa fa-plus mr-1" style="font-size: 13px;"></i>Deposit
                         </button>
-                        <button class="btn btn-withdrawal btn-secondary text-white px-4 py-2" data-tab="withdrawal"
-                                style="font-family: med;font-size: 14px;">
-                            Withdrawal
+
+                        <button class="btn btn-withdrawal btn-secondary text-white p-0" data-tab="withdrawal"
+                                style="font-family: med;font-size: 14px; padding: 11px 15px !important;">Withdrawal
                         </button>
                     </div>
                 </div>
@@ -193,6 +227,17 @@
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
+        });
+
+        $(".btn-drp-account").on('click', function () {
+            console.log('sdsd');
+           if ($("#account-icon").hasClass("fa-chevron-down")) {
+               $("#account-icon").removeClass("fa-chevron-down");
+               $("#account-icon").addClass("fa-chevron-up");
+           } else {
+               $("#account-icon").removeClass("fa-chevron-up");
+               $("#account-icon").addClass("fa-chevron-down");
+           }
         });
 
         $(".btn-deposit, .btn-withdrawal, .btn-account, .btn-trade, .btn-market, .btn-referral").on('click', function () {

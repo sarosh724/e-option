@@ -8,4 +8,5 @@ interface SettingInterface
 {
     public function show();
     public function store(Request $request);
+    public function getDemoAmount();
 }
