@@ -8,4 +8,5 @@ interface CoinInterface
 {
     public function coinListing(Request $request, $id);
     public function storeCoin(Request $request);
+    public function storeCoinPump(Request $request);
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\CoinInterface;
 use App\Jobs\ProcessCoinRate;
 use App\Models\Coin;
+use App\Models\CoinPricePump;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -48,9 +49,11 @@ class CoinController extends Controller
                 })
                 ->addColumn('actions', function ($coin) {
                     return '<a href="javascript:void(0);" data-id="' . $coin->id . '"
-                    class="btn btn-sm btn-create-pump btn-info-outline mr-1" ><i class="fas fa-edit mr-1"></i>Create Pump</a>
+                    class="btn btn-sm btn-create-pump btn-dark mr-1" ><i class="fas fa-bolt mr-1"></i>Create Pump</a>
                     <a href="javascript:void(0);" data-id="' . $coin->id . '"
-                    class="btn btn-sm btn-edit btn-primary mr-1" ><i class="fas fa-edit mr-1"></i>Edit</a>';
+                    class="btn btn-sm btn-view-pump btn-primary mr-1" ><i class="fas fa-eye mr-1"></i>View Pump</a>
+                    <a href="javascript:void(0);" data-id="' . $coin->id . '"
+                    class="btn btn-sm btn-edit btn-secondary mr-1" ><i class="fas fa-edit mr-1"></i>Edit</a>';
                 })
                 ->rawColumns(['actions'])
                 ->make(true);
@@ -185,4 +188,52 @@ class CoinController extends Controller
 
         return response()->json($res);
     }
+
+    public function coinPumpModal($coinId)
+    {
+        $res["title"] = 'Pump Coin Price';
+        $res["html"] = view('admin.coins.pump.form', compact(['coinId']))->render();
+
+        return response()->json($res);
+    }
+
+    public function viewCoinPumpModal($coinId)
+    {
+        $pump = CoinPricePump::with('coin')->where('coin_id', $coinId)->first();
+//        dd($pump);
+        $res["title"] = 'Coin Pump';
+        $res["html"] = view('admin.coins.pump.view', compact(['pump']))->render();
+
+        return response()->json($res);
+    }
+
+    public function storeCoinPump(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'coin_id' => 'required',
+            'pump_type' => 'required',
+            'start_date_time' => 'required',
+            'end_date_time' => 'required'
+        ]);
+        if (!$validator->fails()) {
+            $res = $this->coinInterface->storeCoinPump($request);
+            if ($res) {
+                $msg ='Coin Pump Created';
+
+                return redirect('admin/coins')->with('success', $msg);
+            } else {
+                return redirect('admin/coins')->with('error', 'Something went wrong');
+            }
+        } else {
+            return redirect(url('admin/coins'))->withErrors($validator->errors());
+        }
+    }
+
+
+    public function getCoinPump(Request $request, $coinId){
+        $pump = CoinPricePump::where('coin_id', $coinId)->first();
+
+        return response()->json(['success' => $pump ? 1 : 0, 'data' => $pump]);
+    }
+
 }

@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('trading')->group(function () {
         Route::get('/', [SiteController::class, 'trading']);
         Route::get('/coin-rate/{coinId}', [CoinController::class, 'getCoinRateData']);
+        Route::get('/get-coin-pump/{coinId}', [CoinController::class, 'getCoinPump']);
         Route::post('/user-trade', [SiteController::class, 'storeUserTrade']);
         Route::get('/history/{id}', [SiteController::class, 'getTradingHistory']);
         Route::get('/history/{id}/{coinId}', [SiteController::class, 'getTradingHistory']);
@@ -113,6 +114,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
             Route::get('/coin-modal/{id}', [CoinController::class, 'coinModal']);
             Route::post('/store', [CoinController::class, 'store']);
             Route::get('/generate-data/{id}/{date}', [CoinController::class, 'generateCoinRateData']);
+            Route::get('/pump-modal/{coinId}', [CoinController::class, 'coinPumpModal']);
+            Route::get('/view-pump-modal/{coinId}', [CoinController::class, 'viewCoinPumpModal']);
+            Route::post('/pump-store', [CoinController::class, 'storeCoinPump']);
         });
 
     Route::prefix('payment-methods')
