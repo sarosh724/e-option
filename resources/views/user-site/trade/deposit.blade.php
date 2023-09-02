@@ -3,6 +3,11 @@
 {{--        <h6 class="m-0 font-weight-bold">Create Deposit</h6>--}}
 {{--    </div>--}}
     <div class="card-body bg-black">
+        @if(auth()->user()->is_demo_account)
+            <div class="alert alert-danger">
+                <b>Note:</b><span class="ml-1">Sorry, you cannot <b>Deposit</b> into demo account.</span>
+            </div>
+        @endif
         <form method="post" name="deposit-form" id="deposit-form" action="{{url('deposit')}}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="user_id" value="{{auth()->id()}}">
@@ -54,7 +59,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-success px-4" style="font-family: med;" type="submit">Deposit</button>
+                <button class="btn btn-success px-4" style="font-family: med;" type="submit" {{(auth()->user()->is_demo_account) ? "disabled" : ""}}>Deposit</button>
             </div>
         </form>
     </div>

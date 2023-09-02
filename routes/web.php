@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/trade', [SiteController::class, 'trade']);
     Route::get('/trade/{tab}', [SiteController::class, 'trade']);
     Route::get('/get-account-balance', [SiteController::class, 'getAccountBalance']);
+    Route::post('/change-user-account', [SiteController::class, 'changeUserAccount']);
 
     Route::prefix('trading')->group(function () {
         Route::get('/', [SiteController::class, 'trading']);
