@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\SettingInterface;
 use App\Models\Referral;
 use App\Models\Setting;
 use App\Models\User;
@@ -14,6 +15,13 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
+    protected SettingInterface $settingInterface;
+
+    public function __construct(SettingInterface $settingInterface)
+    {
+        $this->settingInterface = $settingInterface;
+    }
+
     public function redirectToGoogle()
     {
         return Socialite::driver('google')
@@ -116,6 +124,7 @@ class AuthController extends Controller
                 $newUser->password = password_hash($request->password, PASSWORD_DEFAULT);
                 $newUser->name = $request->name;
                 $newUser->country = $request->country;
+                $newUser->demo_account_balance = $this->settingInterface->getDemoAmount();
                 $newUser->save();
 
                 if ($request->refCode) {
