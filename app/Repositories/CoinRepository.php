@@ -52,14 +52,12 @@ class CoinRepository implements CoinInterface
             # deleting previous pump(s) created
             $coinPump = CoinPricePump::where('coin_id', $request->coin_id)->delete();
 
-            if($coinPump) {
                 $coin = new CoinPricePump();
                 $coin->coin_id = $request->coin_id;
                 $coin->pump_type = $request->pump_type;
                 $coin->start_date_time = $request->start_date_time;
                 $coin->end_date_time = $request->end_date_time;
                 $coin->save();
-            }
 
             DB::commit();
             $res["status"] = true;

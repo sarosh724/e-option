@@ -645,7 +645,7 @@
                 var high = 0;
 
                 let loop_var = date_axis_time_value == 'minute' ? coin_data.diff_in_min : coin_data.diff_in_min * 60;
-                loop_var = 200;
+                loop_var = 300;
                 for (var i = 0; i < loop_var; i++) {
                     var newDate = new Date(firstDate);
                     if (date_axis_time_value == 'minute') {
