@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Coin;
+use App\Models\User;
 use Carbon\Carbon;
 
 function showDateTime($datetime)

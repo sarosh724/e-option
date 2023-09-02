@@ -225,6 +225,7 @@
     });
 
     $(document).ready(function () {
+
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
@@ -317,6 +318,24 @@
             timer: 3000,
             background: '#6c757d',
             color: '#ffffff'
+        });
+    }
+
+    function setAccountBalance(){
+        $.ajax({
+            url: "{{url('get-account-balance')}}",
+            type: "GET",
+            cache: false,
+            processData: false,
+            contentType: "application/json; charset=UTF-8",
+            success: function (res) {
+                if (res.success == 1) {
+                    $('#account-balance').html('Balance: $' + res.data);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert(textStatus+' : '+errorThrown);
+            }
         });
     }
 

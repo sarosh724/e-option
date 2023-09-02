@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-1 col-lg-1">
+    <div class="col-md-1 col-lg-1 w-25">
         <select class="form-control bg-dark" name="coin" id="coin" onChange="loadChart()">
             <option value="">coin</option>
             @foreach(getCoins() as $coin)
@@ -7,7 +7,7 @@
             @endforeach
         </select>
     </div>
-    <div class="col-md-1 col-lg-1">
+    <div class="col-md-1 col-lg-1 w-25">
         <select class="form-control bg-dark" name="time-type" id="time-type" onChange="loadChart()">
             <option value="">filter</option>
             <option value="second">Second</option>
@@ -36,6 +36,8 @@
                     <tr>
                         <th width="20%">Coin</th>
                         <th width="20%">Amount Invested</th>
+                        <th width="20%">Starting Price</th>
+                        <th width="20%">Closing Price</th>
                         <th width="20%">Time Period</th>
                         <th width="20%">Type</th>
                         <th width="20%">Result</th>
@@ -150,11 +152,12 @@
     $("#history-box").hide();
 
     $(document).ready(function () {
+        var coin_id = $('#coin option:eq(1)').prop('selected', true);
         $("#time-type").hide();
         $("#chart-div").hide();
         root = am5.Root.new("container");
 
-        // loadChart();
+        loadChart();
     });
 
     function loadTradingHistory(coin_id) {
@@ -170,6 +173,8 @@
             columns: [
                 {data: 'coin', name: 'coin'},
                 {data: 'amount_invested', name: 'amount_invested'},
+                {data: 'starting_price', name: 'starting_price'},
+                {data: 'closing_price', name: 'closing_price'},
                 {data: 'time_period', name: 'time_period'},
                 {data: 'type', name: 'type'},
                 {data: 'result', name: 'result'}
@@ -183,7 +188,7 @@
 
         root.dispose();
 
-        var coin_id = $("#coin").val();
+        coin_id = $("#coin").val();
         let coin_data = [];
         $("#time-type").fadeIn();
         $("#chart-div").fadeIn();
@@ -220,7 +225,7 @@
             // Set global number format
             // -------------------------------------------------------------------------------
             // https://www.amcharts.com/docs/v5/concepts/formatters/formatting-numbers/
-            root.numberFormatter.set("numberFormat", "#,###.00");
+            root.numberFormatter.set("numberFormat", "#,###.0000");
 
             // Create a main stock panel (chart)
             // -------------------------------------------------------------------------------
@@ -243,8 +248,8 @@
                     }),
                     extraMin: 0.1, // adds some space for main series
                     tooltip: am5.Tooltip.new(root, {}),
-                    numberFormat: "#,###.00",
-                    extraTooltipPrecision: 2
+                    numberFormat: "#,###.0000",
+                    extraTooltipPrecision: 4
                 })
             );
 
@@ -335,7 +340,7 @@
                 cornerRadiusTR: 0,
                 cornerRadiusBR: 0,
                 cornerRadiusBL: 0,
-                fill: '#dc3545',
+                fill: '#28a745',
                 fillOpacity: 0.7
             })
             var sell = mainPanel.plotContainer.children.push(am5.Button.new(root, {
@@ -357,7 +362,7 @@
                 cornerRadiusTR: 0,
                 cornerRadiusBR: 0,
                 cornerRadiusBL: 0,
-                fill: '#28a745',
+                fill: '#dc3545',
                 fillOpacity: 0.7
             })
 
@@ -403,44 +408,44 @@
             // Add scrollbar
             // -------------------------------------------------------------------------------
             // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-            var scrollbar = mainPanel.set(
-                "scrollbarX",
-                am5xy.XYChartScrollbar.new(root, {
-                    orientation: "horizontal",
-                    height: 50
-                })
-            );
-            stockChart.toolsContainer.children.push(scrollbar);
+            // var scrollbar = mainPanel.set(
+            //     "scrollbarX",
+            //     am5xy.XYChartScrollbar.new(root, {
+            //         orientation: "horizontal",
+            //         height: 50
+            //     })
+            // );
+            // stockChart.toolsContainer.children.push(scrollbar);
 
-            var sbDateAxis = scrollbar.chart.xAxes.push(
-                am5xy.GaplessDateAxis.new(root, {
-                    baseInterval: {
-                        timeUnit: date_axis_time_value,
-                        count: 1,
-                    },
-                    renderer: am5xy.AxisRendererX.new(root, {})
-                })
-            );
+            // var sbDateAxis = scrollbar.chart.xAxes.push(
+            //     am5xy.GaplessDateAxis.new(root, {
+            //         baseInterval: {
+            //             timeUnit: date_axis_time_value,
+            //             count: 1,
+            //         },
+            //         renderer: am5xy.AxisRendererX.new(root, {})
+            //     })
+            // );
 
-            var sbValueAxis = scrollbar.chart.yAxes.push(
-                am5xy.ValueAxis.new(root, {
-                    renderer: am5xy.AxisRendererY.new(root, {})
-                })
-            );
+            // var sbValueAxis = scrollbar.chart.yAxes.push(
+            //     am5xy.ValueAxis.new(root, {
+            //         renderer: am5xy.AxisRendererY.new(root, {})
+            //     })
+            // );
 
-            var sbSeries = scrollbar.chart.series.push(
-                am5xy.LineSeries.new(root, {
-                    valueYField: "Close",
-                    valueXField: "Date",
-                    xAxis: sbDateAxis,
-                    yAxis: sbValueAxis
-                })
-            );
-
-            sbSeries.fills.template.setAll({
-                visible: true,
-                fillOpacity: 0.3
-            });
+            // var sbSeries = scrollbar.chart.series.push(
+            //     am5xy.LineSeries.new(root, {
+            //         valueYField: "Close",
+            //         valueXField: "Date",
+            //         xAxis: sbDateAxis,
+            //         yAxis: sbValueAxis
+            //     })
+            // );
+            //
+            // sbSeries.fills.template.setAll({
+            //     visible: true,
+            //     fillOpacity: 0.3
+            // });
 
             // Set up series type switcher
             // -------------------------------------------------------------------------------
@@ -522,8 +527,6 @@
                 let total = (Number(amount) + Number(profit)).toFixed(2);
                 $("#profit").val(total);
 
-
-                console.log();
             });
 
             $(".btn_trade_period").on('click', function () {
@@ -627,7 +630,8 @@
                         } else {
                             toast(res.message, "info");
                         }
-                        window.location.reload();
+                        loadTradingHistory(coin_id);
+                        setAccountBalance();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         alert(textStatus+' : '+errorThrown);
@@ -686,83 +690,84 @@
 
             // set data to all series
             valueSeries.data.setAll(data);
-            sbSeries.data.setAll(data);
+            // sbSeries.data.setAll(data);
 
             // update data
             var previousDate;
 
-            function updateChart(interval) {
-                setInterval(function () {
-                    var valueSeries = stockChart.get("stockSeries");
-                    var date = Date.now();
-                    var lastDataObject = valueSeries.data.getIndex(valueSeries.data.length - 1);
-                    if (lastDataObject) {
-                        var previousDate = lastDataObject.Date;
-                        var previousValue = lastDataObject.Close;
-                        value = am5.math.round(previousValue + (Math.random() < 0.5 ? 1 : -1) * Math.random() * 2, 2);
+            // function updateChart(interval) {
+            //     setInterval(function () {
+            //         var valueSeries = stockChart.get("stockSeries");
+            //         var date = Date.now();
+            //         var lastDataObject = valueSeries.data.getIndex(valueSeries.data.length - 1);
+            //         if (lastDataObject) {
+            //             var previousDate = lastDataObject.Date;
+            //             var previousValue = lastDataObject.Close;
+            //             value = am5.math.round(previousValue + (Math.random() < 0.5 ? 1 : -1) * Math.random() * 2, 2);
+            //
+            //             var high = lastDataObject.High;
+            //             var low = lastDataObject.Low;
+            //             var open = lastDataObject.Open;
+            //
+            //             if (am5.time.checkChange(date, previousDate, date_axis_time_value)) {
+            //                 open = value;
+            //                 high = value;
+            //                 low = value;
+            //
+            //                 var dObj1 = {
+            //                     Date: date,
+            //                     Close: value,
+            //                     Open: value,
+            //                     Low: value,
+            //                     High: value
+            //                 };
+            //
+            //                 valueSeries.data.push(dObj1);
+            //                 // sbSeries.data.push(dObj1);
+            //                 previousDate = date;
+            //             } else {
+            //                 if (value > high) {
+            //                     high = value;
+            //                 }
+            //
+            //                 if (value < low) {
+            //                     low = value;
+            //                 }
+            //
+            //                 var dObj2 = {
+            //                     Date: date,
+            //                     Close: value,
+            //                     Open: open,
+            //                     Low: low,
+            //                     High: high
+            //                 };
+            //
+            //                 valueSeries.data.setIndex(valueSeries.data.length - 1, dObj2);
+            //                 // sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
+            //             }
+            //             // update current value
+            //             if (currentLabel) {
+            //                 currentValueDataItem.animate({
+            //                     key: "value",
+            //                     to: value,
+            //                     duration: 500,
+            //                     easing: am5.ease.out(am5.ease.cubic)
+            //                 });
+            //                 currentLabel.set("text", stockChart.getNumberFormatter().format(value));
+            //                 var bg = currentLabel.get("background");
+            //                 if (bg) {
+            //                     if (value < open) {
+            //                         bg.set("fill", root.interfaceColors.get("negative"));
+            //                     } else {
+            //                         bg.set("fill", root.interfaceColors.get("positive"));
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }, interval);
+            // }
 
-                        var high = lastDataObject.High;
-                        var low = lastDataObject.Low;
-                        var open = lastDataObject.Open;
-
-                        if (am5.time.checkChange(date, previousDate, date_axis_time_value)) {
-                            open = value;
-                            high = value;
-                            low = value;
-
-                            var dObj1 = {
-                                Date: date,
-                                Close: value,
-                                Open: value,
-                                Low: value,
-                                High: value
-                            };
-
-                            valueSeries.data.push(dObj1);
-                            sbSeries.data.push(dObj1);
-                            previousDate = date;
-                        } else {
-                            if (value > high) {
-                                high = value;
-                            }
-
-                            if (value < low) {
-                                low = value;
-                            }
-
-                            var dObj2 = {
-                                Date: date,
-                                Close: value,
-                                Open: open,
-                                Low: low,
-                                High: high
-                            };
-
-                            valueSeries.data.setIndex(valueSeries.data.length - 1, dObj2);
-                            sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
-                        }
-                        // update current value
-                        if (currentLabel) {
-                            currentValueDataItem.animate({
-                                key: "value",
-                                to: value,
-                                duration: 500,
-                                easing: am5.ease.out(am5.ease.cubic)
-                            });
-                            currentLabel.set("text", stockChart.getNumberFormatter().format(value));
-                            var bg = currentLabel.get("background");
-                            if (bg) {
-                                if (value < open) {
-                                    bg.set("fill", root.interfaceColors.get("negative"));
-                                } else {
-                                    bg.set("fill", root.interfaceColors.get("positive"));
-                                }
-                            }
-                        }
-                    }
-                }, interval);
-            }
-
+            // let pump = true;
             setInterval(function () {
                 if (autoUpdate) {
                     var valueSeries = stockChart.get("stockSeries");
@@ -772,7 +777,12 @@
                         var previousDate = lastDataObject.Date;
                         var previousValue = lastDataObject.Close;
 
-                        value = am5.math.round(previousValue + (Math.random() < 0.5 ? 1 : -1) * Math.random() * 2, 2);
+                        // if (pump) {
+                        //     value = am5.math.round(previousValue + (.5) * Math.random() * 1, 4);
+                        // } else {
+                            value = am5.math.round(previousValue + (Math.random() < 0.5 ? 1 : -1) * Math.random() * 2, 2);
+                        // }
+
 
                         var high = lastDataObject.High;
                         var low = lastDataObject.Low;
@@ -792,7 +802,7 @@
                             };
 
                             valueSeries.data.push(dObj1);
-                            sbSeries.data.push(dObj1);
+                            // sbSeries.data.push(dObj1);
                             previousDate = date;
                         } else {
                             if (value > high) {
@@ -812,7 +822,7 @@
                             };
 
                             valueSeries.data.setIndex(valueSeries.data.length - 1, dObj2);
-                            sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
+                            // sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
                         }
                         // update current value
                         if (currentLabel) {

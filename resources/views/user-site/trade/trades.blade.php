@@ -10,6 +10,8 @@
                     <tr>
                         <th width="20%">Coin</th>
                         <th width="20%">Amount Invested</th>
+                        <th width="20%">Starting Price</th>
+                        <th width="20%">Closing Price</th>
                         <th width="20%">Time Period</th>
                         <th width="20%">Type</th>
                         <th width="20%">Result</th>
@@ -37,6 +39,8 @@
             columns: [
                 {data: 'coin', name: 'coin'},
                 {data: 'amount_invested', name: 'amount_invested'},
+                {data: 'starting_price', name: 'starting_price'},
+                {data: 'closing_price', name: 'closing_price'},
                 {data: 'time_period', name: 'time_period'},
                 {data: 'type', name: 'type'},
                 {data: 'result', name: 'result'}
