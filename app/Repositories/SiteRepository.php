@@ -25,10 +25,10 @@ class SiteRepository implements SiteInterface
             $data = $data->where("id", $id);
         }
 
-        $data = $data->orderBy("id", "desc")->get();
+        $data = $data->orderBy("id", "desc")
+            ->get();
 
         return $data;
-
     }
 
     public function storeDeposit(Request $request)
@@ -43,9 +43,11 @@ class SiteRepository implements SiteInterface
             $deposit->status = "pending";
             if (isset($request->photo)) {
                 $photo = $request->file('photo');
-                $name = time().'_customer_'.$request->user_id.'_'.$request->amount.'_'.$photo->getClientOriginalName();
+                $name = time(
+                    ) . '_customer_' . $request->user_id . '_' . $request->amount . '_' . $photo->getClientOriginalName(
+                    );
                 $photo->move(public_path('uploads/payment_receipts'), $name);
-                $deposit->photo = '/uploads/payment_receipts/'.$name;
+                $deposit->photo = '/uploads/payment_receipts/' . $name;
             }
             $deposit->save();
             DB::commit();
@@ -71,7 +73,8 @@ class SiteRepository implements SiteInterface
             $data = $data->where("id", $id);
         }
 
-        $data = $data->orderBy("id", "desc")->get();
+        $data = $data->orderBy("id", "desc")
+            ->get();
 
         return $data;
     }
@@ -101,11 +104,12 @@ class SiteRepository implements SiteInterface
     public function withdrawalAccountListing($userId, $id)
     {
         $data = UserAccount::where("user_id", $userId);
-            if($id){
-                $data = $data->where('id', $id);
-            }
+        if ($id) {
+            $data = $data->where('id', $id);
+        }
 
-        return $data->orderBy("id", "desc")->get();
+        return $data->orderBy("id", "desc")
+            ->get();
     }
 
     public function storeWithdrawalAccount(Request $request)
@@ -141,51 +145,52 @@ class SiteRepository implements SiteInterface
         return $res;
     }
 
-    public function storeUserTrade(Request $request)
+    public function storeUserTrade(Request $request, $user)
     {
         $res["success"] = 0;
         $result = '';
         try {
             DB::beginTransaction();
-            $user = User::find(auth()->user()->id);
             if ($request->label == "buy") {
                 if ($request->latest > $request->close_value) {
-                    if (auth()->user()->is_demo_account) {
+                    if ($user->is_demo_account) {
                         $user->demo_account_balance += $request->profit;
                     } else {
                         $user->account_balance += $request->profit;
                     }
                     $res['success'] = 1;
-                    $res['message'] = 'Congratulations, You earned profit of $'.$request->profit;
+                    $res['message'] = 'Congratulations, You earned profit of $' . $request->profit;
                     $result = 'Profit';
                 } else {
-                    if (auth()->user()->is_demo_account) {
+                    if ($user->is_demo_account) {
                         $user->demo_account_balance -= $request->amount_invested;
                     } else {
                         $user->account_balance -= $request->amount_invested;
                     }
-                    $res['message'] = 'Sorry, You Lost $'.$request->amount_invested;
+                    $res['success'] = 1;
+                    $res['message'] = 'Sorry, You Lost $' . $request->amount_invested;
                     $result = 'Lose';
                 }
             }
 
             if ($request->label == "sell") {
                 if ($request->latest < $request->close_value) {
-                    if (auth()->user()->is_demo_account) {
+                    if ($user->is_demo_account) {
                         $user->demo_account_balance += $request->profit;
                     } else {
                         $user->account_balance += $request->profit;
                     }
                     $res['success'] = 1;
-                    $res['message'] = 'Congratulations, You earned profit of $'.$request->profit;
+                    $res['message'] = 'Congratulations, You earned profit of $' . $request->profit;
                     $result = 'Profit';
                 } else {
-                    if (auth()->user()->is_demo_account) {
+                    if ($user->is_demo_account) {
                         $user->demo_account_balance -= $request->amount_invested;
                     } else {
                         $user->account_balance -= $request->amount_invested;
                     }
-                    $res['message'] = 'Sorry, You Lost $'.$request->amount_invested;
+                    $res['success'] = 1;
+                    $res['message'] = 'Sorry, You Lost $' . $request->amount_invested;
                     $result = 'Lose';
                 }
             }
@@ -198,7 +203,7 @@ class SiteRepository implements SiteInterface
             $trade->amount_invested = $request->amount_invested;
             $trade->starting_price = $request->close_value;
             $trade->closing_price = $request->latest;
-            $trade->account_type = (auth()->user()->is_demo_account) ? "demo" : "live";
+            $trade->account_type = ($user->is_demo_account) ? "demo" : "live";
             $trade->profit = $request->profit;
             $trade->time_period = $request->time_period;
             $trade->result = $result;
@@ -212,7 +217,7 @@ class SiteRepository implements SiteInterface
         return $res;
     }
 
-    public function getTradingHistory($user_id, $coin_id = null)
+    public function getTradingHistory($request, $user, $coin_id = null)
     {
         $type = "live";
         $data = Trade::join("coins", "trades.coin_id", "coins.id");
@@ -221,15 +226,17 @@ class SiteRepository implements SiteInterface
             $data = $data->where("trades.coin_id", $coin_id);
         }
 
-        if (auth()->user()->is_demo_account)    $type = "demo";
+        if ($user->is_demo_account) {
+            $type = "demo";
+        }
 
-        $data = $data->where("trades.user_id", $user_id)
+        $data = $data->where("trades.user_id", $user->id)
             ->where("account_type", $type);
+
         return $data->select(
             "trades.*",
             "coins.name as coin_name"
-        )
-        ->orderBy("trades.id", "desc");
+        )->orderBy("trades.id", "desc")->get();
     }
 
     public function changeUserAccount(Request $request)

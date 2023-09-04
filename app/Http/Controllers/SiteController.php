@@ -251,7 +251,8 @@ class SiteController extends Controller
             ]);
         }
 
-        $res = $this->siteInterface->storeUserTrade($request);
+        $user = User::find(auth()->user()->id);
+        $res = $this->siteInterface->storeUserTrade($request, $user);
 
         return response()->json($res);
     }
@@ -259,7 +260,8 @@ class SiteController extends Controller
     public function getTradingHistory(Request $request, $id, $coinId = null)
     {
         if ($request->ajax()) {
-            $data = $this->siteInterface->getTradingHistory($id, $coinId);
+            $user = User::find(auth()->user()->id);
+            $data = $this->siteInterface->getTradingHistory($request, $user, $coinId);
             return DataTables::of($data)
                 ->addColumn('coin', function ($data) {
                     return $data->coin_name;
