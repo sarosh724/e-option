@@ -1,21 +1,23 @@
 <div class="row">
-    <div class="col-md-1 col-lg-1 w-25">
-        <select class="form-control bg-dark" name="coin" id="coin" onChange="loadChart()">
-            <option value="">coin</option>
-            @foreach(getCoins() as $coin)
-                <option value="{{$coin->id}}">{{$coin->name}}</option>
-            @endforeach
-        </select>
+    <div class="col-md-6">
+        <div class="d-flex justify-content-start align-items-center">
+            <select class="form-control bg-dark" name="coin" id="coin" onChange="loadChart()" style="width: 100px;">
+                <option value="">Coin</option>
+                @foreach(getCoins() as $coin)
+                    <option value="{{$coin->id}}">{{$coin->name}}</option>
+                @endforeach
+            </select>
+
+            <select class="form-control bg-dark ml-1" name="time-type" id="time-type" onChange="loadChart()" style="width: 100px;">
+                <option value="">Filter</option>
+                <option value="second">Second</option>
+                <option value="minute" selected>Minute</option>
+            </select>
+        </div>
     </div>
-    <div class="col-md-1 col-lg-1 w-25">
-        <select class="form-control bg-dark" name="time-type" id="time-type" onChange="loadChart()">
-            <option value="">filter</option>
-            <option value="second">Second</option>
-            <option value="minute" selected>Minute</option>
-        </select>
-    </div>
-    <div class="col-md-3">
-        <span class="text-white py-2 px-4 rounded" style="font-size: 1rem;" id="time"></span>
+    <div class="col-md-6 text-right">
+        <span class="text-white py-2 px-4 rounded bg-success" style="font-size: 1rem;" id="trading-rate"></span>
+        <span class="text-white py-2 px-4 rounded ml-1" style="font-size: 1rem;" id="time"></span>
     </div>
 </div>
 
@@ -366,8 +368,8 @@
 
             // Add custom button
             var buy = mainPanel.plotContainer.children.push(am5.Button.new(root, {
-                dx: 10,
-                dy: 350,
+                dx: 6,
+                dy: 400,
                 layer: 40,
                 label: am5.Label.new(root, {
                     text: `${coin_data.buy_profit}% Buy`,
@@ -376,20 +378,30 @@
                     paddingTop: 0,
                     paddingRight: 14,
                     paddingBottom: 0,
-                    paddingLeft: 14
+                    paddingLeft: 14,
                 })
             }));
             buy.get("background").setAll({
-                cornerRadiusTL: 0,
-                cornerRadiusTR: 0,
-                cornerRadiusBR: 0,
-                cornerRadiusBL: 0,
-                fill: '#28a745',
-                fillOpacity: 0.7
+                cornerRadiusTL: 3,
+                cornerRadiusTR: 3,
+                cornerRadiusBR: 3,
+                cornerRadiusBL: 3,
+                fill: '#1d9c09',
+                fillOpacity: 1
             })
+            buy.get("background").states.create("hover", {}).setAll({
+                fill: am5.color('#068c06'),
+                fillOpacity: 0.8
+            });
+
+            // buy.get("background").states.create("down", {}).setAll({
+            //     fill: am5.color(0xff0000),
+            //     fillOpacity: 1
+            // });
+
             var sell = mainPanel.plotContainer.children.push(am5.Button.new(root, {
                 dx: 120,
-                dy: 350,
+                dy: 400,
                 layer: 40,
                 label: am5.Label.new(root, {
                     text: `${coin_data.sell_profit}% Sell`,
@@ -402,13 +414,17 @@
                 })
             }));
             sell.get("background").setAll({
-                cornerRadiusTL: 0,
-                cornerRadiusTR: 0,
-                cornerRadiusBR: 0,
-                cornerRadiusBL: 0,
-                fill: '#dc3545',
-                fillOpacity: 0.7
-            })
+                cornerRadiusTL: 3,
+                cornerRadiusTR: 3,
+                cornerRadiusBR: 3,
+                cornerRadiusBL: 3,
+                fill: '#c92112',
+                fillOpacity: 1
+            });
+            sell.get("background").states.create("hover", {}).setAll({
+                fill: am5.color('#b51405'),
+                fillOpacity: 0.8
+            });
 
             buy.events.on("click", function(ev) {
                 var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
@@ -527,6 +543,8 @@
 
             });
 
+            $("#trading-rate").hide();
+
             $(".btn_trade_period").on('click', function () {
                 if ($("#amt").val() < 1) {
                     toast("Please enter amount", "info");
@@ -551,6 +569,10 @@
 
                 milliseconds = seconds * 1000;
 
+                document.getElementById("trading-rate").innerHTML = `<small>Trade Closed on:</small> $${$("#close").val()}`;
+                // document.getElementById("trading-rate").style.background = "#5cb85c";
+                document.getElementById("trading-rate").style.color = "#ffffff";
+                $("#trading-rate").show();
                 // autoUpdate = false;
                 runTimer(seconds, time_period, type);
                 $("#tradePeriod").modal("hide");
@@ -561,6 +583,7 @@
 
             });
             $("#time").hide();
+
             function runTimer(seconds, time_period, type) {
                 let count = new Date();
                 count.setSeconds(count.getSeconds() + seconds);
@@ -592,6 +615,7 @@
                     if (diff < 0) {
                         clearInterval(update);
                         $("#time").hide();
+                        $("#trading-rate").hide();
                         let latest = valueSeries.data.getIndex(valueSeries.data.length - 1);
                         let label = $("#label").val();
                         let coin_id = $("#coin_id").val();
