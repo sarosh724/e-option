@@ -45,7 +45,7 @@
 
 <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar" class="bg-dark active">
+    <nav id="sidebar" class="bg-dark">
         <div class="sidebar-header p-0 py-2 mb-2">
             <h3>Easy Option</h3>
             <strong class="text-success">EO</strong>
@@ -120,93 +120,95 @@
     <!-- Page Content  -->
     <div id="content">
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark m-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark m-0 p-0 py-2">
             <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-sm bg-transparent">
+                    <i class="fas fa-align-left text-white"></i>
+                    <span>Toggle Sidebar</span>
+                </button>
                 <h5 class="text-white m-0">Easy Option</h5>
                 <span class="ml-4" style="color: dimgray;">Web Trading Platform</span>
-{{--                <button type="button" id="sidebarCollapse" class="btn btn-info">--}}
-{{--                    <i class="fas fa-align-left"></i>--}}
-{{--                    <span>Toggle Sidebar</span>--}}
-{{--                </button>--}}
                 <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-align-justify"></i>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
+                        <li>
+                            <a href="javascript:void(0);" class="referral-link px-4 mr-1 btn" title="Get Referral Link"
+                               data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;">
+                                <i class="fal fa-clipboard mr-1"></i>Get Referral Link
+                            </a>
+                        </li>
                     </ul>
                     <div class="d-flex justify-content-end align-items-center">
-                        <a href="javascript:void(0);" class="referral-link px-4 py-2 mr-1" title="Get Referral Link"
-                           data-link="{{url('register').'?refcode='.base64_encode(auth()->user()->id)}}" style="font-family: med;font-size: 14px;">
-                            <i class="fal fa-clipboard mr-1"></i>Get Referral Link
-                        </a>
 
-                        <div class="dropdown mr-1 p-0">
-                            <button class="btn bg-black d-flex justify-content-between align-items-center btn-drp-account p-0"
-                                    type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false" style="padding: 4.5px 15px !important;">
-                                <div class="pr-1">
-                                    <span><i class="fa fa-location-arrow text-success"></i></span>
-                                </div>
-                                <div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="text-left px-3">
-                                            <small class="m-0 d-block text-secondary" style="font-size: 11px; font-family: med;">{{(auth()->user()->is_demo_account) ? "Demo Account" : "Live Account"}}</small>
-                                            <h6 class="m-0 text-white" id="balance" style="font-family: bold;">${{sprintf("%0.2f", (auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance)}}</h6>
+                            <div class="dropdown mr-1 p-0">
+                                <button class="btn bg-black d-flex justify-content-between align-items-center btn-drp-account p-0"
+                                        type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" style="padding: 4.5px 15px !important;">
+                                    <div class="pr-1">
+                                        <span><i class="fa fa-location-arrow text-success"></i></span>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="text-left px-3">
+                                                <small class="m-0 d-block text-secondary" style="font-size: 11px; font-family: med;">{{(auth()->user()->is_demo_account) ? "Demo Account" : "Live Account"}}</small>
+                                                <h6 class="m-0 text-white" id="balance" style="font-family: bold;">${{sprintf("%0.2f", (auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance)}}</h6>
+                                            </div>
+                                            <span class="pl-1 text-white"><i class="far fa-chevron-down" id="account-icon" style="font-size: 13px;"></i></span>
                                         </div>
-                                        <span class="pl-1 text-white"><i class="far fa-chevron-down" id="account-icon" style="font-size: 13px;"></i></span>
                                     </div>
-                                </div>
-                            </button>
-                            <div class="dropdown-menu bg-black shadow p-0" style="min-width: 250px;" aria-labelledby="dropdownMenuButton">
-                                <div class="px-3 py-2">
-                                    <div class="d-flex justify-content-start align-items-center">
-                                        <small class="text-secondary mr-2 d-block">Name:</small>
-                                        <p class="m-0 text-white text-capitalize" style="font-size: 14px; font-family: med;">{{auth()->user()->name}}</p>
+                                </button>
+                                <div class="dropdown-menu bg-black shadow p-0" style="min-width: 250px;" aria-labelledby="dropdownMenuButton">
+                                    <div class="px-3 py-2">
+                                        <div class="d-flex justify-content-start align-items-center">
+                                            <small class="text-secondary mr-2 d-block">Name:</small>
+                                            <p class="m-0 text-white text-capitalize" style="font-size: 14px; font-family: med;">{{auth()->user()->name}}</p>
+                                        </div>
+                                        <div class="d-flex justify-content-start align-items-center">
+                                            <small class="text-secondary mr-2 d-block">Email:</small>
+                                            <span class="m-0 text-success">{{auth()->user()->email}}</span>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-start align-items-center">
-                                        <small class="text-secondary mr-2 d-block">Email:</small>
-                                        <span class="m-0 text-success">{{auth()->user()->email}}</span>
-                                    </div>
-                                </div>
-                                <hr style="background: #4f4e4d; margin: 0;">
+                                    <hr style="background: #4f4e4d; margin: 0;">
 
-                                <div class="d-flex justify-content-start px-3 py-2">
-                                    <div>
-                                        <label id="live-acc-btn" data-type="live"><i class="far fa-check"></i></label>
+                                    <div class="d-flex justify-content-start px-3 py-2">
+                                        <div>
+                                            <label id="live-acc-btn" data-type="live"><i class="far fa-check"></i></label>
+                                        </div>
+                                        <div class="ml-2">
+                                            <span class="live-acc-label text-white" data-type="live" style="font-size: 15px; font-family: med;" for="live-acc-btn">Live Account</span>
+                                            <span class="text-secondary d-block" id="live-balance" style="font-family: bold;">${{sprintf("%0.2f", auth()->user()->account_balance)}}</span>
+                                        </div>
                                     </div>
-                                    <div class="ml-2">
-                                        <span class="live-acc-label text-white" data-type="live" style="font-size: 15px; font-family: med;" for="live-acc-btn">Live Account</span>
-                                        <span class="text-secondary d-block" id="live-balance" style="font-family: bold;">${{sprintf("%0.2f", auth()->user()->account_balance)}}</span>
+                                    <hr style="background: #4f4e4d; margin: 0;">
+                                    <div class="d-flex justify-content-start px-3 py-2">
+                                        <div>
+                                            <label id="demo-acc-btn" data-type="demo"><i class="far fa-check"></i></label>
+                                        </div>
+                                        <div class="ml-2">
+                                            <span class="demo-acc-label text-white" data-type="demo" style="font-size: 15px; font-family: med;" for="demo-acc-btn">Demo Account</span>
+                                            <span class="text-secondary d-block" id="demo-balance" style="font-family: bold;">${{sprintf("%0.2f", auth()->user()->demo_account_balance)}}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <hr style="background: #4f4e4d; margin: 0;">
-                                <div class="d-flex justify-content-start px-3 py-2">
-                                    <div>
-                                        <label id="demo-acc-btn" data-type="demo"><i class="far fa-check"></i></label>
+                                    <hr style="background: #4f4e4d; margin: 0;">
+                                    <div class="px-3 py-2">
+                                        <a href="{{url('logout')}}" class="text-danger">
+                                            <i class="far fa-sign-out-alt text-danger mr-1"></i>Logout
+                                        </a>
                                     </div>
-                                    <div class="ml-2">
-                                        <span class="demo-acc-label text-white" data-type="demo" style="font-size: 15px; font-family: med;" for="demo-acc-btn">Demo Account</span>
-                                        <span class="text-secondary d-block" id="demo-balance" style="font-family: bold;">${{sprintf("%0.2f", auth()->user()->demo_account_balance)}}</span>
-                                    </div>
-                                </div>
-                                <hr style="background: #4f4e4d; margin: 0;">
-                                <div class="px-3 py-2">
-                                    <a href="{{url('logout')}}" class="text-danger">
-                                        <i class="far fa-sign-out-alt text-danger mr-1"></i>Logout
-                                    </a>
                                 </div>
                             </div>
-                        </div>
 
-                        <button class="btn btn-deposit btn-success text-white mr-1 p-0" data-tab="deposit"
-                                style="font-family: med; font-size: 14px; padding: 11px 15px !important;">
-                            <i class="fa fa-plus mr-1" style="font-size: 13px;"></i>Deposit
-                        </button>
+                            <button class="btn btn-deposit btn-success text-white mr-1 p-0" data-tab="deposit"
+                                    style="font-family: med; font-size: 14px; padding: 11px 15px !important;">
+                                <i class="fa fa-plus mr-1" style="font-size: 13px;"></i>Deposit
+                            </button>
 
-                        <button class="btn btn-withdrawal btn-secondary text-white p-0" data-tab="withdrawal"
-                                style="font-family: med;font-size: 14px; padding: 11px 15px !important;">Withdrawal
-                        </button>
+                            <button class="btn btn-withdrawal btn-secondary text-white p-0" data-tab="withdrawal"
+                                    style="font-family: med;font-size: 14px; padding: 11px 15px !important;">Withdrawal
+                            </button>
                     </div>
                 </div>
             </div>
@@ -322,6 +324,23 @@
         // $("#demo-acc-btn, .demo-acc-label").on('click', function () {
         //     alert("demo account")
         // });
+        function changeWidth() {
+            let width = $(window).width();
+            if (width > 440) {
+                $("#sidebarCollapse").hide();
+                if (!$("#sidebar").hasClass("active")) {
+                    $("#sidebar").addClass("active");
+                }
+            } else {
+                $("#sidebarCollapse").show();
+                if ($("#sidebar").hasClass("active")) {
+                    $("#sidebar").removeClass("active");
+                }
+            }
+        }
+
+        changeWidth();
+        $(window).resize(changeWidth);
 
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');

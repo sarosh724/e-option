@@ -18,6 +18,9 @@
 body {
     font-family: regular;
     background: #212529;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     /*background: #fafafa;*/
     /*background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);*/
     /*background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);*/
