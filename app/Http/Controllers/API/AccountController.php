@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Interfaces\PaymentMethodInterface;
 use App\Interfaces\SettingInterface;
 use App\Interfaces\SiteInterface;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -169,6 +170,26 @@ class AccountController extends BaseController
             $data = $this->siteInterface->withdrawalListing($id, $userId);
 
             return $this->sendResponse($data, 'Withdrawal History Listing');
+        }
+    }
+
+    public function changeUserAccount(Request $request): JsonResponse
+    {
+        $validate = Validator::make($request->all(), [
+            "type" => "required"
+        ]);
+
+        if ($validate->fails()) {
+            return $this->sendError('Validation Error.', $validate->errors());
+        }
+
+        $user = User::find($request->user()->id);
+        $res = $this->siteInterface->changeUserAccount($request, $user);
+        if($res['success']){
+            return $this->sendResponse([], 'Account Changed Successfully');
+        }
+        else {
+            return $this->sendError($res['message'], 'something went wrong');
         }
     }
 }

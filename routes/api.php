@@ -26,6 +26,7 @@ Route::controller(AuthController::class)->group(function(){
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::get('logout', [AuthController::class, 'logout']);
+    Route::post('change-account-type', [AccountController::class, 'changeUserAccount']);
     Route::get('get-user', [UserController::class, 'getUser']);
     Route::get('get-referral-link', [UserController::class, 'getReferralLink']);
     Route::get('get-referral-detail', [UserController::class, 'getReferralDetails']);
