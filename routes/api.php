@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\API\CoinController;
+use App\Http\Controllers\API\TradeController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,10 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::get('/', [AccountController::class, 'withdrawal']);
         Route::get('/{id}', [AccountController::class, 'withdrawal']);
         Route::post('/', [AccountController::class, 'withdrawal']);
+    });
+    Route::prefix('trading')->group(function () {
+        Route::get('/history/{coin_id?}', [TradeController::class, 'getTradingHistory']);
+        Route::post('/store', [TradeController::class, 'storeUserTrade']);
     });
 });
 

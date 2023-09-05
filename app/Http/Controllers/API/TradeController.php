@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Interfaces\SiteInterface;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,7 +20,7 @@ class TradeController extends BaseController
         $this->siteInterface = $siteInterface;
     }
 
-    public function storeUserTrade(Request $request)
+    public function storeUserTrade(Request $request): JsonResponse
     {
         $validate = Validator::make($request->all(), [
             "amount_invested" => "required",
@@ -34,7 +36,8 @@ class TradeController extends BaseController
             return $this->sendError('Validation Error.', $validate->errors());
         }
 
-        $res = $this->siteInterface->storeUserTrade($request);
+        $user = User::find($request->user()->id);
+        $res = $this->siteInterface->storeUserTrade($request, $user);
         if ($res['success'] == 1) {
             return $this->sendResponse('', $res['message']);
         } else {
@@ -42,10 +45,11 @@ class TradeController extends BaseController
         }
     }
 
-    public function getTradingHistory(Request $request, $id, $coinId = null)
+    public function getTradingHistory(Request $request): JsonResponse
     {
-            $data = $this->siteInterface->getTradingHistory($id, $coinId);
+        $user = User::find($request->user()->id);
+        $data = $this->siteInterface->getTradingHistory($request, $user, $request->coin_id);
 
-            return $this->sendResponse($data, 'trading history');
+        return $this->sendResponse($data, 'trading history');
     }
 }
