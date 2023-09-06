@@ -30,7 +30,7 @@
                     <label for="account_no" class="form-label">
                         <span class="required">Account Number</span>
                     </label>
-                    <input type="number" class="form-control" id="account_no" name="account_no"
+                    <input type="text" class="form-control" id="account_no" name="account_no"
                            placeholder="34364356573654" value="{{@$paymentMethod->account_no}}">
                 </div>
             </div>
