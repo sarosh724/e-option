@@ -244,6 +244,8 @@
 
         am5.ready(async function () {
 
+            var is_trade = false;
+
             coin_data = await fetch(
                 '{{url('trading/coin-rate/')}}' + '/' + coin_id
             ).then(response => response.json());
@@ -638,40 +640,43 @@
                         let profit = $("#profit").val();
                         $("#amt").val(0);
                         $("#profit").val(0);
+                        is_trade = true;
                         calculate(label, coin_id, coin_name, close_value, latest.Close, amt, profit, time_period);
                     }
                 }, 1000);
             }
 
             function calculate(label, coin_id, coin_name, close_value, latest, amt, profit, time_period) {
-                $.ajax({
-                    url: "{{url('trading/user-trade')}}",
-                    type: "POST",
-                    data: JSON.stringify({
-                        amount_invested: amt,
-                        profit: profit,
-                        close_value: close_value,
-                        latest: latest,
-                        label: label,
-                        coin_id: coin_id,
-                        time_period: time_period
-                    }),
-                    cache: false,
-                    processData: false,
-                    contentType: "application/json; charset=UTF-8",
-                    success: function (res) {
-                        if (res.success == 1) {
-                            toast(res.message, "success");
-                        } else {
-                            toast(res.message, "info");
+                if (is_trade) {
+                    $.ajax({
+                        url: "{{url('trading/user-trade')}}",
+                        type: "POST",
+                        data: JSON.stringify({
+                            amount_invested: amt,
+                            profit: profit,
+                            close_value: close_value,
+                            latest: latest,
+                            label: label,
+                            coin_id: coin_id,
+                            time_period: time_period
+                        }),
+                        cache: false,
+                        processData: false,
+                        contentType: "application/json; charset=UTF-8",
+                        success: function (res) {
+                            if (res.success == 1) {
+                                toast(res.message, "success");
+                            } else {
+                                toast(res.message, "info");
+                            }
+                            loadTradingHistory(coin_id);
+                            setAccountBalance();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert(textStatus + ' : ' + errorThrown);
                         }
-                        loadTradingHistory(coin_id);
-                        setAccountBalance();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        alert(textStatus+' : '+errorThrown);
-                    }
-                });
+                    });
+                }
             }
 
             // data
@@ -681,8 +686,8 @@
                 var low = 0;
                 var high = 0;
 
-                let loop_var = date_axis_time_value == 'minute' ? coin_data.diff_in_min : coin_data.diff_in_min * 60;
-                // loop_var = 300;
+                // let loop_var = date_axis_time_value == 'minute' ? coin_data.diff_in_min : coin_data.diff_in_min * 60;
+                loop_var = 300;
                 for (var i = 0; i < loop_var; i++) {
                     var newDate = new Date(firstDate);
                     if (date_axis_time_value == 'minute') {
