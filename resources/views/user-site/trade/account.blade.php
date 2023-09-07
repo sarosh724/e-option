@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     <label class="form-label required" for="bank">Bank / Payment Method</label>
                                     <input type="text" class="form-control shadow-none" name="bank" id="bank"
-                                           placeholder="e.g Sadapay">
+                                           placeholder="e.g">
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12">
@@ -92,7 +92,7 @@
                                 <div class="form-group">
                                     <label class="form-label required" for="account_number">Account Number</label>
                                     <input type="text" class="form-control shadow-none" name="account_number" id="account_number"
-                                           placeholder="PK19AL353737346536">
+                                           placeholder="19AL353737346536">
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12">

@@ -79,7 +79,7 @@ function statusDropdown($entity, $status, $id) {
             break;
     }
 
-    $html = '<select class="form-control btn-status" name="status" id="status" data-id="'.$id.'">';
+    $html = '<select class="form-control btn-status" name="status" id="status-'.$id.'" data-id="'.$id.'">';
     foreach ($list as $item) {
         $selected = ($item == $status) ? "selected" : '';
         $html .= '<option value="'.$item.'" '.$selected.'>'.$item.'</option>';

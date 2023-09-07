@@ -55,7 +55,7 @@ class SiteController extends Controller
             ]);
 
             if ($validate->fails()) {
-                return redirect(url('deposit'))->withErrors($validate);
+                return redirect(url('trade'))->withErrors($validate);
             }
 
             $res = $this->siteInterface->storeDeposit($request);
@@ -101,7 +101,7 @@ class SiteController extends Controller
             ]);
 
             if ($validate->fails()) {
-                return redirect(url('withdrawal'))->withErrors($validate);
+                return redirect(url('trade'))->withErrors($validate);
             }
 
             if ($request->amount > auth()->user()->account_balance) {
@@ -114,7 +114,7 @@ class SiteController extends Controller
             }
             $res = $this->siteInterface->storeWithdrawal($request);
 
-            return redirect(url('withdrawal'))->with($res['type'], $res['message']);
+            return redirect(url('trade'))->with($res['type'], $res['message']);
         }
 
         if ($request->ajax()) {
@@ -188,7 +188,7 @@ class SiteController extends Controller
         ]);
 
         if ($validate->fails()) {
-            return redirect(url('settings'))->withErrors($validate);
+            return redirect(url('trade'))->withErrors($validate);
         }
 
         $res = $this->siteInterface->storeWithdrawalAccount($request);

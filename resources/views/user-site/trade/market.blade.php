@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="col-md-6 text-right">
-        <span class="text-white py-2 px-4 rounded bg-success" style="font-size: 1rem;" id="trading-rate"></span>
+        <span class="text-white py-2 px-4 rounded" style="font-size: 1rem;" id="trading-rate"></span>
         <span class="text-white py-2 px-4 rounded ml-1" style="font-size: 1rem;" id="time"></span>
     </div>
 </div>
@@ -292,6 +292,9 @@
                 })
             );
 
+            var myTooltip = am5.Tooltip.new(root, {});
+
+
             // Create value axis
             // -------------------------------------------------------------------------------
             // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
@@ -301,12 +304,13 @@
                         pan: "zoom"
                     }),
                     extraMin: 0.1, // adds some space for main series
-                    tooltip: am5.Tooltip.new(root, {}),
+                    tooltip: myTooltip,
                     numberFormat: "#,###.0000",
                     extraTooltipPrecision: 4
                 })
             );
 
+            myTooltip.get("background").set("fill", "#0390fc");
             var dateAxis = mainPanel.xAxes.push(
                 am5xy.GaplessDateAxis.new(root, {
                     baseInterval: {
@@ -577,8 +581,9 @@
 
                 milliseconds = seconds * 1000;
 
+
                 document.getElementById("trading-rate").innerHTML = `<small>Trade Closed on:</small> $${$("#close").val()}`;
-                // document.getElementById("trading-rate").style.background = "#5cb85c";
+                document.getElementById("trading-rate").style.background = $("#label").val() == "buy" ? "#1d9c09" : "#c92112";
                 document.getElementById("trading-rate").style.color = "#ffffff";
                 $("#trading-rate").show();
                 // autoUpdate = false;
