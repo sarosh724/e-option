@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
-        'country'
+        'country',
+        'demo_account_balance'
     ];
 
     /**

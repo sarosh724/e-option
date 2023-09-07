@@ -253,6 +253,10 @@
             // https://www.amcharts.com/docs/v5/getting-started/#Root_element
             root = am5.Root.new("container");
 
+            root.setThemes([
+                am5themes_Responsive.new(root)
+            ]);
+
             /* remove amchart logo */
 
             root._logo.dispose();

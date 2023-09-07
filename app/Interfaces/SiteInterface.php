@@ -66,5 +66,5 @@ interface SiteInterface
      * @param Request $request
      * @return mixed
      */
-    public function changeUserAccount(Request $request);
+    public function changeUserAccount(Request $request, $user);
 }

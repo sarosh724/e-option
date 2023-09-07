@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
+use App\Interfaces\SettingInterface;
 use App\Models\Referral;
 use App\Models\Setting;
 use App\Models\User;
@@ -14,6 +15,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends BaseController
 {
+    /**
+     * @var SettingInterface
+     */
+    protected SettingInterface $settingInterface;
+
+    public function __construct(SettingInterface $settingInterface)
+    {
+        $this->settingInterface = $settingInterface;
+    }
+
     /**
      * Register api
      *
@@ -38,6 +49,7 @@ class AuthController extends BaseController
         try {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
+        $input['demo_account_balance'] = $this->settingInterface->getDemoAmount();
         $user = User::create($input);
 
         if ($request->refcode) {

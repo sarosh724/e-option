@@ -325,7 +325,8 @@ class SiteController extends Controller
             ]);
         }
 
-        $res = $this->siteInterface->changeUserAccount($request);
+        $user = User::find(auth()->user()->id);
+        $res = $this->siteInterface->changeUserAccount($request, $user);
 
         return response()->json($res);
     }

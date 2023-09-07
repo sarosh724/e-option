@@ -239,12 +239,12 @@ class SiteRepository implements SiteInterface
         )->orderBy("trades.id", "desc")->get();
     }
 
-    public function changeUserAccount(Request $request)
+    public function changeUserAccount(Request $request, $user)
     {
         $res['success'] = 0;
         try {
             DB::beginTransaction();
-            User::where("id", \auth()->user()->id)
+            User::where("id", $user->id)
                 ->update(["is_demo_account" => ($request->type == "demo") ? 1 : 0]);
             DB::commit();
             $res['success'] = 1;
