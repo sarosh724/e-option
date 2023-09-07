@@ -641,13 +641,15 @@
                         $("#amt").val(0);
                         $("#profit").val(0);
                         is_trade = true;
-                        calculate(label, coin_id, coin_name, close_value, latest.Close, amt, profit, time_period);
+                        if (is_trade) {
+                            calculate(label, coin_id, coin_name, close_value, latest.Close, amt, profit, time_period);
+                            is_trade = false;
+                        }
                     }
                 }, 1000);
             }
 
             function calculate(label, coin_id, coin_name, close_value, latest, amt, profit, time_period) {
-                if (is_trade) {
                     $.ajax({
                         url: "{{url('trading/user-trade')}}",
                         type: "POST",
@@ -673,11 +675,11 @@
                             setAccountBalance();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
+                            toast(res.message, "info");
                             alert(textStatus + ' : ' + errorThrown);
                         }
                     });
                 }
-            }
 
             // data
             function generateChartData() {
