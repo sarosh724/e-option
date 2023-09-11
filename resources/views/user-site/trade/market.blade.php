@@ -317,7 +317,9 @@
             myTooltip.get("background").set("fill", "#0390fc");
             var dateAxis = mainPanel.xAxes.push(
                 am5xy.GaplessDateAxis.new(root, {
-                    start: 0.9,
+                    start: .9,
+                    minZoomCount: 20,
+                    // maxZoomCount: 10,
                     baseInterval: {
                         timeUnit: date_axis_time_value,
                         count: 1
@@ -511,7 +513,7 @@
                             // {timeUnit: "second", count: 5, name: "5S"},
                             // {timeUnit: "second", count: 10, name: "10S"},
                             // {timeUnit: "second", count: 30, name: "30S"},
-                            // {timeUnit: "minute", count: 1, name: "1Min"},
+                            {timeUnit: "minute", count: 1, name: "1Min"},
                             {timeUnit: "minute", count: 5, name: "5Min"},
                             {timeUnit: "minute", count: 15, name: "15Min"},
                             {timeUnit: "minute", count: 30, name: "30Min"},
