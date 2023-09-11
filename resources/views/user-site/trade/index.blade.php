@@ -448,11 +448,9 @@
                     if (res.data.is_demo_account) {
                         $('#balance').html(parseFloat(res.data.demo_account_balance).toFixed(2));
                         $('#demo-balance').html(parseFloat(res.data.demo_account_balance).toFixed(2));
-                        return res.data.demo_account_balance;
                     } else {
                         $('#balance').html(parseFloat(res.data.account_balance).toFixed(2));
                         $('#live-balance').html(parseFloat(res.data.account_balance).toFixed(2));
-                        return res.data.account_balance;
                     }
                 }
             },
