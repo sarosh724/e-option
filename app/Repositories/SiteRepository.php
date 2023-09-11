@@ -155,8 +155,10 @@ class SiteRepository implements SiteInterface
                 if ($request->latest > $request->close_value) {
                     if ($user->is_demo_account) {
                         $user->demo_account_balance += $request->profit;
+                        $res['balance'] = $user->demo_account_balance;
                     } else {
                         $user->account_balance += $request->profit;
+                        $res['balance'] = $user->account_balance;
                     }
                     $res['success'] = 1;
                     $res['message'] = 'Congratulations, You earned profit of $' . $request->profit;
@@ -164,8 +166,10 @@ class SiteRepository implements SiteInterface
                 } else {
                     if ($user->is_demo_account) {
                         $user->demo_account_balance -= $request->amount_invested;
+                        $res['balance'] = $user->demo_account_balance;
                     } else {
                         $user->account_balance -= $request->amount_invested;
+                        $res['balance'] = $user->account_balance;
                     }
                     $res['success'] = 1;
                     $res['message'] = 'Sorry, You Lost $' . $request->amount_invested;
@@ -177,8 +181,10 @@ class SiteRepository implements SiteInterface
                 if ($request->latest < $request->close_value) {
                     if ($user->is_demo_account) {
                         $user->demo_account_balance += $request->profit;
+                        $res['balance'] = $user->demo_account_balance;
                     } else {
                         $user->account_balance += $request->profit;
+                        $res['balance'] = $user->account_balance;
                     }
                     $res['success'] = 1;
                     $res['message'] = 'Congratulations, You earned profit of $' . $request->profit;
@@ -186,8 +192,10 @@ class SiteRepository implements SiteInterface
                 } else {
                     if ($user->is_demo_account) {
                         $user->demo_account_balance -= $request->amount_invested;
+                        $res['balance'] = $user->demo_account_balance;
                     } else {
                         $user->account_balance -= $request->amount_invested;
+                        $res['balance'] = $user->account_balance;
                     }
                     $res['success'] = 1;
                     $res['message'] = 'Sorry, You Lost $' . $request->amount_invested;

@@ -1,18 +1,18 @@
 <div class="row">
     <div class="col-md-6">
         <div class="d-flex justify-content-start align-items-center">
-            <select class="form-control bg-dark" name="coin" id="coin" onChange="loadChart()" style="width: 100px;">
+            <select class="form-control bg-dark" name="coin" id="coin" onChange="loadChart()" style="width: 150px;">
                 <option value="">Coin</option>
                 @foreach(getCoins() as $coin)
                     <option value="{{$coin->id}}">{{$coin->name}}</option>
                 @endforeach
             </select>
 
-            <select class="form-control bg-dark ml-1" name="time-type" id="time-type" onChange="loadChart()" style="width: 100px;">
-                <option value="">Filter</option>
-                <option value="second">Second</option>
-                <option value="minute" selected>Minute</option>
-            </select>
+{{--            <select class="form-control bg-dark ml-1" name="time-type" id="time-type" onChange="loadChart()" style="width: 100px;">--}}
+{{--                <option value="">Filter</option>--}}
+{{--                <option value="second">Second</option>--}}
+{{--                <option value="minute" selected>Minute</option>--}}
+{{--            </select>--}}
         </div>
     </div>
     <div class="col-md-6 text-right">
@@ -72,7 +72,7 @@
                 <input type="hidden" name="amt_percent" id="amt_percent" value="0">
                 <div>
                     <div class="d-flex justify-content-end align-items-center">
-                        <span class="rounded text-white px-4 py-2" style="background: black;"><small>Balance:</small>  ${{sprintf("%0.2f", (auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance)}}</span>
+                        <span class="user-account-balance rounded text-white px-4 py-2" style="background: black;"><small>Balance:</small>  ${{sprintf("%0.2f", (auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance)}}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-1">
                         <div style="width: 50%;" class="mr-2">
@@ -158,7 +158,7 @@
 
     $(document).ready(function () {
         var coin_id = $('#coin option:eq(1)').prop('selected', true);
-        $("#time-type").hide();
+        // $("#time-type").hide();
         $("#chart-div").hide();
         root = am5.Root.new("container");
 
@@ -230,13 +230,15 @@
 
     function loadChart() {
 
-        let date_axis_time_value = $("#time-type").val()
+        // let date_axis_time_value = $("#time-type").val()
+
+        let date_axis_time_value = 'minute'
 
         root.dispose();
 
         coin_id = $("#coin").val();
         let coin_data = [];
-        $("#time-type").fadeIn();
+        // $("#time-type").fadeIn();
         $("#chart-div").fadeIn();
 
         $("#history-box").show();
@@ -315,6 +317,7 @@
             myTooltip.get("background").set("fill", "#0390fc");
             var dateAxis = mainPanel.xAxes.push(
                 am5xy.GaplessDateAxis.new(root, {
+                    start: 0.9,
                     baseInterval: {
                         timeUnit: date_axis_time_value,
                         count: 1
@@ -505,10 +508,10 @@
                     am5stock.PeriodSelector.new(root, {
                         stockChart: stockChart,
                         periods: [
-                            {timeUnit: "second", count: 5, name: "5S"},
-                            {timeUnit: "second", count: 10, name: "10S"},
-                            {timeUnit: "second", count: 30, name: "30S"},
-                            {timeUnit: "minute", count: 1, name: "1Min"},
+                            // {timeUnit: "second", count: 5, name: "5S"},
+                            // {timeUnit: "second", count: 10, name: "10S"},
+                            // {timeUnit: "second", count: 30, name: "30S"},
+                            // {timeUnit: "minute", count: 1, name: "1Min"},
                             {timeUnit: "minute", count: 5, name: "5Min"},
                             {timeUnit: "minute", count: 15, name: "15Min"},
                             {timeUnit: "minute", count: 30, name: "30Min"},
@@ -517,15 +520,15 @@
                         ]
                     }),
                     // seriesSwitcher,
-                    am5stock.DrawingControl.new(root, {
-                        stockChart: stockChart
-                    }),
+                    // am5stock.DrawingControl.new(root, {
+                    //     stockChart: stockChart
+                    // }),
                     // am5stock.ResetControl.new(root, {
                     //     stockChart: stockChart
                     // }),
-                    am5stock.SettingsControl.new(root, {
-                        stockChart: stockChart
-                    })
+                    // am5stock.SettingsControl.new(root, {
+                    //     stockChart: stockChart
+                    // })
                 ]
             });
 
@@ -668,11 +671,15 @@
                         success: function (res) {
                             if (res.success == 1) {
                                 toast(res.message, "success");
+                                let html = `<small>Balance:</small>  $${res.balance.toFixed(2)}`
+                                $('.user-account-balance').html(html)
+                                setAccountBalance();
                             } else {
                                 toast(res.message, "info");
                             }
                             loadTradingHistory(coin_id);
-                            setAccountBalance();
+
+
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             toast(res.message, "info");
@@ -689,7 +696,7 @@
                 var high = 0;
 
                 // let loop_var = date_axis_time_value == 'minute' ? coin_data.diff_in_min : coin_data.diff_in_min * 60;
-                loop_var = 300;
+                loop_var = 1000;
                 for (var i = 0; i < loop_var; i++) {
                     var newDate = new Date(firstDate);
                     if (date_axis_time_value == 'minute') {
