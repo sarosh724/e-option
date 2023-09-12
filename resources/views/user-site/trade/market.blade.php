@@ -318,7 +318,7 @@
             var dateAxis = mainPanel.xAxes.push(
                 am5xy.GaplessDateAxis.new(root, {
                     start: .9,
-                    minZoomCount: 20,
+                    minZoomCount: 10,
                     // maxZoomCount: 10,
                     baseInterval: {
                         timeUnit: date_axis_time_value,
@@ -500,10 +500,10 @@
                 container: document.getElementById("chart_controls"),
                 stockChart: stockChart,
                 controls: [
-                    // am5stock.IndicatorControl.new(root, {
-                    //     stockChart: stockChart,
-                    //     legend: valueLegend
-                    // }),
+                    am5stock.IndicatorControl.new(root, {
+                        stockChart: stockChart,
+                        legend: valueLegend
+                    }),
                     // am5stock.DateRangeSelector.new(root, {
                     //     stockChart: stockChart
                     // }),
