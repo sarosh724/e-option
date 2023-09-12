@@ -514,7 +514,7 @@
                             // {timeUnit: "second", count: 10, name: "10S"},
                             // {timeUnit: "second", count: 30, name: "30S"},
                             {timeUnit: "minute", count: 1, name: "1Min"},
-                            {timeUnit: "minute", count: 5, name: "5Min"},
+                            // {timeUnit: "minute", count: 5, name: "5Min"},
                             {timeUnit: "minute", count: 15, name: "15Min"},
                             {timeUnit: "minute", count: 30, name: "30Min"},
                             {timeUnit: "hour", count: 1, name: "1Hr"},
