@@ -500,10 +500,10 @@
                 container: document.getElementById("chart_controls"),
                 stockChart: stockChart,
                 controls: [
-                    am5stock.IndicatorControl.new(root, {
-                        stockChart: stockChart,
-                        legend: valueLegend
-                    }),
+                    // am5stock.IndicatorControl.new(root, {
+                    //     stockChart: stockChart,
+                    //     legend: valueLegend
+                    // }),
                     // am5stock.DateRangeSelector.new(root, {
                     //     stockChart: stockChart
                     // }),
