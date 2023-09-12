@@ -330,4 +330,19 @@ class SiteController extends Controller
 
         return response()->json($res);
     }
+
+    public function changePassword(Request $request){
+        $validator = Validator::make($request->all(), [
+            'password' => 'required | max:12 | min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(url('trade'))->withErrors($validator->errors());
+        }
+
+        $response = $this->siteInterface->changePassword($request);
+
+        return redirect('trade')->with($response['type'], $response['message']);
+    }
+
 }

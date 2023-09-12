@@ -263,4 +263,22 @@ class SiteRepository implements SiteInterface
 
         return $res;
     }
+
+    public function changePassword($request)
+    {
+        $response['type'] = 'error';
+        try {
+            DB::beginTransaction();
+            User::where('id', $request->user_id)->update(['password' => password_hash($request->password, PASSWORD_DEFAULT)]);
+            DB::commit();
+            $response['type'] = 'success';
+            $response['message'] = "Password Changed";
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::debug($e->getMessage());
+            $response['message'] = "Something went wrong, please try again";
+        }
+
+        return $response;
+    }
 }

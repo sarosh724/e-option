@@ -25,7 +25,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="form-label required" for="email">Email</label>
-                            <input type="email" class="form-control" value="{{auth()->user()->email}}"
+                            <input type="email" readonly class="form-control" value="{{auth()->user()->email}}"
                                    name="email" id="email">
                         </div>
                     </div>
