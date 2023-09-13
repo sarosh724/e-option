@@ -17,6 +17,7 @@
     </div>
     <div class="col-md-6 text-right">
         <span class="text-white py-2 px-4 rounded" style="font-size: 1rem;" id="trading-rate"></span>
+        <span class="text-white py-2 px-4 rounded" style="font-size: 1rem;" id="trading-info"></span>
         <span class="text-white py-2 px-4 rounded ml-1" style="font-size: 1rem;" id="time"></span>
     </div>
 </div>
@@ -341,7 +342,7 @@
 
             var currentGrid = currentValueDataItem.get("grid");
             if (currentGrid) {
-                currentGrid.setAll({strokeOpacity: 0.5, strokeDasharray: [2, 5]});
+                currentGrid.setAll({strokeOpacity: 0.5, strokeDasharray: [2, 5], stroke: am5.color(0xffffff)});
             }
 
 
@@ -563,6 +564,7 @@
             });
 
             $("#trading-rate").hide();
+            $("#trading-info").hide();
 
             $(".btn_trade_period").on('click', function () {
                 if ($("#amt").val() < 1) {
@@ -589,10 +591,16 @@
                 milliseconds = seconds * 1000;
 
 
-                document.getElementById("trading-rate").innerHTML = `<small>Trade Closed on:</small> $${$("#close").val()}`;
+                let iconClass = $("#label").val() == "buy" ? "fa-arrow-up" : "fa-arrow-down";
+
+                document.getElementById("trading-rate").innerHTML = `<small>Trade Closed on:</small> $${$("#close").val()}<i class="fa ${iconClass} ml-1"></i>`;
                 document.getElementById("trading-rate").style.background = $("#label").val() == "buy" ? "#1d9c09" : "#c92112";
                 document.getElementById("trading-rate").style.color = "#ffffff";
                 $("#trading-rate").show();
+                document.getElementById("trading-info").innerHTML = `<small>Invested Amount:</small> $${$("#amt").val()} <small>Expected Profit:</small> $${$("#profit").val()}`;
+                document.getElementById("trading-info").style.background = "rgba(146,176,178,0.73)";
+                document.getElementById("trading-info").style.color = "#ffffff";
+                $("#trading-info").show();
                 // autoUpdate = false;
                 runTimer(seconds, time_period, type);
                 $("#tradePeriod").modal("hide");
@@ -636,6 +644,7 @@
                         clearInterval(update);
                         $("#time").hide();
                         $("#trading-rate").hide();
+                        $("#trading-info").hide();
                         let latest = valueSeries.data.getIndex(valueSeries.data.length - 1);
                         let label = $("#label").val();
                         let coin_id = $("#coin_id").val();
