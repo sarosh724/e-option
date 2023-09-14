@@ -388,7 +388,7 @@
 
             // Add custom button
             var buy = mainPanel.plotContainer.children.push(am5.Button.new(root, {
-                dx: 6,
+                dx: 1400,
                 dy: 400,
                 layer: 40,
                 label: am5.Label.new(root, {
@@ -420,7 +420,7 @@
             // });
 
             var sell = mainPanel.plotContainer.children.push(am5.Button.new(root, {
-                dx: 120,
+                dx: 1290,
                 dy: 400,
                 layer: 40,
                 label: am5.Label.new(root, {
