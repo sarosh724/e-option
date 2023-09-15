@@ -127,7 +127,7 @@
                     <span>Toggle Sidebar</span>
                 </button>
                 <h5 class="text-white m-0">Easy Option</h5>
-                <span class="ml-4" style="color: dimgray;">Web Trading Platform</span>
+{{--                <span class="ml-4" style="color: dimgray;">Web Trading Platform</span>--}}
                 <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-align-justify"></i>
                 </button>
