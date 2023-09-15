@@ -16,6 +16,7 @@
         </div>
     </div>
     <div class="col-md-6 text-right">
+        <button class="btn btn-sm btn secondary mr-2" id="hide-show-trade-history" onclick="show_hide_trade()">Show Trading History</button>;
         <span class="text-white py-2 px-4 rounded" style="font-size: 1rem;" id="trading-rate"></span>
         <span class="text-white py-2 px-4 rounded" style="font-size: 1rem;" id="trading-info"></span>
         <span class="text-white py-2 px-4 rounded ml-1" style="font-size: 1rem;" id="time"></span>
@@ -27,7 +28,7 @@
     <div class="container-fluid my-4" id="container"></div>
 </div>
 
-<div class="mt-3 col-md-12" id="history-box">
+<div class="mt-3 col-lg-12 col-md-12" id="history-box">
     <div class="card border-0">
         <div class="card-header bg-success">
             <h6 class="m-0 text-white" style="font-family: med;">Trading History</h6>
@@ -150,6 +151,21 @@
 <!-- Chart code -->
 
 <script>
+    var show_history = true
+    function show_hide_trade() {
+        if(show_history){
+            $('#history-box').fadeIn();
+            loadTradingHistory($('#coin').val())
+            show_history = false;
+            $('#hide-show-trade-history').text('Hide Trading History');
+        }
+        else{
+            $('#history-box').fadeOut();
+            $('#hide-show-trade-history').text('Show Trading History');
+            show_history = true;
+        }
+    }
+
     var root;
     var is_pump = false;
     var pump_type = '';
@@ -158,6 +174,7 @@
     $("#history-box").hide();
 
     $(document).ready(function () {
+        // $('#history-box').hide();
         var coin_id = $('#coin option:eq(1)').prop('selected', true);
         // $("#time-type").hide();
         $("#chart-div").hide();
@@ -242,7 +259,7 @@
         // $("#time-type").fadeIn();
         $("#chart-div").fadeIn();
 
-        $("#history-box").show();
+        // $("#history-box").show();
         loadTradingHistory(coin_id);
 
         am5.ready(async function () {
