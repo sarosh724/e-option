@@ -111,10 +111,10 @@ a:focus {
 }
 
 #recent-trades-box {
-    width: 350px;
+    width: 410px;
     position: fixed;
     top: 0;
-    right: -350px;
+    right: -410px;
     height: 100vh;
     z-index: 999;
     background: var(--second);

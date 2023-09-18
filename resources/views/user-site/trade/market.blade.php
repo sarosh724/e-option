@@ -4,13 +4,13 @@
     Market
 @stop
 
-@section('title')
-    Market
-@stop
+{{--@section('title')--}}
+{{--    Market--}}
+{{--@stop--}}
 
 @section('content')
 
-    <div class="mt-2 d-flex justify-content-between align-items-center">
+    <div class=" d-flex justify-content-between align-items-center">
         <div>
             <select class="form-control form-control-sm bg-dark" name="coin" id="coin" onChange="loadChart()" style="width: 150px;">
                 <option value="">Coin</option>
@@ -57,6 +57,8 @@
                     <tr>
                         <th class="bg-secondary" style="font-size: 14px;" width="15%">Coin</th>
                         <th class="bg-secondary" style="font-size: 14px;" width="15%">Amount</th>
+                        <th class="bg-secondary" style="font-size: 14px;" width="15%">Starting Price</th>
+                        <th class="bg-secondary" style="font-size: 14px;" width="15%">Closing Price</th>
                         <th class="bg-secondary" style="font-size: 14px;" width="10%">Time</th>
                         <th class="bg-secondary" style="font-size: 14px;" width="10%">Type</th>
                         <th class="bg-secondary" style="font-size: 14px;" width="50%">Result</th>
@@ -66,6 +68,8 @@
                             <tr>
                                 <td style="font-size: 12px;">{{$trade->coin_name}}</td>
                                 <td style="font-size: 12px;">${{$trade->amount_invested}}</td>
+                                <td style="font-size: 12px;">${{$trade->starting_price}}</td>
+                                <td style="font-size: 12px;">${{$trade->closing_price}}</td>
                                 <td style="font-size: 12px;">{{$trade->time_period}}</td>
                                 <td style="font-size: 12px;">{!! statusBadge($trade->label) !!}</td>
                                 <td style="font-size: 12px;">
@@ -92,32 +96,32 @@
         </div>
     </div>
 
-<div class="mt-3 col-lg-12 col-md-12" id="history-box">
-    <div class="card border-0 mt-2">
-        <div class="card-header bg-success">
-            <h6 class="m-0 text-white" style="font-family: med;">Trading History</h6>
-        </div>
-        <div class="card-body bg-black border border-dark">
-            <div class="table-responsive p-0">
-                <table class="table table-sm data-table" id="trading-data-table">
-                    <thead class="">
-                    <tr>
-                        <th width="20%">Coin</th>
-                        <th width="20%">Amount Invested</th>
-                        <th width="20%">Starting Price</th>
-                        <th width="20%">Closing Price</th>
-                        <th width="20%">Time Period</th>
-                        <th width="20%">Type</th>
-                        <th width="20%">Result</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+{{--<div class="mt-3 col-lg-12 col-md-12" id="history-box">--}}
+{{--    <div class="card border-0 mt-2">--}}
+{{--        <div class="card-header bg-success">--}}
+{{--            <h6 class="m-0 text-white" style="font-family: med;">Trading History</h6>--}}
+{{--        </div>--}}
+{{--        <div class="card-body bg-black border border-dark">--}}
+{{--            <div class="table-responsive p-0">--}}
+{{--                <table class="table table-sm data-table" id="trading-data-table">--}}
+{{--                    <thead class="">--}}
+{{--                    <tr>--}}
+{{--                        <th width="20%">Coin</th>--}}
+{{--                        <th width="20%">Amount Invested</th>--}}
+{{--                        <th width="20%">Starting Price</th>--}}
+{{--                        <th width="20%">Closing Price</th>--}}
+{{--                        <th width="20%">Time Period</th>--}}
+{{--                        <th width="20%">Type</th>--}}
+{{--                        <th width="20%">Result</th>--}}
+{{--                    </tr>--}}
+{{--                    </thead>--}}
+{{--                    <tbody>--}}
+{{--                    </tbody>--}}
+{{--                </table>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 <!-- Modal -->
 <div class="modal fade" id="tradePeriod" data-backdrop="static" data-keyboard="false" tabindex="-1"
