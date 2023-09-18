@@ -8,6 +8,7 @@ use App\Models\Trade;
 use App\Models\User;
 use App\Models\UserAccount;
 use App\Models\Withdraw;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -226,13 +227,23 @@ class SiteRepository implements SiteInterface
         return $res;
     }
 
-    public function getTradingHistory($request, $user, $coin_id = null)
+    public function getTradingHistory($request, $user, $coin_id = null, $filter = null)
     {
         $type = "live";
         $data = Trade::join("coins", "trades.coin_id", "coins.id");
 
         if (isset($coin_id)) {
             $data = $data->where("trades.coin_id", $coin_id);
+        }
+
+        if (isset($filter)) {
+            switch ($filter) {
+                case "today":
+                    $data = $data->whereDate("trades.created_at", Carbon::today());
+                    break;
+                default:
+                    break;
+            }
         }
 
         if ($user->is_demo_account) {

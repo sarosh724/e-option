@@ -110,6 +110,25 @@ a:focus {
     left: 0;
 }
 
+#recent-trades-box {
+    width: 350px;
+    position: fixed;
+    top: 0;
+    right: -350px;
+    height: 100vh;
+    z-index: 999;
+    background: var(--second);
+    /*background: rgb(36, 45, 57);*/
+    color: #fff;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#recent-trades-box.active {
+    right: 0;
+}
+
 #dismiss {
     width: 35px;
     height: 35px;
@@ -128,7 +147,29 @@ a:focus {
     transition: all 0.3s;
 }
 
+#recent-trades-box-dismiss {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    color: var(--black);
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    margin-top: 5px;
+    margin-left: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
 #dismiss:hover {
+    border: 1px solid #ffffff;
+    background: var(--black);
+    color: #ffffff;
+}
+#recent-trades-box-dismiss:hover {
     border: 1px solid #ffffff;
     background: var(--black);
     color: #ffffff;
@@ -367,6 +408,10 @@ div.dataTables_filter input:focus {
 .data-table tbody tr td{
     font-size: 14px !important;
 }
+
+#trading-data-table td {
+    font-size: 10px !important;
+}
 .context-box {
     margin-bottom: 0px;
 }
@@ -507,6 +552,13 @@ div.dataTables_filter input:focus {
     .account-box{
         border: none;
     }
+    #recent-trades-box {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -561,5 +613,12 @@ div.dataTables_filter input:focus {
     }
     .account-box{
         border: none;
+    }
+    #recent-trades-box {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
     }
 }

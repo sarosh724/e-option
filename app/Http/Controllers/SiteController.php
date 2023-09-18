@@ -193,9 +193,12 @@ class SiteController extends Controller
         return view('site.pages.about');
     }
 
-    public function market()
+    public function market(Request $request)
     {
-        return view('user-site.trade.market');
+        $user = User::find(auth()->user()->id);
+        $recentTrades = $this->siteInterface->getTradingHistory($request, $user);
+
+        return view('user-site.trade.market', compact(['recentTrades']));
     }
 
     public function getWithdrawalAccounts(Request $request, $id = null)
