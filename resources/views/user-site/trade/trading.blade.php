@@ -220,7 +220,7 @@
 
         <div class="px-2 py-2 text-white context-box">
             <div>
-                <h3 class="m-0 py-3 d-inline-block border-bottom border-secondary text-success" style="font-family: bold;">@yield('title')</h3>
+                <h3 class="m-0 py-1 d-inline-block border-bottom border-secondary text-success title" style="font-family: bold;">@yield('title')</h3>
             </div>
             <div>
                 @yield('content')

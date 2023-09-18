@@ -448,6 +448,9 @@ div.dataTables_filter input:focus {
 .parent-account-drp-down{
     padding: 0px 8px;
 }
+.title{
+    font-size: 19px;
+}
 @media screen and (max-width: 576px) {
     .context-box {
         margin-bottom: 65px;
@@ -494,6 +497,9 @@ div.dataTables_filter input:focus {
     }
     .parent-account-drp-down{
         padding: 0px 5px;
+    }
+    .title{
+        font-size: 16px;
     }
 }
 
@@ -543,5 +549,8 @@ div.dataTables_filter input:focus {
     }
     .parent-account-drp-down{
         padding: 0px 5px;
+    }
+    .title{
+        font-size: 16px;
     }
 }

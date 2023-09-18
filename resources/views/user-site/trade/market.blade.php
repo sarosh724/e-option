@@ -30,7 +30,7 @@
         <span class="text-white px-2 py-1 mt-1 rounded" id="trading-info"></span>
     </div>
 {{--<div class="col-md-12">--}}
-    <div class="mt-2 chart-div p-0 py-3">
+    <div class="chart-div p-0 py-1">
         <div class="text-white" id="chart_controls"></div>
         <div class="container-fluid my-2 p-0" id="container"></div>
         <div class="button-box p-0">
@@ -653,7 +653,7 @@
 
                 let iconClass = $("#label").val() == "buy" ? "fa-arrow-up" : "fa-arrow-down";
 
-                document.getElementById("trading-rate").innerHTML = `<small>Trade Closed on:</small> $${$("#close").val()}<i class="fa ${iconClass} ml-1"></i>`;
+                document.getElementById("trading-rate").innerHTML = `<small>Trade Closed on:</small> ${$("#close").val()}<i class="fa ${iconClass} ml-1"></i>`;
                 document.getElementById("trading-rate").style.background = $("#label").val() == "buy" ? "#1d9c09" : "#c92112";
                 document.getElementById("trading-rate").style.color = "#ffffff";
                 $("#trading-rate").show();
