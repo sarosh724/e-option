@@ -124,7 +124,7 @@
                             <i class="fas fa-align-left"></i>
                         </button>
                         <h3 class="text-white m-0 ml-1" style="font-family: med;">Easy<span class="text-success">Option</span></h3>
-                        <span class="text-secondary ml-1 my-title" style="font-size: 14px;"><i>Web Trading Platform</i></span>
+{{--                        <span class="text-secondary ml-1 my-title" style="font-size: 14px;"><i>Web Trading Platform</i></span>--}}
                     </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-center">
