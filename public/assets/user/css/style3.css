@@ -435,6 +435,10 @@ div.dataTables_filter input:focus {
 .drp-name {
     display: block;
 }
+.period-box {
+    /*display: grid;*/
+    /*grid-template-columns: 1fr 1fr 1fr;*/
+}
 @media screen and (max-width: 576px) {
     .context-box {
         margin-bottom: 65px;
@@ -462,10 +466,10 @@ div.dataTables_filter input:focus {
         margin-top: 4px;
     }
     #trading-info {
-        display: block !important;
+        display: block;
     }
     .drp-name {
-        display: none !important;
+        display: none;
     }
 }
 
@@ -496,9 +500,9 @@ div.dataTables_filter input:focus {
         margin-top: 4px;
     }
     #trading-info {
-        display: block !important;
+        display: block ;
     }
     .drp-name {
-        display: none !important;
+        display: none;
     }
 }

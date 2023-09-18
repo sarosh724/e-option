@@ -102,34 +102,25 @@
                     </div>
                 </div>
                 <label class="form-label mt-3">Select Period</label>
-                <div class="row mt-1">
-                    <div class="col-2 mb-3">
-                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="s" data-period="5" style="width: 100% !important;">5S</button>
-                    </div>
-                    <div class="col-2 mb-3">
-                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="s" data-period="10" style="width: 100% !important;">10S</button>
-                    </div>
-                    <div class="col-2 mb-3">
-                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="s" data-period="30" style="width: 100% !important;">30S</button>
-                    </div>
-                    <div class="col-2 mb-3">
-                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="m" data-period="1" style="width: 100% !important;">1M</button>
-                    </div>
-                    <div class="col-2 mb-3">
-                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="m" data-period="5" style="width: 100% !important;">5M</button>
-                    </div>
-                    <div class="col-2 mb-3">
-                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="m" data-period="15" style="width: 100% !important;">15M</button>
-                    </div>
-                    <div class="col-2 mb-3">
-                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="m" data-period="30" style="width: 100% !important;">30M</button>
-                    </div>
-                    <div class="col-2 mb-3">
-                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="h" data-period="1" style="width: 100% !important;">1H</button>
-                    </div>
-                    <div class="col-2 mb-3">
-                        <button class="btn btn-sm btn-secondary btn_trade_period" data-type="h" data-period="2" style="width: 100% !important;">2H</button>
-                    </div>
+                <div class="period-box mt-1">
+
+                        <button class="btn btn-sm btn-secondary btn_trade_period mb-3 mr-3" data-type="s" data-period="5">5S</button>
+
+                        <button class="btn btn-sm btn-secondary btn_trade_period mb-3 mr-3" data-type="s" data-period="10">10S</button>
+
+                        <button class="btn btn-sm btn-secondary btn_trade_period mb-3 mr-3" data-type="s" data-period="30">30S</button>
+
+                        <button class="btn btn-sm btn-secondary btn_trade_period mb-3 mr-3" data-type="m" data-period="1">1M</button>
+
+                        <button class="btn btn-sm btn-secondary btn_trade_period mb-3 mr-3" data-type="m" data-period="5">5M</button>
+
+                        <button class="btn btn-sm btn-secondary btn_trade_period mb-3 mr-3" data-type="m" data-period="15">15M</button>
+
+                        <button class="btn btn-sm btn-secondary btn_trade_period mb-3 mr-3" data-type="m" data-period="30">30M</button>
+
+                        <button class="btn btn-sm btn-secondary btn_trade_period mb-3 mr-3" data-type="h" data-period="1">1H</button>
+
+                        <button class="btn btn-sm btn-secondary btn_trade_period mb-3 mr-3" data-type="h" data-period="2">2H</button>
                 </div>
             </div>
         </div>
@@ -227,7 +218,7 @@
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        alert(textStatus + ' : ' + errorThrown);
+                        // alert(textStatus + ' : ' + errorThrown);
                     }
                 });
             }
@@ -763,7 +754,7 @@
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             toast(res.message, "info");
-                            alert(textStatus + ' : ' + errorThrown);
+                            // alert(textStatus + ' : ' + errorThrown);
                         }
                     });
                 }
