@@ -12,7 +12,7 @@
     <div class="card border-0">
         <div class="card-body bg-self">
             <div class="row">
-                <div class="col-md-4" style="border-right: 1px dashed #6c757d;">
+                <div class="col-md-4 mt-2 account-box">
                     <h5 style="font-family: bold;" class="text-white m-0">Personal Info:</h5>
                     <div class="mt-3">
                         <form method="post" name="user-form" id="user-form" action="{{url('profile')}}" enctype="multipart/form-data">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4" style="border-right: 1px dashed #6c757d;">
+                <div class="col-md-4 mt-2 account-box">
                     <h5 style="font-family: bold;" class="text-white m-0">Security:</h5>
                     <div class="mt-3">
                         <form method="post" autocomplete="off" name="change-password-form" id="change-password-form" action="{{url('change-password')}}">
@@ -86,7 +86,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-4 mt-2">
                     <h5 style="font-family: bold;" class="text-white m-0">Withdrawal Accounts:</h5>
                     <div class="mt-3">
                         <form method="post" name="withdrawal-account-form" id="withdrawal-account-form" action="{{url('withdrawal-account')}}">

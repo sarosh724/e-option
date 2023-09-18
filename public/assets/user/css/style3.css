@@ -451,6 +451,9 @@ div.dataTables_filter input:focus {
 .title{
     font-size: 19px;
 }
+.account-box{
+    border-right: 1px dashed #6c757d;
+}
 @media screen and (max-width: 576px) {
     .context-box {
         margin-bottom: 65px;
@@ -500,6 +503,9 @@ div.dataTables_filter input:focus {
     }
     .title{
         font-size: 16px;
+    }
+    .account-box{
+        border: none;
     }
 }
 
@@ -552,5 +558,8 @@ div.dataTables_filter input:focus {
     }
     .title{
         font-size: 16px;
+    }
+    .account-box{
+        border: none;
     }
 }

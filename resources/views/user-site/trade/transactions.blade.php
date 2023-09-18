@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="row">
-        <div class="mt-3 col-md-6">
+        <div class="mt-1 col-md-6">
             <div class="card border-0">
                 <div class="card-header bg-success">
                     <h6 class="m-0 text-white" style="font-family: med;">Deposit History</h6>
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="mt-3 col-md-6">
+        <div class="mt-1 col-md-6">
             <div class="card border-0">
                 <div class="card-header bg-success">
                     <h6 class="m-0 text-white" style="font-family: med;">Withdrawal History</h6>
