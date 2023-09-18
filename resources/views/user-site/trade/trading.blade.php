@@ -40,6 +40,43 @@
         #live-acc-btn, #demo-acc-btn, .live-acc-label, .demo-acc-label:hover {
             cursor: pointer;
         }
+        .demo-acc-label, .live-acc-label{
+            font-size: 15px;
+        }
+        .dropdown-menu {
+            min-width: 150px !important;
+        }
+        @media screen and (max-width: 768px) {
+            #live-acc-btn, #demo-acc-btn {
+                width: 18px;
+                height: 18px;
+            }
+            .demo-acc-label, .live-acc-label{
+                font-size: 12px;
+            }
+            #live-balance, #demo-balance {
+                font-size: 12px;
+            }
+            #live-acc-btn, #demo-acc-btn i {
+                font-size: 10px;
+            }
+        }
+        @media screen and (max-width: 576px) {
+            #live-acc-btn, #demo-acc-btn {
+                width: 18px;
+                height: 18px;
+                margin-top: 5px;
+            }
+            .demo-acc-label, .live-acc-label{
+                font-size: 13px;
+            }
+            #live-balance, #demo-balance {
+                font-size: 12px;
+            }
+            #live-acc-btn, #demo-acc-btn i {
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 
@@ -145,7 +182,7 @@
                                 </div>
                             </div>
                         </button>
-                        <div class="dropdown-menu bg-black shadow p-0" style="min-width: 150px !important;" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-menu bg-black shadow p-0" aria-labelledby="dropdownMenuButton">
                             <div class="px-3 py-2">
                                 <div class="d-flex justify-content-start align-items-center">
                                     <small class="text-secondary drp-name mr-2">Name:</small>
@@ -158,27 +195,27 @@
                             </div>
                             <hr style="background: #4f4e4d; margin: 0;">
 
-                            <div class="d-flex justify-content-start px-3 py-2">
+                            <div class="d-flex justify-content-start drd-box px-2 py-2">
                                 <div>
                                     <label id="live-acc-btn" data-type="live"><i class="far fa-check"></i></label>
                                 </div>
                                 <div class="ml-2">
-                                    <span class="live-acc-label text-white" data-type="live" style="font-size: 15px; font-family: med;" for="live-acc-btn">Live Account</span>
+                                    <span class="live-acc-label text-white" data-type="live" style="font-family: med;" for="live-acc-btn">Live Account</span>
                                     <span class="text-secondary d-block" id="live-balance" style="font-family: bold;">${{sprintf("%0.2f", auth()->user()->account_balance)}}</span>
                                 </div>
                             </div>
                             <hr style="background: #4f4e4d; margin: 0;">
-                            <div class="d-flex justify-content-start px-3 py-2">
+                            <div class="d-flex justify-content-start drd-box px-2 py-2">
                                 <div>
                                     <label id="demo-acc-btn" data-type="demo"><i class="far fa-check"></i></label>
                                 </div>
                                 <div class="ml-2">
-                                    <span class="demo-acc-label text-white" data-type="demo" style="font-size: 15px; font-family: med;" for="demo-acc-btn">Demo Account</span>
+                                    <span class="demo-acc-label text-white" data-type="demo" style="font-family: med;" for="demo-acc-btn">Demo Account</span>
                                     <span class="text-secondary d-block" id="demo-balance" style="font-family: bold;">${{sprintf("%0.2f", auth()->user()->demo_account_balance)}}</span>
                                 </div>
                             </div>
                             <hr style="background: #4f4e4d; margin: 0;">
-                            <div class="px-3 py-2">
+                            <div class="drd-box px-2 py-2">
                                 <a href="{{url('logout')}}" class="text-danger">
                                     <i class="far fa-sign-out-alt text-danger mr-1"></i>Logout
                                 </a>
