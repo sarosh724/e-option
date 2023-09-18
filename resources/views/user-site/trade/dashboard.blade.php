@@ -16,14 +16,13 @@
                     <div class="d-flex justify-content-start align-items-center">
                         <div>
                             @php
-                                $url = auth()->user()->photo ? auth()->user()->photo : asset('assets/site/img/user.png')
+                                $url = auth()->user()->photo ? auth()->user()->photo : asset('assets/user/img/user.png')
                             @endphp
                             <img src="{{$url}}" width="70px" height="70px"
                                  class="rounded-circle p-1 border border-success" style="object-fit: contain;">
                         </div>
                         <div class="ml-3">
-                            <p class="m-0 text-white" style="font-family: regular;">{{auth()->user()->name}} (BTR{{auth()->user()->uuid}})</p>
-                            <small class="text-success d-block" style="font-family: light;">{{auth()->user()->phone_number}}</small>
+                            <p class="m-0 text-white" style="font-family: regular;">{{auth()->user()->name}}</p>
                             <small class="text-success d-block" style="font-family: light;">{{auth()->user()->email}}</small>
                         </div>
                     </div>
