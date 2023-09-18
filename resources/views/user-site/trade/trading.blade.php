@@ -123,23 +123,23 @@
                         <button type="button" id="sidebarCollapse" class="btn btn-outline-secondary" style="border: none !important;">
                             <i class="fas fa-align-left"></i>
                         </button>
-                        <h3 class="text-white m-0 ml-1" style="font-family: med;">Easy<span class="text-success">Option</span></h3>
+                        <h3 class="text-white m-0 ml-1 brand-text" style="font-family: med;">Easy<span class="text-success">Option</span></h3>
 {{--                        <span class="text-secondary ml-1 my-title" style="font-size: 14px;"><i>Web Trading Platform</i></span>--}}
                     </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-center">
                     <div class="dropdown mr-1 p-0">
-                        <button class="btn bg-black d-flex justify-content-between align-items-center btn-drp-account p-0"
+                        <button class="btn bg-black d-flex justify-content-between align-items-center btn-drp-account"
                                 type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" style="padding: 4.5px 15px !important;">
+                                aria-haspopup="true" aria-expanded="false" >
                             <div class="pr-1">
                                 <span><i class="fa fa-location-arrow text-success"></i></span>
                             </div>
                             <div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div class="text-left px-3">
-                                        <small class="m-0 d-block text-secondary" style="font-size: 11px; font-family: med;">{{(auth()->user()->is_demo_account) ? "Demo Account" : "Live Account"}}</small>
-                                        <h6 class="m-0 text-white" id="balance" style="font-family: bold;">${{sprintf("%0.2f", (auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance)}}</h6>
+                                    <div class="text-left parent-account-drp-down">
+                                        <small class="m-0 d-block text-secondary account-type-text" style="font-family: med;">{{(auth()->user()->is_demo_account) ? "Demo Account" : "Live Account"}}</small>
+                                        <h6 class="m-0 text-white balance-text" id="balance" style="font-family: bold;">${{sprintf("%0.2f", (auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance)}}</h6>
                                     </div>
                                     <span class="pl-1 text-white"><i class="far fa-chevron-down" id="account-icon" style="font-size: 13px;"></i></span>
                                 </div>

@@ -439,6 +439,15 @@ div.dataTables_filter input:focus {
     /*display: grid;*/
     /*grid-template-columns: 1fr 1fr 1fr;*/
 }
+.btn-drp-account{
+    padding: 4.5px 15px;
+}
+.account-type-text{
+    font-size: 11px;
+}
+.parent-account-drp-down{
+    padding: 0px 8px;
+}
 @media screen and (max-width: 576px) {
     .context-box {
         margin-bottom: 65px;
@@ -470,6 +479,21 @@ div.dataTables_filter input:focus {
     }
     .drp-name {
         display: none;
+    }
+    .brand-text{
+        font-size: 16px;
+    }
+    .balance-text{
+        font-size: 14px !important;
+    }
+    .btn-drp-account{
+        padding: 3px 9px;
+    }
+    .account-type-text{
+        font-size: 10px;
+    }
+    .parent-account-drp-down{
+        padding: 0px 5px;
     }
 }
 
@@ -504,5 +528,20 @@ div.dataTables_filter input:focus {
     }
     .drp-name {
         display: none;
+    }
+    .brand-text{
+        font-size: 16px;
+    }
+    .balance-text{
+        font-size: 14px !important;
+    }
+    .btn-drp-account{
+        padding: 3px 9px;
+    }
+    .account-type-text{
+        font-size: 10px;
+    }
+    .parent-account-drp-down{
+        padding: 0px 5px;
     }
 }
