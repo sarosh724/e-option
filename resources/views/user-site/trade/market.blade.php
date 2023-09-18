@@ -19,8 +19,12 @@
                 @endforeach
             </select>
         </div>
+
         <div>
-            <button class="btn btn-sm btn secondary mr-2" id="hide-show-trade-history" onclick="show_hide_trade()">Show Trading History</button>
+            <button type="button" id="tradeHistoryCollapse" class="btn btn-sm btn secondary mr-2">
+                Recent Trades
+            </button>
+{{--            <button class="btn btn-sm btn secondary mr-2" id="hide-show-trade-history" onclick="show_hide_trade()">Show Trading History</button>--}}
         </div>
     </div>
 
@@ -40,15 +44,62 @@
     </div>
 {{--</div>--}}
 
+    <div id="recent-trades-box">
+        <div id="recent-trades-box-dismiss">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="card border-0 mt-2">
+            <div class="card-header bg-success p-0 px-1 py-2">
+                <h6 class="m-0 text-white" style="font-family: med;">Recent Trades</h6>
+            </div>
+            <div class="card-body bg-second p-0 p-1">
+                <table class="table table-sm">
+                    <tr>
+                        <th class="bg-secondary" style="font-size: 14px;" width="15%">Coin</th>
+                        <th class="bg-secondary" style="font-size: 14px;" width="15%">Amount</th>
+                        <th class="bg-secondary" style="font-size: 14px;" width="10%">Time</th>
+                        <th class="bg-secondary" style="font-size: 14px;" width="10%">Type</th>
+                        <th class="bg-secondary" style="font-size: 14px;" width="50%">Result</th>
+                    </tr>
+                    @if(count($recentTrades) > 0)
+                        @foreach($recentTrades as $trade)
+                            <tr>
+                                <td style="font-size: 12px;">{{$trade->coin_name}}</td>
+                                <td style="font-size: 12px;">${{$trade->amount_invested}}</td>
+                                <td style="font-size: 12px;">{{$trade->time_period}}</td>
+                                <td style="font-size: 12px;">{!! statusBadge($trade->label) !!}</td>
+                                <td style="font-size: 12px;">
+                                    @php
+                                        $class = "btn-danger";
+                                        $icon = "fa-minus";
+                                        $txt = '$'.sprintf("%0.2f", $trade->amount_invested) . " " . $trade->result;
+
+                                        if ($trade->result == "Profit") {
+                                            $class = "btn-success";
+                                            $icon = "fa-plus";
+                                            $txt = '$'.sprintf("%0.2f", $trade->profit) . " " . $trade->result;
+                                        }
+                                    @endphp
+                                    <a class="btn btn-sm {{$class}}"><i class="far {{$icon}} text-white mr-1" style="font-size: 12px;"></i>{{$txt}}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+
+                    @endif
+                </table>
+            </div>
+        </div>
+    </div>
 
 <div class="mt-3 col-lg-12 col-md-12" id="history-box">
-    <div class="card border-0">
+    <div class="card border-0 mt-2">
         <div class="card-header bg-success">
             <h6 class="m-0 text-white" style="font-family: med;">Trading History</h6>
         </div>
         <div class="card-body bg-black border border-dark">
             <div class="table-responsive p-0">
-                <table class="table table-sm table-dark table-striped table-hover" id="trading-data-table">
+                <table class="table table-sm data-table" id="trading-data-table">
                     <thead class="">
                     <tr>
                         <th width="20%">Coin</th>
@@ -188,6 +239,19 @@
     $("#history-box").hide();
 
     $(document).ready(function () {
+        $("#recent-trades-box").mCustomScrollbar({
+            theme: "minimal"
+        });
+
+        $('#recent-trades-box-dismiss, .overlay').on('click', function () {
+            $('#recent-trades-box').removeClass('active');
+        });
+
+        $('#tradeHistoryCollapse').on('click', function () {
+            $('#recent-trades-box').addClass('active');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            loadTradingHistory($('#coin').val())
+        });
         // $('#history-box').hide();
         var coin_id = $('#coin option:eq(1)').prop('selected', true);
         // $("#time-type").hide();
@@ -244,25 +308,25 @@
     }
 
     function loadTradingHistory(coin_id) {
-        $('#trading-data-table').DataTable({
-            processing: true,
-            serverSide: true,
-            destroy: true,
-            aaSorting: [[0, "desc"]],
-            columnsDefs: [{
-                orderable: true
-            }],
-            ajax: {url: "{{url('trading/history').'/'.auth()->user()->id}}"+"/"+coin_id},
-            columns: [
-                {data: 'coin', name: 'coin'},
-                {data: 'amount_invested', name: 'amount_invested'},
-                {data: 'starting_price', name: 'starting_price'},
-                {data: 'closing_price', name: 'closing_price'},
-                {data: 'time_period', name: 'time_period'},
-                {data: 'type', name: 'type'},
-                {data: 'result', name: 'result'}
-            ]
-        });
+        {{--$('#trading-data-table').DataTable({--}}
+        {{--    processing: true,--}}
+        {{--    serverSide: true,--}}
+        {{--    destroy: true,--}}
+        {{--    aaSorting: [[0, "desc"]],--}}
+        {{--    columnsDefs: [{--}}
+        {{--        orderable: true--}}
+        {{--    }],--}}
+        {{--    ajax: {url: "{{url('trading/history').'/'.auth()->user()->id}}"+"/"+coin_id},--}}
+        {{--    columns: [--}}
+        {{--        {data: 'coin', name: 'coin'},--}}
+        {{--        {data: 'amount_invested', name: 'amount_invested'},--}}
+        {{--        {data: 'starting_price', name: 'starting_price'},--}}
+        {{--        {data: 'closing_price', name: 'closing_price'},--}}
+        {{--        {data: 'time_period', name: 'time_period'},--}}
+        {{--        {data: 'type', name: 'type'},--}}
+        {{--        {data: 'result', name: 'result'}--}}
+        {{--    ]--}}
+        {{--});--}}
     }
 
     function loadChart() {

@@ -60,7 +60,7 @@ interface SiteInterface
      * @param $coin_id
      * @return mixed
      */
-    public function getTradingHistory($request, $user, $coin_id = null);
+    public function getTradingHistory($request, $user, $coin_id = null, $filter = null);
 
     /**
      * @param Request $request
