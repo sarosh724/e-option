@@ -33,15 +33,25 @@ class SiteController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return redirect()->intended('/trade');
+            return redirect()->intended('/dashboard');
         }
 
         return view('user-site.home');
     }
 
+    public function dashboard()
+    {
+        $data['count_deposits'] = auth()->user()->countDeposit();
+        $data['count_withdrawals'] = auth()->user()->countWithdraw();
+        $data['count_trades'] = auth()->user()->countTrades();
+        $data['count_referrals'] = auth()->user()->countReferral();
+
+        return view('user-site.trade.dashboard', compact(['data']));
+    }
+
     public function trading()
     {
-        return view('site.pages.trading');
+        return view('user-site.trade.trading');
     }
 
     public function deposit(Request $request)
@@ -88,7 +98,7 @@ class SiteController extends Controller
 
         $payment_methods = $this->paymentMethodInterface->paymentMethodListing(true);
 
-        return view('site.pages.deposit', compact(['payment_methods']));
+        return view('user-site.trade.deposit', compact(['payment_methods']));
     }
 
     public function withdrawal(Request $request)
@@ -142,7 +152,35 @@ class SiteController extends Controller
 
         $accounts = $this->siteInterface->withdrawalAccountListing(auth()->id(), $id=null);
 
-        return view('site.pages.withdrawal', compact(['accounts']));
+        return view('user-site.trade.withdrawal', compact(['accounts']));
+    }
+
+    public function transactions()
+    {
+        return view('user-site.trade.transactions');
+    }
+
+    public function tradeHistory()
+    {
+        return view('user-site.trade.trades');
+    }
+
+    public function referral()
+    {
+        $referrals = Referral::where("referred_by", auth()->user()->id)->count();
+        $referrer_amount = Setting::select("referral_sign_up_amount")->pluck("referral_sign_up_amount")->first();
+
+        return view('user-site.trade.referral', compact(['referrals', 'referrer_amount']));
+    }
+
+    public function withdrawalAccount()
+    {
+        return view('user-site.trade.withdrawal-account');
+    }
+
+    public function account()
+    {
+        return view('user-site.trade.account');
     }
 
     public function settings()
@@ -153,6 +191,11 @@ class SiteController extends Controller
     public function about()
     {
         return view('site.pages.about');
+    }
+
+    public function market()
+    {
+        return view('user-site.trade.market');
     }
 
     public function getWithdrawalAccounts(Request $request, $id = null)
@@ -188,12 +231,12 @@ class SiteController extends Controller
         ]);
 
         if ($validate->fails()) {
-            return redirect(url('trade'))->withErrors($validate);
+            return redirect()->back()->withErrors($validate);
         }
 
         $res = $this->siteInterface->storeWithdrawalAccount($request);
 
-        return redirect(url('trade'))->with($res['type'], $res['message']);
+        return redirect()->back()->with($res['type'], $res['message']);
     }
 
     public function getPaymentMethodDetail($id)
@@ -345,4 +388,25 @@ class SiteController extends Controller
         return redirect('trade')->with($response['type'], $response['message']);
     }
 
+    public function getWithdrawalAccount(Request $request){
+
+        if ($request->ajax()) {
+            $data = $this->siteInterface->withdrawalAccountListing(auth()->user()->id, null);
+
+            return DataTables::of($data)
+                ->addColumn('bank', function ($data) {
+                    return $data->bank;
+                })
+                ->addColumn('account_name', function ($data) {
+                    return $data->account_name;
+                })
+                ->addColumn('account_number', function ($data) {
+                    return $data->account_number;
+                })
+                ->addColumn('phone', function ($data) {
+                    return $data->phone;
+                })
+                ->make(true);
+        }
+    }
 }

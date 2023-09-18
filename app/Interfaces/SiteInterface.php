@@ -69,4 +69,5 @@ interface SiteInterface
     public function changeUserAccount(Request $request, $user);
 
     public function changePassword(Request $request);
+
 }

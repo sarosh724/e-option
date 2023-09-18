@@ -58,7 +58,7 @@ class AdminController extends Controller
 
             $res = $this->userInterface->update($request);
 
-            return redirect(url('admin/profile'))->with($res['type'], $res['message']);
+            return redirect()->back()->with($res['type'], $res['message']);
         }
 
         return view("admin.dashboard.profile");

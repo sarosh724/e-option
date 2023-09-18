@@ -23,6 +23,12 @@ class UserRepository implements UserInterface
             $user->name = $request->name;
             $user->email = $request->email;
             $user->country = $request->country;
+            if (isset($request->photo)) {
+                $photo = $request->file('photo');
+                $name = time() . '_customer_' . $request->id . '_photo' . '_' . $photo->getClientOriginalName();
+                $photo->move(public_path('uploads/users'), $name);
+                $user->photo = '/uploads/users/' . $name;
+            }
             $user->save();
             DB::commit();
             $res['type'] = "success";

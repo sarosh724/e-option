@@ -1,8 +1,16 @@
-<div class="card border-0">
-{{--    <div class="card-header">--}}
-{{--        <h6 class="m-0 font-weight-bold">Create Deposit</h6>--}}
-{{--    </div>--}}
-    <div class="card-body bg-black">
+@extends('user-site.trade.trading')
+
+@section('page-title')
+    Deposits
+@stop
+
+@section('title')
+    Make Deposit
+@stop
+
+@section('content')
+    <div class="card border-0">
+        <div class="card-body bg-self p-0 px-2 py-3">
         @if(auth()->user()->is_demo_account)
             <div class="alert alert-danger">
                 <b>Note:</b><span class="ml-1">Sorry, you cannot <b>Deposit</b> into demo account.</span>
@@ -63,9 +71,11 @@
             </div>
         </form>
     </div>
-</div>
+    </div>
+@stop
 
-<script>
+@section('scripts')
+    <script>
     $(document).ready(function (){
         $("#detail-box").hide();
         $("#file-box").hide();
@@ -140,3 +150,4 @@
         }
     }
 </script>
+@stop

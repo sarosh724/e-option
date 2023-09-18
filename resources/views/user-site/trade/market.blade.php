@@ -1,32 +1,45 @@
-<div class="row">
-    <div class="col-md-6">
-        <div class="d-flex justify-content-start align-items-center">
-            <select class="form-control bg-dark" name="coin" id="coin" onChange="loadChart()" style="width: 150px;">
+@extends('user-site.trade.trading')
+
+@section('page-title')
+    Market
+@stop
+
+@section('title')
+    Market
+@stop
+
+@section('content')
+
+    <div class="mt-2 d-flex justify-content-between align-items-center">
+        <div>
+            <select class="form-control form-control-sm bg-dark" name="coin" id="coin" onChange="loadChart()" style="width: 150px;">
                 <option value="">Coin</option>
                 @foreach(getCoins() as $coin)
                     <option value="{{$coin->id}}">{{$coin->name}}</option>
                 @endforeach
             </select>
-
-{{--            <select class="form-control bg-dark ml-1" name="time-type" id="time-type" onChange="loadChart()" style="width: 100px;">--}}
-{{--                <option value="">Filter</option>--}}
-{{--                <option value="second">Second</option>--}}
-{{--                <option value="minute" selected>Minute</option>--}}
-{{--            </select>--}}
+        </div>
+        <div>
+            <button class="btn btn-sm btn secondary mr-2" id="hide-show-trade-history" onclick="show_hide_trade()">Show Trading History</button>
         </div>
     </div>
-    <div class="col-md-6 text-right">
-        <button class="btn btn-sm btn secondary mr-2" id="hide-show-trade-history" onclick="show_hide_trade()">Show Trading History</button>;
-        <span class="text-white py-2 px-4 rounded" style="font-size: 1rem;" id="trading-rate"></span>
-        <span class="text-white py-2 px-4 rounded" style="font-size: 1rem;" id="trading-info"></span>
-        <span class="text-white py-2 px-4 rounded ml-1" style="font-size: 1rem;" id="time"></span>
-    </div>
-</div>
 
-<div class="mt-2 chart-div">
-    <div class="text-white" id="chart_controls"></div>
-    <div class="container-fluid my-4" id="container"></div>
-</div>
+    <div class="result-box p-0">
+        <span class="text-white px-2 py-1 mt-1 rounded" id="time"></span>
+        <span class="text-white px-2 py-1 mt-1 rounded" id="trading-rate"></span>
+        <span class="text-white px-2 py-1 mt-1 rounded" id="trading-info"></span>
+    </div>
+{{--<div class="col-md-12">--}}
+    <div class="mt-2 chart-div p-0 py-3">
+        <div class="text-white" id="chart_controls"></div>
+        <div class="container-fluid my-2 p-0" id="container"></div>
+        <div class="button-box p-0">
+            <button class="btn btn-success mr-1 px-2" id="btn-buy" data-label="buy">85% Buy</button>
+            <button class="btn btn-danger mr-1 px-2" id="btn-sell" data-label="sell">75% Sell</button>
+        </div>
+    </div>
+{{--</div>--}}
+
 
 <div class="mt-3 col-lg-12 col-md-12" id="history-box">
     <div class="card border-0">
@@ -90,31 +103,31 @@
                 </div>
                 <label class="form-label mt-3">Select Period</label>
                 <div class="row mt-1">
-                    <div class="col-md-2 mb-3">
+                    <div class="col-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="s" data-period="5" style="width: 100% !important;">5S</button>
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="s" data-period="10" style="width: 100% !important;">10S</button>
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="s" data-period="30" style="width: 100% !important;">30S</button>
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="m" data-period="1" style="width: 100% !important;">1M</button>
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="m" data-period="5" style="width: 100% !important;">5M</button>
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="m" data-period="15" style="width: 100% !important;">15M</button>
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="m" data-period="30" style="width: 100% !important;">30M</button>
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="h" data-period="1" style="width: 100% !important;">1H</button>
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-2 mb-3">
                         <button class="btn btn-sm btn-secondary btn_trade_period" data-type="h" data-period="2" style="width: 100% !important;">2H</button>
                     </div>
                 </div>
@@ -124,7 +137,9 @@
 </div>
 
 {{--- AM charts - live stock data ---}}
+@stop
 
+@section('styles')
 <!-- Styles -->
 <style>
     #chart_controls {
@@ -135,7 +150,7 @@
 
     #container {
         width: 100%;
-        height: 500px;
+        height: 100%;
         max-width: 100%
     }
 
@@ -149,7 +164,15 @@
 </style>
 
 <!-- Chart code -->
+@stop
 
+@section('scripts')
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/stock.js"></script>
+    {{--<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>--}}
+    <script src="https://cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
+    {{--<script src="https://cdn.amcharts.com/lib/5/themes/Dark.js"></script>--}}
 <script>
     var show_history = true
     function show_hide_trade() {
@@ -403,89 +426,91 @@
             // https://www.amcharts.com/docs/v5/charts/stock-chart/#Setting_main_series
             valueLegend.data.setAll([valueSeries]);
 
+            $("#btn-buy").text(`${coin_data.buy_profit}% Buy`);
+            $("#btn-sell").text(`${coin_data.sell_profit}% Sell`);
             // Add custom button
-            var buy = mainPanel.plotContainer.children.push(am5.Button.new(root, {
-                dx: 1400,
-                dy: 400,
-                layer: 40,
-                label: am5.Label.new(root, {
-                    text: `${coin_data.buy_profit}% Buy`,
-                    fontSize: 15,
-                    fontWeight: "600",
-                    paddingTop: 0,
-                    paddingRight: 14,
-                    paddingBottom: 0,
-                    paddingLeft: 14,
-                })
-            }));
-            buy.get("background").setAll({
-                cornerRadiusTL: 3,
-                cornerRadiusTR: 3,
-                cornerRadiusBR: 3,
-                cornerRadiusBL: 3,
-                fill: '#1d9c09',
-                fillOpacity: 1
-            })
-            buy.get("background").states.create("hover", {}).setAll({
-                fill: am5.color('#068c06'),
-                fillOpacity: 0.8
-            });
+            // var buy = mainPanel.plotContainer.children.push(am5.Button.new(root, {
+            //     dx: 700,
+            //     dy: 400,
+            //     layer: 40,
+            //     label: am5.Label.new(root, {
+            //         text: `${coin_data.buy_profit}% Buy`,
+            //         fontSize: 15,
+            //         fontWeight: "600",
+            //         paddingTop: 0,
+            //         paddingRight: 14,
+            //         paddingBottom: 0,
+            //         paddingLeft: 14,
+            //     })
+            // }));
+            // buy.get("background").setAll({
+            //     cornerRadiusTL: 3,
+            //     cornerRadiusTR: 3,
+            //     cornerRadiusBR: 3,
+            //     cornerRadiusBL: 3,
+            //     fill: '#1d9c09',
+            //     fillOpacity: 1
+            // })
+            // buy.get("background").states.create("hover", {}).setAll({
+            //     fill: am5.color('#068c06'),
+            //     fillOpacity: 0.8
+            // });
 
             // buy.get("background").states.create("down", {}).setAll({
             //     fill: am5.color(0xff0000),
             //     fillOpacity: 1
             // });
 
-            var sell = mainPanel.plotContainer.children.push(am5.Button.new(root, {
-                dx: 1290,
-                dy: 400,
-                layer: 40,
-                label: am5.Label.new(root, {
-                    text: `${coin_data.sell_profit}% Sell`,
-                    fontSize: 15,
-                    fontWeight: "600",
-                    paddingTop: 0,
-                    paddingRight: 14,
-                    paddingBottom: 0,
-                    paddingLeft: 14
-                })
-            }));
-            sell.get("background").setAll({
-                cornerRadiusTL: 3,
-                cornerRadiusTR: 3,
-                cornerRadiusBR: 3,
-                cornerRadiusBL: 3,
-                fill: '#c92112',
-                fillOpacity: 1
-            });
-            sell.get("background").states.create("hover", {}).setAll({
-                fill: am5.color('#b51405'),
-                fillOpacity: 0.8
-            });
+            // var sell = mainPanel.plotContainer.children.push(am5.Button.new(root, {
+            //     dx: 850,
+            //     dy: 400,
+            //     layer: 40,
+            //     label: am5.Label.new(root, {
+            //         text: `${coin_data.sell_profit}% Sell`,
+            //         fontSize: 15,
+            //         fontWeight: "600",
+            //         paddingTop: 0,
+            //         paddingRight: 14,
+            //         paddingBottom: 0,
+            //         paddingLeft: 14
+            //     })
+            // }));
+            // sell.get("background").setAll({
+            //     cornerRadiusTL: 3,
+            //     cornerRadiusTR: 3,
+            //     cornerRadiusBR: 3,
+            //     cornerRadiusBL: 3,
+            //     fill: '#c92112',
+            //     fillOpacity: 1
+            // });
+            // sell.get("background").states.create("hover", {}).setAll({
+            //     fill: am5.color('#b51405'),
+            //     fillOpacity: 0.8
+            // });
 
-            buy.events.on("click", function(ev) {
-                var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
-                $("#label").val("buy");
-                $("#coin_id").val(coin_data.id);
-                $("#coin_name").val(coin_data.name);
-                $("#close").val(last.Close);
-                $("#amt").val(0);
-                $("#profit").val(0);
-                $("#tradePeriod").modal("show");
-                // calculate("buy", last, coin_data);
-            });
-
-            sell.events.on('click', function (e) {
-                var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
-                $("#label").val("sell");
-                $("#coin_id").val(coin_data.id);
-                $("#coin_name").val(coin_data.name);
-                $("#close").val(last.Close);
-                $("#amt").val(0);
-                $("#profit").val(0);
-                $("#tradePeriod").modal("show");
-                // calculate("sell", last, coin_data);
-            });
+            // buy.events.on("click", function(ev) {
+            //     var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
+            //     $("#label").val("buy");
+            //     $("#coin_id").val(coin_data.id);
+            //     $("#coin_name").val(coin_data.name);
+            //     $("#close").val(last.Close);
+            //     $("#amt").val(0);
+            //     $("#profit").val(0);
+            //     $("#tradePeriod").modal("show");
+            //     // calculate("buy", last, coin_data);
+            // });
+            //
+            // sell.events.on('click', function (e) {
+            //     var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
+            //     $("#label").val("sell");
+            //     $("#coin_id").val(coin_data.id);
+            //     $("#coin_name").val(coin_data.name);
+            //     $("#close").val(last.Close);
+            //     $("#amt").val(0);
+            //     $("#profit").val(0);
+            //     $("#tradePeriod").modal("show");
+            //     // calculate("sell", last, coin_data);
+            // });
 
             // Add cursor(s)
             // -------------------------------------------------------------------------------
@@ -558,6 +583,28 @@
             var value = coin_data.coin_price;
 
             var autoUpdate = true;
+
+            $("#btn-buy").click(function() {
+                var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
+                $("#label").val("buy");
+                $("#coin_id").val(coin_data.id);
+                $("#coin_name").val(coin_data.name);
+                $("#close").val(last.Close);
+                $("#amt").val(0);
+                $("#profit").val(0);
+                $("#tradePeriod").modal("show");
+            });
+
+            $("#btn-sell").click(function() {
+                var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
+                $("#label").val("sell");
+                $("#coin_id").val(coin_data.id);
+                $("#coin_name").val(coin_data.name);
+                $("#close").val(last.Close);
+                $("#amt").val(0);
+                $("#profit").val(0);
+                $("#tradePeriod").modal("show");
+            });
 
             $("#amt").on('keyup', function () {
                 let amount = $("#amt").val();
@@ -859,3 +906,5 @@
     }
 
 </script>
+
+@stop
