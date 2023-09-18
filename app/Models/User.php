@@ -63,4 +63,29 @@ class User extends Authenticatable
     {
         return $this->hasMany(Trade::class, "user_id");
     }
+
+    public function countDeposit(): int
+    {
+        return $this->hasMany(Deposit::class, "user_id")
+            ->where("status", "approved")
+            ->count();
+    }
+
+    public function countWithdraw(): int
+    {
+        return $this->hasMany(Withdraw::class, "user_id")
+            ->where("status", "approved")
+            ->count();
+    }
+
+    public function countTrades(): int
+    {
+        return $this->hasMany(Trade::class, "user_id")
+            ->count();
+    }
+
+    public function countReferral(): int
+    {
+        return $this->hasMany(Referral::class, "referred_by")->count();
+    }
 }

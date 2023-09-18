@@ -22,6 +22,11 @@ function showDate($datetime)
     return Carbon::parse($datetime)->format('d-M-Y');
 }
 
+function is_active_menu($link)
+{
+    return (request()->is($link)) ? 'active' : '';
+}
+
 function validateDateFormat($date,$format='')
 {
     $is_valid_date = false;

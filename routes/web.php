@@ -42,6 +42,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::get('/', [SiteController::class, 'index']);
 
 Route::group(['middleware' => ['auth']], function () {
+
     Route::get('/trade', [SiteController::class, 'trade']);
     Route::get('/trade/{tab}', [SiteController::class, 'trade']);
     Route::get('/get-account-balance', [SiteController::class, 'getAccountBalance']);
@@ -75,8 +76,18 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/', [SiteController::class, 'withdrawal']);
         });
 
+    Route::get('/transactions', [SiteController::class, 'transactions']);
+    Route::get('/trade-history', [SiteController::class, 'tradeHistory']);
+    Route::get('/referral', [SiteController::class, 'referral']);
+    Route::get('/account', [SiteController::class, 'account']);
+    Route::get('/withdrawal-account', [SiteController::class, 'withdrawalAccount']);
+    Route::post('/withdrawal-account', [SiteController::class, 'storeWithdrawalAccount']);
+    Route::get('/get-withdrawal-accounts', [SiteController::class, 'getWithdrawalAccount']);
+    Route::get('/market', [SiteController::class, 'market']);
+    Route::get('/dashboard', [SiteController::class, 'dashboard']);
 
     Route::get('payment-method/{id}', [SiteController::class, 'getPaymentMethodDetail']);
+    Route::post('/profile', [AdminController::class, 'profile']);
 });
 
 /*
