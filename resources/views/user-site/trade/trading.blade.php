@@ -120,7 +120,7 @@
             <div class="container-fluid p-0 d-flex justify-content-between align-items-center">
                 <div class="">
                     <div class="d-flex justify-content-start align-items-center">
-                        <button type="button" id="sidebarCollapse" class="btn btn-outline-secondary ml-1" style="border: none !important;">
+                        <button type="button" id="sidebarCollapse" class="btn btn-outline-secondary" style="border: none !important;">
                             <i class="fas fa-align-left"></i>
                         </button>
                         <h3 class="text-white m-0 ml-1" style="font-family: med;">Easy<span class="text-success">Option</span></h3>
@@ -218,11 +218,14 @@
             </div>
         </nav>
 
-        <div class="px-3 py-2 text-white context-box">
+        <div class="px-2 py-2 text-white context-box">
             <div>
                 <h3 class="m-0 py-3 d-inline-block border-bottom border-secondary text-success" style="font-family: bold;">@yield('title')</h3>
             </div>
-            @yield('content')
+            <div>
+                @yield('content')
+            </div>
+
         </div>
         <div id="mobile-menu" class="bg-second">
             <div class="mobile-menu-content">

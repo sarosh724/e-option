@@ -204,31 +204,36 @@
         root = am5.Root.new("container");
 
         function getCoinPump() {
-            $.ajax({
-                url: "{{url('trading/get-coin-pump')}}" + "/" + $("#coin").val(),
-                type: "GET",
-                cache: false,
-                processData: false,
-                contentType: "application/json; charset=UTF-8",
-                success: function (res) {
-                    if (res.success == true) {
-                        pump_type = res.data['pump_type'];
-                        pump_start = res.data['start_date_time'];
-                        pump_end = res.data['end_date_time'];
+            if ($("#coin").val()) {
+                $.ajax({
+                    url: "{{url('trading/get-coin-pump')}}" + "/" + $("#coin").val(),
+                    type: "GET",
+                    cache: false,
+                    processData: false,
+                    contentType: "application/json; charset=UTF-8",
+                    success: function (res) {
+                        if (res.success == true) {
+                            pump_type = res.data['pump_type'];
+                            pump_start = res.data['start_date_time'];
+                            pump_end = res.data['end_date_time'];
 
-                        const current_date_time = formatDateTime(new Date());
+                            const current_date_time = formatDateTime(new Date());
 
-                        if (pump_start <= current_date_time && pump_end >= current_date_time) {
-                            is_pump = true;
-                        } else {
-                            is_pump = false;
+                            if (pump_start <= current_date_time && pump_end >= current_date_time) {
+                                is_pump = true;
+                            } else {
+                                is_pump = false;
+                            }
                         }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert(textStatus + ' : ' + errorThrown);
                     }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert(textStatus+' : '+errorThrown);
-                }
-            });
+                });
+            }
+            else{
+                return;
+            }
         }
 
        setInterval(getCoinPump, 10000);
