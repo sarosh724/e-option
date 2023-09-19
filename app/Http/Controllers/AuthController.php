@@ -77,7 +77,7 @@ class AuthController extends Controller
                 $request->session()
                     ->regenerate();
 
-                return redirect(url('/trade'));
+                return redirect(url('/market'));
             }
 
             return back()
@@ -149,7 +149,7 @@ class AuthController extends Controller
                     $request->session()
                         ->regenerate();
 
-                    return redirect(url('/trade'));
+                    return redirect(url('/market'));
                 }
             }
         }
