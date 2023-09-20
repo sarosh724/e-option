@@ -51,7 +51,7 @@
                         <input type="text" readonly class="form-control shadow-none" name="account_name" id="account_name">
                     </div>
                     <div class="col-md-4 form-group">
-                        <label class="form-label required" for="account_number">Account Number</label>
+                        <label class="form-label required" for="account_number">Wallet Address</label>
                         <input type="text" readonly class="form-control shadow-none" name="account_number" id="account_number">
                     </div>
                 </div>
