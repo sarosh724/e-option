@@ -81,27 +81,6 @@ class SiteRepository implements SiteInterface
         return $data;
     }
 
-    public function storeWithdrawal(Request $request)
-    {
-        $res["type"] = "error";
-        try {
-            DB::beginTransaction();
-            $withdraw = new Withdraw();
-            $withdraw->user_id = $request->user_id;
-            $withdraw->amount = $request->amount;
-            $withdraw->user_account_id = $request->account;
-            $withdraw->status = "pending";
-            $withdraw->save();
-            DB::commit();
-            $res["type"] = "success";
-            $res["message"] = "Withdraw Submitted Successfully";
-        } catch (\Exception $e) {
-            DB::rollBack();
-            $res["message"] = "Internal Server Error";
-        }
-
-        return $res;
-    }
 
     public function withdrawalAccountListing($userId, $id)
     {

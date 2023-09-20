@@ -221,6 +221,8 @@
     {{--<script src="https://cdn.amcharts.com/lib/5/themes/Dark.js"></script>--}}
 <script>
     var show_history = true
+    var is_trade_running = false;
+    var is_trade = false;
     function show_hide_trade() {
         if(show_history){
             $('#history-box').fadeIn();
@@ -350,8 +352,6 @@
         loadTradingHistory(coin_id);
 
         am5.ready(async function () {
-
-            var is_trade = false;
 
             coin_data = await fetch(
                 '{{url('trading/coin-rate/')}}' + '/' + coin_id
@@ -649,6 +649,10 @@
             var autoUpdate = true;
 
             $("#btn-buy").click(function() {
+                if(is_trade_running){
+                    toast('You have already initiated a trade', 'warning');
+                    return;
+                }
                 var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
                 $("#label").val("buy");
                 $("#coin_id").val(coin_data.id);
@@ -660,6 +664,10 @@
             });
 
             $("#btn-sell").click(function() {
+                if(is_trade_running){
+                    toast('You have already initiated a trade', 'warning');
+                    return;
+                }
                 var last = valueSeries.data.getIndex(valueSeries.data.length - 1);
                 $("#label").val("sell");
                 $("#coin_id").val(coin_data.id);
@@ -700,6 +708,13 @@
                     return;
                 }
 
+                let user_balance = {{(auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance}};
+                if (user_balance < $("#amt").val()) {
+                    toast("You don't have enough balance. Please deposit money", "warning");
+                    return;
+                }
+
+                is_trade_running = true;
                 let period = $(this).data('period');
                 let type = $(this).data('type');
                 let time_period = period+type;
@@ -817,7 +832,7 @@
                                 toast(res.message, "info");
                             }
                             loadTradingHistory(coin_id);
-
+                            is_trade_running = false;
 
                         },
                         error: function (jqXHR, textStatus, errorThrown) {

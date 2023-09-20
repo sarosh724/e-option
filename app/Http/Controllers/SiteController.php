@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\PaymentMethodInterface;
 use App\Interfaces\SettingInterface;
 use App\Interfaces\SiteInterface;
+use App\Interfaces\WithdrawalInterface;
 use App\Models\PaymentMethod;
 use App\Models\Referral;
 use App\Models\Setting;
@@ -19,15 +20,18 @@ class SiteController extends Controller
     protected SiteInterface $siteInterface;
     protected PaymentMethodInterface $paymentMethodInterface;
     protected SettingInterface $settingInterface;
+    protected WithdrawalInterface $withdrawalInterface;
 
     public function __construct(
         SiteInterface $siteInterface,
         PaymentMethodInterface $paymentMethodInterface,
-        SettingInterface $settingInterface
+        SettingInterface $settingInterface,
+        WithdrawalInterface $withdrawalInterface
     ) {
         $this->siteInterface = $siteInterface;
         $this->paymentMethodInterface = $paymentMethodInterface;
         $this->settingInterface = $settingInterface;
+        $this->withdrawalInterface = $withdrawalInterface;
     }
 
     public function index()
@@ -65,12 +69,12 @@ class SiteController extends Controller
             ]);
 
             if ($validate->fails()) {
-                return redirect(url('trade'))->withErrors($validate);
+                return redirect(url('deposit'))->withErrors($validate);
             }
 
             $res = $this->siteInterface->storeDeposit($request);
 
-            return redirect(url('trade'))->with($res['type'], $res['message']);
+            return redirect(url('deposit'))->with($res['type'], $res['message']);
         }
 
         if ($request->ajax()) {
@@ -111,7 +115,7 @@ class SiteController extends Controller
             ]);
 
             if ($validate->fails()) {
-                return redirect(url('trade'))->withErrors($validate);
+                return redirect(url('withdrawal'))->withErrors($validate);
             }
 
             if ($request->amount > auth()->user()->account_balance) {
@@ -122,9 +126,9 @@ class SiteController extends Controller
             if ($request->amount < $setting->withdraw_limit) {
                 return back()->with("warning", "Sorry, Minimum Withdraw limit is ".$setting->withdraw_limit."$");
             }
-            $res = $this->siteInterface->storeWithdrawal($request);
+            $res = $this->withdrawalInterface->storeWithdrawal($request);
 
-            return redirect(url('trade'))->with($res['type'], $res['message']);
+            return redirect(url('withdrawal'))->with($res['type'], $res['message']);
         }
 
         if ($request->ajax()) {
@@ -383,12 +387,12 @@ class SiteController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(url('trade'))->withErrors($validator->errors());
+            return redirect(url('account'))->withErrors($validator->errors());
         }
 
         $response = $this->siteInterface->changePassword($request);
 
-        return redirect('trade')->with($response['type'], $response['message']);
+        return redirect('account')->with($response['type'], $response['message']);
     }
 
     public function getWithdrawalAccount(Request $request){

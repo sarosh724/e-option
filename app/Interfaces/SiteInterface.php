@@ -46,12 +46,6 @@ interface SiteInterface
      * @param Request $request
      * @return mixed
      */
-    public function storeWithdrawal(Request $request);
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
     public function storeUserTrade(Request $request, $user);
 
     /**

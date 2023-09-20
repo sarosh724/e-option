@@ -175,7 +175,7 @@
                             <div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="text-left parent-account-drp-down">
-                                        <small class="m-0 d-block text-secondary account-type-text" style="font-family: med;">{{(auth()->user()->is_demo_account) ? "Demo Account" : "Live Account"}}</small>
+                                        <small class="m-0 d-block text-secondary account-type-text" id="account_type" style="font-family: med;">{{(auth()->user()->is_demo_account) ? "Demo Account" : "Live Account"}}</small>
                                         <h6 class="m-0 text-white balance-text" id="balance" style="font-family: bold;">${{sprintf("%0.2f", (auth()->user()->is_demo_account) ? auth()->user()->demo_account_balance : auth()->user()->account_balance)}}</h6>
                                     </div>
                                     <span class="pl-1 text-white"><i class="far fa-chevron-down" id="account-icon" style="font-size: 13px;"></i></span>
@@ -423,7 +423,9 @@
             contentType: "application/json; charset=UTF-8",
             success: function (res) {
                 if (res.success == true) {
-                    $('#balance').html('$<b>' + parseFloat(res.data.account_balance).toFixed(2) + '</b>');
+                    $('#account_type').html((res.data.is_demo_account) ? 'Demo Account' : 'Live Account');
+                    let account_balance = (res.data.is_demo_account) ? res.data.demo_account_balance : res.data.account_balance;
+                    $('#balance').html('$<b>' + parseFloat(account_balance).toFixed(2) + '</b>');
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
