@@ -10,10 +10,10 @@
 
 @section('content')
 
-    <div class=" d-flex justify-content-between align-items-center">
+    <div class=" d-flex justify-content-between align-items-center mt-1">
         <div>
             <select class="form-control form-control-sm bg-dark" name="coin" id="coin" onChange="loadChart()" style="width: 150px;">
-                <option value="">Coin</option>
+                <option value="">Currency</option>
                 @foreach(getCoins() as $coin)
                     <option value="{{$coin->id}}">{{$coin->name}}</option>
                 @endforeach
@@ -21,7 +21,7 @@
         </div>
 
         <div>
-            <button type="button" id="tradeHistoryCollapse" class="btn btn-sm btn secondary mr-2">
+            <button type="button" id="tradeHistoryCollapse" class="btn btn-sm btn secondary">
                 Recent Trades
             </button>
 {{--            <button class="btn btn-sm btn secondary mr-2" id="hide-show-trade-history" onclick="show_hide_trade()">Show Trading History</button>--}}
@@ -55,7 +55,7 @@
             <div class="card-body bg-second p-0 p-1">
                 <table class="table table-sm">
                     <tr>
-                        <th class="bg-secondary" style="font-size: 14px;" width="15%">Coin</th>
+                        <th class="bg-secondary" style="font-size: 14px;" width="15%">Currency</th>
                         <th class="bg-secondary" style="font-size: 14px;" width="15%">Amount</th>
                         <th class="bg-secondary" style="font-size: 14px;" width="15%">Starting Price</th>
                         <th class="bg-secondary" style="font-size: 14px;" width="15%">Closing Price</th>
@@ -188,9 +188,12 @@
 @section('styles')
 <!-- Styles -->
 <style>
+    .title-box {
+        display: none;
+    }
     #chart_controls {
         height: auto;
-        padding: 5px 5px 0 16px;
+        padding: 0;
         max-width: 100%;
     }
 

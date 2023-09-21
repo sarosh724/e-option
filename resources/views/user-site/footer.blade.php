@@ -1,19 +1,13 @@
 <hr style="background: gray; margin: 0;">
 <div class="container py-4">
     <div class="row py-4">
-        <div class="col-md-3 col-sm-6 col-xs-6 footer-col">
-            <h6>Affiliates</h6>
-            <ul>
-                <li><a href="#">Sign up</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-6 footer-col">
+        <div class="col-md-4 col-sm-6 col-xs-6 footer-col">
             <h6>About us</h6>
             <ul>
                 <li><a href="#">Contacts</a></li>
             </ul>
         </div>
-        <div class="col-md-3 col-sm-6 col-xs-6 footer-col">
+        <div class="col-md-4 col-sm-6 col-xs-6 footer-col">
             <h6>FAQ</h6>
             <ul>
                 <li><a href="#">General questions</a></li>
@@ -21,7 +15,7 @@
                 <li><a href="#">Verification</a></li>
             </ul>
         </div>
-        <div class="col-md-3 col-sm-6 col-xs-6 footer-col">
+        <div class="col-md-4 col-sm-6 col-xs-6 footer-col">
             <h6>Regulations</h6>
             <ul>
                 <li><a href="#">Privacy policy</a></li>
@@ -43,8 +37,7 @@
             Risk Warning: Trading Forex and Leveraged Financial Instruments involves significant risk and can result in the loss of your invested capital. You should not invest more than you can afford to lose and should ensure that you fully understand the risks involved. Trading leveraged products may not be suitable for all investors. Trading non-leveraged products such as stocks also involves risk as the value of a stock can fall as well as rise, which could mean getting back less than you originally put in. Past performance is no guarantee of future results. Before trading, please take into consideration your level of experience, investment objectives and seek independent financial advice if necessary. It is the responsibility of the Client to ascertain whether he/she is permitted to use the services of the Quotex brand based on the legal requirements in his/her country of residence.
         </p>
         <br><br>
-        <p>Maxbit LLC is the owner of the qxbroker.com domain.</p>
-        <p>Copyright © 2023 Quotex. All rights reserved</p>
+        <p>Copyright © 2023 Eoption. All rights reserved</p>
     </div>
 </div>
 

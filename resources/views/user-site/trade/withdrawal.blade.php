@@ -9,8 +9,8 @@
 @stop
 
 @section('content')
-    <div class="card border-0">
-        <div class="card-body bg-self p-0 px-2 py-3">
+    <div class="card border-0 bg-self px-2">
+        <div class="card-body bg-self p-1">
             @if(auth()->user()->is_demo_account)
                 <div class="alert alert-danger">
                     <b>Note:</b><span class="ml-1">Sorry, you cannot make <b>Withdraw</b> from demo account.</span>
@@ -24,9 +24,9 @@
                 @endif
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label class="form-label required" for="account">Account</label>
+                        <label class="form-label required" for="account">Payment Method</label>
                         <select class="form-control bg-dark shadow-none" name="account" id="account" required>
-                            <option value="">Select Account</option>
+                            <option value="">Select Payment Method</option>
                             @if(count($accounts) > 0)
                                 @foreach($accounts as $account)
                                     <option value="{{$account->id}}">{{$account->bank}}</option>
@@ -37,12 +37,13 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label class="form-label required" for="amount">Amount</label>
-                        <input type="number" maxlength="11" class="form-control shadow-none" name="amount" id="amount" required>
+                        <input type="number" maxlength="11" class="form-control shadow-none" name="amount" id="amount"
+                               placeholder="0" required>
                     </div>
                 </div>
 
                 <div class="text-center">
-                    <button class="btn px-4 btn-success" style="font-family: med;" type="submit" {{(auth()->user()->is_demo_account) ? "disabled" : ""}}>Withdraw</button>
+                    <button class="btn px-4 btn-success" type="submit" {{(auth()->user()->is_demo_account) ? "disabled" : ""}}>Withdraw</button>
                 </div>
             </form>
         </div>
@@ -68,7 +69,7 @@
                         min: "Value must be greater then 0"
                     },
                     account: {
-                        required: "Please select Account*"
+                        required: "Please select Payment method*"
                     }
                 },
                 submitHandler:function(form){

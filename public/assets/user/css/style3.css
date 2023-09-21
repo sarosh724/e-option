@@ -400,6 +400,11 @@ div.dataTables_filter input:focus {
     border: none;
 }
 
+.data-table thead tr th{
+    font-size: 14px !important;
+    font-family: regular !important;
+}
+
 .data-table tbody tr {
     background: var(--black) !important;
     color: #fff !important;
@@ -459,7 +464,7 @@ div.dataTables_filter input:focus {
     display: inline-block;
 }
 .chart-div {
-    height: calc(100vh - 330px);
+    height: calc(100vh - 225px);
     margin-bottom:  0px;
 }
 .button-box {
@@ -493,11 +498,28 @@ div.dataTables_filter input:focus {
 .parent-account-drp-down{
     padding: 0px 8px;
 }
-.title{
-    font-size: 19px;
+.title {
+    display: inline-block;
+    margin: 0;
+    margin-top: 5px;
+    margin-left: 3px;
 }
-.account-box{
+.account-box {
     border-right: 1px dashed #6c757d;
+    margin-top: 10px;
+}
+.account-box:nth-child(3) {
+    border-right: none !important;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+    margin: 0;
 }
 @media screen and (max-width: 576px) {
     .context-box {
@@ -513,7 +535,7 @@ div.dataTables_filter input:focus {
         display: none;
     }
     .chart-div {
-        height: calc(100vh - 405px);
+        height: calc(100vh - 325px);
     }
     .button-box button {
         width: 50%;
@@ -547,7 +569,7 @@ div.dataTables_filter input:focus {
         padding: 0px 5px;
     }
     .title{
-        font-size: 16px;
+        font-size: 20px;
     }
     .account-box{
         border: none;
@@ -575,7 +597,7 @@ div.dataTables_filter input:focus {
         display: none;
     }
     .chart-div {
-        height: calc(100vh - 405px);
+        height: calc(100vh - 325px);
     }
     .button-box button {
         width: 50%;
@@ -609,7 +631,7 @@ div.dataTables_filter input:focus {
         padding: 0px 5px;
     }
     .title{
-        font-size: 16px;
+        font-size: 20px;
     }
     .account-box{
         border: none;
