@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{url('/')}}">
-                <img src="{{asset('assets/site/img/logo-2.png')}}" width="120px" height="60px">
+                <h3 class="text-white m-0 ml-1 brand-text" style="font-family: med;">Easy<span class="text-success">Option</span></h3>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

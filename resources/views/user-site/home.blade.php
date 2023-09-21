@@ -61,7 +61,8 @@
                         <i class="fab fa-google-play" style="font-size: 1.9rem;"></i>
                     </div>
                     <div class="p-2">
-                        <p style="color: dimgray; margin: 0; font-size: 14px; text-align: left; font-family: med;">Coming soon</p>
+                        <span style="color: white; margin: 0; font-size: 14px; font-family: med;">App Is Under Maintenance</span>
+                        <div class="text-white" style="font-size: large" id="timer"></div>
                         <p class="m-0 mt-1" style="color: lightgrey !important; font-family: bold;">Google Play</p>
                     </div>
                 </a>
@@ -76,7 +77,7 @@
         <h3 style="color: dimgray;">3 steps</h3>
         <div class="row mb-4">
             <div class="col-md-4 text-center mt-4 mb-4">
-                <img src="{{asset('assets/user/img/start-trading-1@3x.png')}}" width="120px" height="120px">
+                <img src="{{asset('assets/user/img/signup.png')}}" width="120px" height="120px">
                 <h4 class="mt-4" style="font-family: bold; color: lightgrey;">Sign up</h4>
                 <p style="color: gray;">Open an account for free in just a <br> few minutes</p>
                 <a href="{{url('register')}}" class="btn mt-4" style="background-color: rgba(110,110,110,0.3); color: #0a58ca; padding: 8px 26px;">Trade on demo <br> account in 1 click</a>
@@ -195,3 +196,53 @@
     </div>
 </div>
 @stop
+<script src="{{asset('assets/admin/plugins/jquery/jquery.min.js')}}"></script>
+<script>
+
+    $(function() {
+        updateTimer();
+    });
+
+    // Function to calculate the time remaining in seconds
+    function getTimeRemaining(endTime) {
+        const totalMilliseconds = Date.parse(endTime) - Date.now();
+        const totalSeconds = Math.floor(totalMilliseconds / 1000);
+        const days = Math.floor(totalSeconds / (3600 * 24));
+        const seconds = totalSeconds % 60;
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+
+        return {
+            'total': totalSeconds,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
+    }
+
+    // Function to update the countdown timer
+    function updateTimer() {
+        const endTime = new Date();
+        endTime.setDate(endTime.getDate() + 30); // Add 30 days to the current date
+
+        function update() {
+            const timeRemaining = getTimeRemaining(endTime);
+
+            if (timeRemaining.total <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('timer').innerHTML = 'Countdown expired!';
+            } else {
+                const timerText = `${timeRemaining.days} days`;
+                document.getElementById('timer').innerHTML = timerText;
+            }
+        }
+
+        update(); // Call the function immediately to prevent a delay in displaying the timer
+
+        const timerInterval = setInterval(update, 1000); // Update the timer every second
+    }
+
+    updateTimer(); // Start the countdown timer when the page loads
+
+</script>
