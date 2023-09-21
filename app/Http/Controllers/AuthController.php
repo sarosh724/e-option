@@ -36,7 +36,7 @@ class AuthController extends Controller
                 ->stateless()
                 ->user();
 
-            $finduser = User::where('google_id', $user->id)
+            $finduser = User::where('google_id', $user->id)->orWhere('email', $user->email)
                 ->first();
 
             if ($finduser) {
@@ -63,6 +63,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if ($request->post()) {
+
             $credentials = $request->validate([
                 'email' => ['required'],
                 'password' => ['required'],
