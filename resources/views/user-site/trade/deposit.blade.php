@@ -9,8 +9,8 @@
 @stop
 
 @section('content')
-    <div class="card border-0">
-        <div class="card-body bg-self p-0 px-2 py-3">
+    <div class="card border-0 px-2 bg-self">
+        <div class="card-body bg-self p-1">
         @if(auth()->user()->is_demo_account)
             <div class="alert alert-danger">
                 <b>Note:</b><span class="ml-1">Sorry, you cannot <b>Deposit</b> into demo account.</span>
@@ -22,7 +22,8 @@
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label class="form-label required" for="amount">Amount</label>
-                    <input type="number" maxlength="11" class="form-control shadow-none" name="amount" id="amount" required>
+                    <input type="number" maxlength="11" class="form-control shadow-none" name="amount"
+                           id="amount" placeholder="0" required>
                 </div>
                 <div class="col-md-6 form-group">
                     <label class="form-label required" for="payment_method">Payment Method</label>
@@ -43,11 +44,11 @@
                 <small class="text-success">Here is Account Details where you can send money. Once Admin approve deposit, you can do trading. Thank you</small>
                 <div class="row mt-2">
                     <div class="col-md-4 form-group">
-                        <label class="form-label required" for="bank">Bank</label>
+                        <label class="form-label required" for="bank">Cryptocurrency</label>
                         <input type="text" readonly class="form-control shadow-none" name="bank" id="bank">
                     </div>
                     <div class="col-md-4 form-group">
-                        <label class="form-label required" for="account_name">Account Title</label>
+                        <label class="form-label required" for="account_name">Currency</label>
                         <input type="text" readonly class="form-control shadow-none" name="account_name" id="account_name">
                     </div>
                     <div class="col-md-4 form-group">
@@ -67,7 +68,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <button class="btn btn-success px-4" style="font-family: med;" type="submit" {{(auth()->user()->is_demo_account) ? "disabled" : ""}}>Deposit</button>
+                <button class="btn btn-success px-4" type="submit" {{(auth()->user()->is_demo_account) ? "disabled" : ""}}>Deposit</button>
             </div>
         </form>
     </div>

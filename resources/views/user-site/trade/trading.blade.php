@@ -255,9 +255,9 @@
             </div>
         </nav>
 
-        <div class="px-2 py-2 text-white context-box">
-            <div>
-                <h3 class="m-0 py-1 d-inline-block border-bottom border-secondary text-success title" style="font-family: bold;">@yield('title')</h3>
+        <div class="px-1 text-white context-box">
+            <div class="p-2 title-box">
+                <h3 class="d-inline-block border-bottom border-secondary text-success title m-0" style="font-family: bold;">@yield('title')</h3>
             </div>
             <div>
                 @yield('content')

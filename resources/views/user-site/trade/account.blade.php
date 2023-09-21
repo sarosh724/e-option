@@ -9,10 +9,10 @@
 @stop
 
 @section('content')
-    <div class="card border-0">
-        <div class="card-body bg-self">
+    <div class="card border-0 bg-self px-2">
+        <div class="card-body bg-self p-1">
             <div class="row">
-                <div class="col-md-4 mt-2 account-box">
+                <div class="col-md-4 account-box">
                     <h5 style="font-family: bold;" class="text-white m-0">Personal Info:</h5>
                     <div class="mt-3">
                         <form method="post" name="user-form" id="user-form" action="{{url('profile')}}" enctype="multipart/form-data">
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <div>
-                                        <button class="btn btn-success px-4" style="font-family: med;" type="submit">Save</button>
+                                        <button class="btn btn-success px-4" type="submit">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 mt-2 account-box">
+                <div class="col-md-4 account-box">
                     <h5 style="font-family: bold;" class="text-white m-0">Security:</h5>
                     <div class="mt-3">
                         <form method="post" autocomplete="off" name="change-password-form" id="change-password-form" action="{{url('change-password')}}">
@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <div>
-                                        <button class="btn btn-success px-4" style="font-family: med;" type="submit">Save</button>
+                                        <button class="btn btn-success px-4" type="submit">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 mt-2">
+                <div class="col-md-4 account-box">
                     <h5 style="font-family: bold;" class="text-white m-0">Withdrawal Accounts:</h5>
                     <div class="mt-3">
                         <form method="post" name="withdrawal-account-form" id="withdrawal-account-form" action="{{url('withdrawal-account')}}">
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <div>
-                                        <button class="btn btn-success px-4" style="font-family: med;" type="submit">Save</button>
+                                        <button class="btn btn-success px-4" type="submit">Save</button>
                                     </div>
                                 </div>
                             </div>

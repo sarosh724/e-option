@@ -9,12 +9,12 @@
 @stop
 
 @section('content')
-    <div class="mt-3 col-md-12">
+    <div class="p-1">
         <div class="card border-0">
             <div class="card-header bg-success">
                 <h6 class="m-0 text-white" style="font-family: med;">Trading History</h6>
             </div>
-            <div class="card-body bg-self border border-dark">
+            <div class="card-body bg-self border border-dark p-2">
                 <div class="table-responsive p-0">
                     <table class="table table-sm data-table" id="trading-data-table">
                         <thead class="">
