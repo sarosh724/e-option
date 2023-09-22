@@ -20,9 +20,9 @@
         <table id="data-table" class="table table-grid table-striped table-sm">
             <thead class="bg-light">
             <tr>
-                <th>Bank</th>
-                <th>Account Title</th>
-                <th>Account No</th>
+                <th>Cryptocurrency</th>
+                <th>Currency</th>
+                <th>Wallet Address</th>
                 <th>Mobile No</th>
                 <th width="10%">Status</th>
                 <th>Actions</th>

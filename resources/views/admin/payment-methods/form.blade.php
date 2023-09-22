@@ -6,10 +6,10 @@
             <div class="fv-row">
                 <div class="field">
                     <label for="bank" class="form-label">
-                        <span class="required">Bank</span>
+                        <span class="required">Cryptocurrency</span>
                     </label>
                     <input type="text" class="form-control" id="bank" name="bank"
-                           placeholder="e.g Sadapay" value="{{@$paymentMethod -> bank}}">
+                           placeholder="Cryptocurrency" value="{{@$paymentMethod -> bank}}">
                 </div>
             </div>
         </div>
@@ -17,10 +17,10 @@
             <div class="fv-row">
                 <div class="field">
                     <label for="account_title" class="form-label">
-                        <span class="required">Account Title</span>
+                        <span class="required">Currency</span>
                     </label>
                     <input type="text" class="form-control" id="account_title" name="account_title"
-                           placeholder="John Doe" value="{{@$paymentMethod -> account_title}}">
+                           placeholder="Currency" value="{{@$paymentMethod -> account_title}}">
                 </div>
             </div>
         </div>
@@ -28,10 +28,10 @@
             <div class="fv-row">
                 <div class="field">
                     <label for="account_no" class="form-label">
-                        <span class="required">Account Number</span>
+                        <span class="required">Wallet Address</span>
                     </label>
                     <input type="text" class="form-control" id="account_no" name="account_no"
-                           placeholder="34364356573654" value="{{@$paymentMethod->account_no}}">
+                           placeholder="Wallet Address" value="{{@$paymentMethod->account_no}}">
                 </div>
             </div>
         </div>

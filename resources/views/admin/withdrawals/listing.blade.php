@@ -42,9 +42,9 @@
             <thead class="bg-light">
             <tr>
                 <th>User</th>
-                <th>Bank</th>
-                <th>Account Title</th>
-                <th>Account Number</th>
+                <th>Cryptocurrency</th>
+                <th>Currency</th>
+                <th>Wallet Address</th>
                 <th>Amount</th>
                 <th width="10%">Status</th>
             </tr>

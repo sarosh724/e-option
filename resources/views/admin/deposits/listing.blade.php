@@ -42,7 +42,7 @@
             <thead class="bg-light">
             <tr>
                 <th>User</th>
-                <th>Bank</th>
+                <th>Cryptocurrency</th>
                 <th>Amount</th>
                 <th>Payment Receipt</th>
                 <th width="10%">Status</th>

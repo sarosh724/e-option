@@ -62,7 +62,7 @@
                     </div>
                     <div class="p-2">
                         <span style="color: white; margin: 0; font-size: 14px; font-family: med;">App Is Under Maintenance</span>
-                        <div class="text-white" style="font-size: large" id="timer"></div>
+                        <div class="text-white" style="font-size: larger; font-family: med" id="timer"></div>
                         <p class="m-0 mt-1" style="color: lightgrey !important; font-family: bold;">Google Play</p>
                     </div>
                 </a>
@@ -223,17 +223,15 @@
 
     // Function to update the countdown timer
     function updateTimer() {
-        const endTime = new Date();
-        endTime.setDate(endTime.getDate() + 30); // Add 30 days to the current date
-
+        const endTime = new Date("October 22, 2023 23:59:59");
         function update() {
             const timeRemaining = getTimeRemaining(endTime);
 
             if (timeRemaining.total <= 0) {
                 clearInterval(timerInterval);
-                document.getElementById('timer').innerHTML = 'Countdown expired!';
+                document.getElementById('timer').innerHTML = '';
             } else {
-                const timerText = `${timeRemaining.days} days`;
+                const timerText = `${timeRemaining.days} days ${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`;
                 document.getElementById('timer').innerHTML = timerText;
             }
         }

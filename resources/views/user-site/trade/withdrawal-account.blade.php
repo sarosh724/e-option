@@ -19,29 +19,29 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
                                     <div class="form-group">
-                                        <label class="form-label required" for="bank">Bank / Payment Method</label>
+                                        <label class="form-label required" for="bank">Cryptocurrency</label>
                                         <input type="text" class="form-control shadow-none" name="bank" id="bank"
-                                               placeholder="e.g">
+                                               placeholder="Crypto Currency">
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <div class="form-group">
-                                        <label class="form-label required" for="account_title">Account Title</label>
-                                        <input type="text" class="form-control shadow-none" name="account_title" id="account_title"
-                                               placeholder="John Doe">
+                                        <label class="form-label required" for="account_title">Currency</label>
+                                        <input type="text" class="form-control shadow-none" name="account_name" id="account_title"
+                                               placeholder="Currency">
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <div class="form-group">
-                                        <label class="form-label required" for="account_no">Account Number</label>
-                                        <input type="text" class="form-control shadow-none" name="account_no" id="account_no"
-                                               placeholder="19AL353737346536">
+                                        <label class="form-label required" for="account_no">Wallet Address</label>
+                                        <input type="text" class="form-control shadow-none" name="account_number" id="account_no"
+                                               placeholder="Wallet Address">
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label class="form-label required" for="mobile_no">Phone Number</label>
-                                        <input type="number" min="0" class="form-control shadow-none" name="mobile_no" id="mobile_no"
+                                        <input type="number" min="0" class="form-control shadow-none" name="phone" id="mobile_no"
                                                placeholder="xxxxxxxxxx">
                                     </div>
                                 </div>
@@ -61,9 +61,9 @@
                                 <table class="table table-sm data-table" id="withdrawal-account-data-table">
                                     <thead class="">
                                     <tr>
-                                        <th width="20%">Bank</th>
-                                        <th width="25%">Account Title</th>
-                                        <th width="35%">Account Number</th>
+                                        <th width="20%">Crypto Currency</th>
+                                        <th width="25%">Currency</th>
+                                        <th width="35%">Wallet Address</th>
                                         <th width="20%">Mobile</th>
                                     </tr>
                                     </thead>
