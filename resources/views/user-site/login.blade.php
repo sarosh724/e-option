@@ -14,7 +14,7 @@
                 <div class="mb-3">
                     <div class="d-flex justify-content-between">
                         <label class="form-label" for="password">Password</label>
-                        <a href="{{url('forgot')}}" style="text-decoration: none; font-size: 14px; font-family: med;">
+                        <a href="{{url('forgot-password')}}" style="text-decoration: none; font-size: 14px; font-family: med;">
                             Forgot Password?
                         </a>
                     </div>

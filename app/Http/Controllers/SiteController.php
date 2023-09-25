@@ -201,6 +201,7 @@ class SiteController extends Controller
     {
         $user = User::find(auth()->user()->id);
         $recentTrades = $this->siteInterface->getTradingHistory($request, $user);
+//        dd($recentTrades);
 
         return view('user-site.trade.market', compact(['recentTrades']));
     }

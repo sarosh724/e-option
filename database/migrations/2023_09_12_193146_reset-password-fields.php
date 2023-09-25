@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table("settings", function (Blueprint $table) {
-            $table->double("demo_account_balance",8, 2)->nullable(false)->default(10000)->after("referral_sign_up_amount");
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('password_reset_token')->nullable();
+            $table->timestamp('password_reset_token_expiry_datetime')->nullable();
         });
     }
 
@@ -21,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

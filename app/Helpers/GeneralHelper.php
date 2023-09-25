@@ -3,6 +3,7 @@
 use App\Models\Coin;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 function showDateTime($datetime)
 {
@@ -98,4 +99,30 @@ function getCoins($first = false) {
     if ($first)    return Coin::first();
 
     return Coin::all();
+}
+
+/**
+ * @param $to
+ * @param $subject
+ * @param $data
+ * @param $blade
+ * @return bool
+ */
+function send_email($to, $subject, $data, $blade)
+{
+    $sent = true;
+    try {
+        Mail::send(sprintf('mails.%s', $blade), $data, function ($message) use ($to, $subject) {
+            $message->to($to)
+                ->subject($subject);
+            $message->from(
+                env('MAIL_FROM_ADDRESS', 'haidersyed106@gmail.com'),
+                env('APP_NAME', 'Easy Option')
+            );
+        });
+    } catch (\Exception $e) {
+        $sent = false;
+    }
+
+    return $sent;
 }

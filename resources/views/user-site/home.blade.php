@@ -8,8 +8,9 @@
         </div>
         <div class="col-md-6">
             <div class="heroarea-right">
-                <h1>Innovative platform for <br> small investments</h1>
-                <p class="m-0 my-4">Register and get $ 10,000 on a demo <br> account for learning to trade</p>
+                <h1>Unlock your trading potential with Easy Option - where
+                    simplicity meets success in the financial markets!</h1>
+                <p class="m-0 my-4">Register and get your free bonus to trade on a demo account for learning</p>
                 <a href="{{url('register')}}" class="btn btn-lg btn-success btn-register px-5 py-3">Registration</a>
             </div>
         </div>
@@ -20,23 +21,27 @@
     <div class="row">
         <div class="col-md-3 px-5 py-3">
             <img src="{{asset('assets/user/img/dignity-1.png')}}">
-            <h5 class="m-0 text-white my-3" style="font-family: bold;">Convenient trading interface</h5>
-            <p class="m-0" style="color: gray;">We created the most simple and comfortable interface that does not distract from the main thing - from trading.</p>
+            <h5 class="m-0 text-white my-3" style="font-family: bold;">Streamlined trading platform</h5>
+            <p class="m-0" style="color: gray;">We have created the most simple, unique and user-friendly interface so that
+                                        everyone can use this app with the ease of their mind</p>
         </div>
         <div class="col-md-3 px-5 py-3">
             <img src="{{asset('assets/user/img/dignity-2.png')}}">
-            <h5 class="m-0 text-white my-3" style="font-family: bold;">Integrated signals</h5>
-            <p class="m-0" style="color: gray;">Approach the strategy thoughtfully - the most precise and innovative signals with an accuracy of 87% will help you create your own effective strategy.</p>
+            <h5 class="m-0 text-white my-3" style="font-family: bold;">Incorporated trading signals</h5>
+            <p class="m-0" style="color: gray;">You can create your own effective strategy with an accuracy of 90% with the
+                most precise and innovative integrated trading signals.</p>
         </div>
         <div class="col-md-3 px-5 py-3">
             <img src="{{asset('assets/user/img/dignity-3.png')}}">
-            <h5 class="m-0 text-white my-3" style="font-family: bold;">Trading indicators</h5>
-            <p class="m-0" style="color: gray;">We have gathered the most useful trading indicators. Use them to boost your account balance.</p>
+            <h5 class="m-0 text-white my-3" style="font-family: bold;">Trading Indicators</h5>
+            <p class="m-0" style="color: gray;">The most useful trading indicators which will boost your account balance
+                are placed at one place in this app to provide the best user outcome.</p>
         </div>
         <div class="col-md-3 px-5 py-3">
             <img src="{{asset('assets/user/img/dignity-4.png')}}">
-            <h5 class="m-0 text-white my-3" style="font-family: bold;">Perfect speed</h5>
-            <p class="m-0" style="color: gray;">Our platform runs on the most modern technology and delivers incredible speed.</p>
+            <h5 class="m-0 text-white my-3" style="font-family: bold;">Optimal Speed</h5>
+            <p class="m-0" style="color: gray;">his app runs on the latest technology which gives the users an incredible
+                speed.</p>
         </div>
     </div>
     <hr style="background: gray; margin: 0;">
@@ -54,8 +59,9 @@
         </div>
         <div class="col-md-6">
             <div class="heroarea-right">
-                <h1>Mobile application is <br> always ready to hand</h1>
-                <p class="m-0 my-4">Download our user-friendly application for <br>iPhone or Android and start trading!</p>
+                <h1>‘’Easy Option’’ is
+                    always ready to hand</h1>
+                <p class="m-0 my-4">Download our application for android or iPhone and start easy trading</p>
                 <a class="btn btn-lg btn-mobile">
                     <div>
                         <i class="fab fa-google-play" style="font-size: 1.9rem;"></i>
@@ -79,19 +85,19 @@
             <div class="col-md-4 text-center mt-4 mb-4">
                 <img src="{{asset('assets/user/img/signup.png')}}" width="120px" height="120px">
                 <h4 class="mt-4" style="font-family: bold; color: lightgrey;">Sign up</h4>
-                <p style="color: gray;">Open an account for free in just a <br> few minutes</p>
+                <p style="color: gray;">Create a free account in few seconds</p>
                 <a href="{{url('register')}}" class="btn mt-4" style="background-color: rgba(110,110,110,0.3); color: #0a58ca; padding: 8px 26px;">Trade on demo <br> account in 1 click</a>
             </div>
             <div class="col-md-4 text-center mt-4 mb-4">
                 <img src="{{asset('assets/user/img/start-trading-2@3x.png')}}" width="120px" height="120px">
                 <h4 class="mt-4" style="font-family: bold; color: lightgrey;">Practice</h4>
-                <p style="color: gray;">Get your skills better with a demo <br> account and training materials</p>
+                <p style="color: gray;">Create demo account and start practising for better learning</p>
                 <a href="{{url('register')}}" class="btn mt-4" style="background-color: rgba(110,110,110,0.3); color: #0a58ca; padding: 8px 26px;">Start training with demo <br> account</a>
             </div>
             <div class="col-md-4 text-center mt-4 mb-4">
                 <img src="{{asset('assets/user/img/start-trading-3@3x.png')}}" width="120px" height="120px">
                 <h4 class="mt-4" style="font-family: bold; color: lightgrey;">Deposit and trade</h4>
-                <p style="color: gray;">Over 410 instruments and a minimum <br>  deposit of $5 for optimal trading</p>
+                <p style="color: gray;">Deposit minimal 5$ and start optimal trading</p>
                 <a href="{{url('register')}}" class="btn mt-4" style="background-color: rgba(110,110,110,0.3); color: #0a58ca; padding: 8px 26px;">Go to Deposit option</a>
             </div>
         </div>

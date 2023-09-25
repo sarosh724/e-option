@@ -24,12 +24,17 @@ use App\Http\Controllers\SettingController;
  *   Authentication Routes
  */
 
-Route::controller(AuthController::class)->group(function () {
+Route::controller(AuthController::class)
+    ->group(function () {
         Route::match(['get', 'post'], '/login', 'login')
             ->name('login');
         Route::match(['get', 'post'], '/register/{refcode?}', 'register');
-        Route::get('/forgot', 'forgot');
-        Route::get('/reset', 'reset');
+        Route::match(['post', 'get'], '/forgot-password', 'forgotPassword')
+            ->name('forgot-password');
+        Route::post('/reset-password', 'doResetPassword')
+            ->name('do-reset-password');
+        Route::get('/reset-password/{token}', 'resetPassword')
+            ->name('reset-password');
         Route::get('/logout', 'logout');
         Route::get('authorized/google', 'redirectToGoogle')
             ->name('auth.google');
@@ -42,21 +47,21 @@ Route::controller(AuthController::class)->group(function () {
 Route::get('/', [SiteController::class, 'index']);
 
 Route::group(['middleware' => ['auth']], function () {
-
     Route::get('/trade', [SiteController::class, 'trade']);
     Route::get('/trade/{tab}', [SiteController::class, 'trade']);
     Route::get('/get-account-balance', [SiteController::class, 'getAccountBalance']);
     Route::post('/change-user-account', [SiteController::class, 'changeUserAccount']);
     Route::post('/change-password', [SiteController::class, 'changePassword']);
 
-    Route::prefix('trading')->group(function () {
-        Route::get('/', [SiteController::class, 'trading']);
-        Route::get('/coin-rate/{coinId}', [CoinController::class, 'getCoinRateData']);
-        Route::get('/get-coin-pump/{coinId}', [CoinController::class, 'getCoinPump']);
-        Route::post('/user-trade', [SiteController::class, 'storeUserTrade']);
-        Route::get('/history/{id}', [SiteController::class, 'getTradingHistory']);
-        Route::get('/history/{id}/{coinId}', [SiteController::class, 'getTradingHistory']);
-    });
+    Route::prefix('trading')
+        ->group(function () {
+            Route::get('/', [SiteController::class, 'trading']);
+            Route::get('/coin-rate/{coinId}', [CoinController::class, 'getCoinRateData']);
+            Route::get('/get-coin-pump/{coinId}', [CoinController::class, 'getCoinPump']);
+            Route::post('/user-trade', [SiteController::class, 'storeUserTrade']);
+            Route::get('/history/{id}', [SiteController::class, 'getTradingHistory']);
+            Route::get('/history/{id}/{coinId}', [SiteController::class, 'getTradingHistory']);
+        });
 
     Route::get('/settings', [SiteController::class, 'settings']);
     Route::get('/about', [SiteController::class, 'about']);
@@ -95,12 +100,14 @@ Route::group(['middleware' => ['auth']], function () {
  */
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], function () {
     Route::get('/', [AdminController::class, 'index']);
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])
+        ->name('admin-dashboard');
 
-    Route::prefix('profile')->group(function () {
-        Route::get('/', [AdminController::class, 'profile']);
-        Route::post('/', [AdminController::class, 'profile']);
-    });
+    Route::prefix('profile')
+        ->group(function () {
+            Route::get('/', [AdminController::class, 'profile']);
+            Route::post('/', [AdminController::class, 'profile']);
+        });
 
     Route::prefix('users')
         ->group(function () {
@@ -140,14 +147,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
             Route::post('/status', [PaymentMethodController::class, 'changePaymentStatusStatus']);
         });
 
-    Route::prefix('settings')->group(function () {
-        Route::get('/', [SettingController::class, 'index']);
-        Route::post('/', [SettingController::class, 'store']);
-    });
+    Route::prefix('settings')
+        ->group(function () {
+            Route::get('/', [SettingController::class, 'index']);
+            Route::post('/', [SettingController::class, 'store']);
+        });
 });
 
 # reset
-Route::get('reset', function (){
+Route::get('reset', function () {
     Artisan::call('route:clear');
     Artisan::call('cache:clear');
     Artisan::call('config:clear');

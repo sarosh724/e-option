@@ -160,7 +160,7 @@ class CoinController extends Controller
             'name' => $coin->name,
             'coin_price' => $coin->price,
             'coin_max_price' => $coin->max_value,
-            'coin_min_value' => $coin->min_value,
+            'coin_min_price' => $coin->min_value,
             'diff_in_min' => $diffInMinutes,
             'buy_profit' => $coin->buy_profit,
             'sell_profit' => $coin->sell_profit
