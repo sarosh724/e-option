@@ -29,14 +29,6 @@
     </div>
     <hr style="background: gray; margin: 0;">
     <div class="footer-txt py-4">
-        <p>Maxbit LLC. Address: First Floor, First St Vincent Bank LTD Building, James Street, Kingstown, St. Vincent and Grenadines. </p>
-        <br>
-        <p>The website services are not available in a number of countries, including USA, Canada, Hong Kong, EEA countries, Russia as well as for persons under 18 years of age. </p>
-        <br>
-        <p>
-            Risk Warning: Trading Forex and Leveraged Financial Instruments involves significant risk and can result in the loss of your invested capital. You should not invest more than you can afford to lose and should ensure that you fully understand the risks involved. Trading leveraged products may not be suitable for all investors. Trading non-leveraged products such as stocks also involves risk as the value of a stock can fall as well as rise, which could mean getting back less than you originally put in. Past performance is no guarantee of future results. Before trading, please take into consideration your level of experience, investment objectives and seek independent financial advice if necessary. It is the responsibility of the Client to ascertain whether he/she is permitted to use the services of the Quotex brand based on the legal requirements in his/her country of residence.
-        </p>
-        <br><br>
         <p>Copyright © 2023 Eoption. All rights reserved</p>
     </div>
 </div>

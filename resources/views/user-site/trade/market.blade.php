@@ -865,6 +865,9 @@
 
                     // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
                     value += Math.round((Math.random() < 0.49 ? .5 : -.5) * Math.random() * 10);
+                    // if(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price){
+                    //     value = coin_data.coin_price;
+                    // }
                     // }
 
                     // while(open >= coin_data.coin_min_price && open <= coin_data.coin_max_price) {

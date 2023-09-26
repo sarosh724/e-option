@@ -194,7 +194,7 @@ class SiteController extends Controller
 
     public function about()
     {
-        return view('site.pages.about');
+        return view('user-site.about');
     }
 
     public function market(Request $request)

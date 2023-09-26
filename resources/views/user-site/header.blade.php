@@ -32,11 +32,11 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-white me-3" href="{{url('/')}}#about">About</a>
+                        <a class="nav-link text-white me-3" href="{{url('about')}}">About</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{url('/')}}#faq">FAQ</a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link text-white" href="{{url('/')}}#faq">FAQ</a>--}}
+{{--                    </li>--}}
                 </ul>
                 <div>
                     <a href="{{url('login')}}" class="btn btn-secondary btn-lg btn-login px-4 py-2 me-2">Log in</a>

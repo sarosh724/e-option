@@ -39,6 +39,7 @@ Route::controller(AuthController::class)
         Route::get('authorized/google', 'redirectToGoogle')
             ->name('auth.google');
         Route::get('authorized/google/callback', 'handleGoogleCallback');
+        Route::get('/about', [SiteController::class, 'about']);
     });
 
 /*
@@ -64,7 +65,6 @@ Route::group(['middleware' => ['auth']], function () {
         });
 
     Route::get('/settings', [SiteController::class, 'settings']);
-    Route::get('/about', [SiteController::class, 'about']);
 
     Route::get('/withdrawal-accounts', [SiteController::class, 'getWithdrawalAccounts']);
     Route::post('/withdrawal-account', [SiteController::class, 'storeWithdrawalAccount']);
