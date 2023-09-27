@@ -223,14 +223,14 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-deposit btn-success text-white mr-1 p-0" data-tab="deposit"
+                    <a href="{{url('deposit')}}" class="btn btn-deposit btn-success text-white mr-1 p-0" data-tab="deposit"
                             style="font-family: med; font-size: 14px; padding: 11px 15px !important;">
                         <i class="fa fa-plus mr-1" style="font-size: 13px;"></i>Deposit
-                    </button>
+                    </a>
 
-                    <button class="btn btn-withdrawal btn-secondary text-white p-0" data-tab="withdrawal"
+                    <a href="{{url('withdrawal')}}" class="btn btn-withdrawal btn-secondary text-white p-0" data-tab="withdrawal"
                             style="font-family: med;font-size: 14px; padding: 11px 15px !important;">Withdrawal
-                    </button>
+                    </a>
                 </div>
                 {{--                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">--}}
                 {{--                    <i class="fas fa-align-justify"></i>--}}

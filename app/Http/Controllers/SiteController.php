@@ -417,4 +417,24 @@ class SiteController extends Controller
                 ->make(true);
         }
     }
+
+    public function deleteUserAccount(Request $request){
+        $response['success'] = false;
+        if(User::where('id', \auth()->user()->id)->delete()){
+            Auth::logout();
+            $request->session()
+                ->invalidate();
+            $request->session()
+                ->regenerateToken();
+
+            $response['success'] = true;
+            $response['message'] = 'Account Deleted';
+        }
+        else{
+            $response['message'] = 'Something Went Wrong';
+        }
+
+        return response()->json($response);
+
+    }
 }

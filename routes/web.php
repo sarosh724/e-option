@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/get-account-balance', [SiteController::class, 'getAccountBalance']);
     Route::post('/change-user-account', [SiteController::class, 'changeUserAccount']);
     Route::post('/change-password', [SiteController::class, 'changePassword']);
+    Route::delete('/user-account/delete', [SiteController::class, 'deleteUserAccount']);
 
     Route::prefix('trading')
         ->group(function () {
