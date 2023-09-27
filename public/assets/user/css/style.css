@@ -19,7 +19,9 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    /*background: #343a40;*/
+    /*background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);*/
+    background: linear-gradient(109.6deg, rgb(36, 45, 57) 51.2%, rgb(0, 0, 0) 98.6%);
     /*background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);*/
     /*background: radial-gradient(circle at -4% -12.9%, rgb(74, 98, 110) 0.3%, rgb(30, 33, 48) 90.2%);*/
     font-family: regular;
@@ -35,12 +37,12 @@ body {
 
 .btn-login {
     font-size: 16px;
-    font-family: bold;
+    font-family: regular;
 }
 
 .btn-register {
     font-size: 16px;
-    font-family: bold;
+    font-family: regular;
 }
 
 .heroarea-right {
@@ -64,34 +66,38 @@ body {
 }
 
 .btn-mobile {
-    width: 300px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(110,110,110,0.3);
+    /*width: 300px;*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
     font-size: 16px;
+    /*padding: 10px 28px;*/
 }
 
 .btn-mobile i {
-    color: #0a58ca;
+    /*color: #0a58ca;*/
 }
 
 .btn-mobile:hover {
-    background-color: #0a58ca;
+    /*background-color: #0a58ca;*/
 }
 
 .btn-mobile:hover i {
     color: #ffffff;
 }
-
-.trading-section h1 {
-    font-size: 2.4rem;
-    font-family: bold;
+.trading-section p {
+    margin: 0;
 }
-
-.trading-section h3 {
-    font-size: 1.9rem;
-    font-family: med;
+.trading-section h2 {
+    margin: 0;
+    font-family: bold;
+    color: #ffffff;
+}
+.trading-section .card {
+    background: rgba(110,110,110,0.3);
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 8px;
 }
 
 .signin-header {
@@ -155,14 +161,14 @@ label.error {
 }
 
 .footer-col ul li a {
-    color: gray;
+    color: #ffffff;
     text-decoration: none;
     font-size: 13px;
     margin-top: 7px;
 }
 
 .footer-txt p {
-    color: gray;
+    color: #ffffff;
     font-size: 13px;
     margin: 0;
 }
@@ -192,11 +198,10 @@ label.error {
         font-size: 0.8rem;
     }
     .btn-mobile {
-        width: 170px;
-        display: inline-flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: rgba(110,110,110,0.3);
+        /*width: 170px;*/
+        /*display: inline-flex;*/
+        /*justify-content: space-between;*/
+        /*align-items: center;*/
     }
 
     .trading-section h1 {

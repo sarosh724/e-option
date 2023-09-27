@@ -186,7 +186,7 @@
                             <div class="px-3 py-2">
                                 <div class="d-flex justify-content-start align-items-center">
                                     <small class="text-secondary drp-name mr-2">Name:</small>
-                                    <span class="m-0 text-white text-capitalize" style="font-size: 14px; font-family: med;">{{auth()->user()->name}}</span>
+                                    <span class="m-0 text-white text-capitalize" style="font-size: 12px; font-family: med;">{{auth()->user()->name}}</span>
                                 </div>
                                 <div class="d-flex justify-content-start align-items-center">
                                     <small class="text-secondary drp-name mr-2">Email:</small>
