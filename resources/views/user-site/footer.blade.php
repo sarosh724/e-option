@@ -1,35 +1,37 @@
 <hr style="background: gray; margin: 0;">
-<div class="container py-4">
-    <div class="row py-4">
-        <div class="col-md-4 col-sm-6 col-xs-6 footer-col">
-            <h6>About us</h6>
-            <ul>
-                <li><a href="#">Contacts</a></li>
-            </ul>
+<div class="bg-success">
+    <div class="container py-4">
+        <div class="row py-4">
+            <div class="col-md-4 col-sm-6 col-xs-6 footer-col">
+                <h6>About us</h6>
+                <ul>
+                    <li><a href="#">Contacts</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6 footer-col">
+                <h6>FAQ</h6>
+                <ul>
+                    <li><a href="#">General questions</a></li>
+                    <li><a href="#">Financial questions</a></li>
+                    <li><a href="#">Verification</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6 footer-col">
+                <h6>Regulations</h6>
+                <ul>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Payment policy</a></li>
+                    <li><a href="#">Service agreement</a></li>
+                    <li><a href="#">Risk disclosure</a></li>
+                    <li><a href="#">Rules of trading operations</a></li>
+                    <li><a href="#">Non-trading operation regulations</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-4 col-sm-6 col-xs-6 footer-col">
-            <h6>FAQ</h6>
-            <ul>
-                <li><a href="#">General questions</a></li>
-                <li><a href="#">Financial questions</a></li>
-                <li><a href="#">Verification</a></li>
-            </ul>
+        <hr style="background: #ffffff; margin: 0;">
+        <div class="footer-txt py-4">
+            <p>Copyright © {{date('Y')}} Easy Option. All rights reserved</p>
         </div>
-        <div class="col-md-4 col-sm-6 col-xs-6 footer-col">
-            <h6>Regulations</h6>
-            <ul>
-                <li><a href="#">Privacy policy</a></li>
-                <li><a href="#">Payment policy</a></li>
-                <li><a href="#">Service agreement</a></li>
-                <li><a href="#">Risk disclosure</a></li>
-                <li><a href="#">Rules of trading operations</a></li>
-                <li><a href="#">Non-trading operation regulations</a></li>
-            </ul>
-        </div>
-    </div>
-    <hr style="background: gray; margin: 0;">
-    <div class="footer-txt py-4">
-        <p>Copyright © 2023 Eoption. All rights reserved</p>
     </div>
 </div>
 

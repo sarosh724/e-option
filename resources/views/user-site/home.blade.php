@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row flex-row-reverse">
         <div class="col-md-6">
             <img src="{{asset('assets/user/img/platform@3x.png')}}" width="100%" height="">
         </div>
@@ -17,7 +17,69 @@
     </div>
 </div>
 
-<div class="container p-0 py-4 rounded-3 mt-2" style="background: rgba(110,110,110,0.3);" id="about">
+<div class="container mt-3">
+    <div class="trading-section">
+        <p class="text-capitalize text-center text-success">how to start</p>
+        <h2 class="text-capitalize text-center">how it works</h2>
+        <div class="row my-4">
+            <div class="col-md-4">
+                <div class="card py-4">
+                    <img src="{{asset('assets/user/img/signup.png')}}" class="mx-auto" width="120px" height="120px">
+                    <h4 class="m-0 mt-4" style="font-family: bold; color: lightgrey;">Sign up</h4>
+                    <p class="m-0 mt-2" style="color: gray;">Create a free account in few seconds</p>
+                    <a href="{{url('register')}}" class="link link-success mt-2">Create account</a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card py-4">
+                    <img src="{{asset('assets/user/img/start-trading-2@3x.png')}}" class="mx-auto" width="120px" height="120px">
+                    <h4 class="m-0 mt-4" style="font-family: bold; color: lightgrey;">Practice</h4>
+                    <p class="m-0 mt-2" style="color: gray;">Create demo account and start practising</p>
+                    <a href="{{url('register')}}" class="link link-success mt-2">Start training with demo account</a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card py-4">
+                    <img src="{{asset('assets/user/img/start-trading-3@3x.png')}}" class="mx-auto" width="120px" height="120px">
+                    <h4 class="m-0 mt-4" style="font-family: bold; color: lightgrey;">Deposit and trade</h4>
+                    <p class="m-0 mt-2" style="color: gray;">Deposit minimal 5$ and start optimal trading</p>
+                    <a href="{{url('register')}}" class="link link-success mt-2">Go to Deposit option</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row flex-row-reverse">
+        <div class="col-md-6 text-center">
+            <img src="{{asset('assets/user/img/appendix@3x.png')}}" style="object-fit: contain;" width="100%" height="">
+        </div>
+        <div class="col-md-6">
+            <div class="heroarea-right">
+                <h1>‘’Easy Option’’ is
+                    always ready to hand</h1>
+                <p class="m-0 my-3">Download our application for android or iPhone and start easy trading</p>
+                <span style="color: white; margin: 0; font-size: 14px; font-family: med;">App Is Under Maintenance</span>
+                <div class="text-white mb-3" style="font-size: larger; font-family: med" id="timer"></div>
+                <a class="btn btn-success btn-mobile px-4 py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fab fa-google-play" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div class="px-2">
+                            <span style="font-family: regular;">Google Play</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container p-0 py-4 rounded-3 mt-2" id="about">
     <div class="row">
         <div class="col-md-3 px-5 py-3">
             <img src="{{asset('assets/user/img/dignity-1.png')}}">
@@ -44,80 +106,31 @@
                 speed.</p>
         </div>
     </div>
-    <hr style="background: gray; margin: 0;">
     <div class="text-center mt-4">
-        <a class="btn btn-lg btn-success p-4" href="{{url('register')}}" style="font-family: regular; font-size: 14px;">
-            Try playing on a demo account<i class="fas fa-arrow-circle-right ms-2"></i>
+        <a class="btn btn-success px-4 py-3" href="{{url('register')}}" style="font-family: regular; font-size: 14px;">
+            Try demo account<i class="fas fa-arrow-circle-right ms-2"></i>
         </a>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <img src="{{asset('assets/user/img/appendix@3x.png')}}" width="100%" height="">
-        </div>
-        <div class="col-md-6">
-            <div class="heroarea-right">
-                <h1>‘’Easy Option’’ is
-                    always ready to hand</h1>
-                <p class="m-0 my-4">Download our application for android or iPhone and start easy trading</p>
-                <a class="btn btn-lg btn-mobile">
-                    <div>
-                        <i class="fab fa-google-play" style="font-size: 1.9rem;"></i>
-                    </div>
-                    <div class="p-2">
-                        <span style="color: white; margin: 0; font-size: 14px; font-family: med;">App Is Under Maintenance</span>
-                        <div class="text-white" style="font-size: larger; font-family: med" id="timer"></div>
-                        <p class="m-0 mt-1" style="color: lightgrey !important; font-family: bold;">Google Play</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="trading-section">
-        <h1 class="text-white">Start trading</h1>
-        <h3 style="color: dimgray;">3 steps</h3>
-        <div class="row mb-4">
-            <div class="col-md-4 text-center mt-4 mb-4">
-                <img src="{{asset('assets/user/img/signup.png')}}" width="120px" height="120px">
-                <h4 class="mt-4" style="font-family: bold; color: lightgrey;">Sign up</h4>
-                <p style="color: gray;">Create a free account in few seconds</p>
-                <a href="{{url('register')}}" class="btn mt-4" style="background-color: rgba(110,110,110,0.3); color: #0a58ca; padding: 8px 26px;">Trade on demo <br> account in 1 click</a>
-            </div>
-            <div class="col-md-4 text-center mt-4 mb-4">
-                <img src="{{asset('assets/user/img/start-trading-2@3x.png')}}" width="120px" height="120px">
-                <h4 class="mt-4" style="font-family: bold; color: lightgrey;">Practice</h4>
-                <p style="color: gray;">Create demo account and start practising for better learning</p>
-                <a href="{{url('register')}}" class="btn mt-4" style="background-color: rgba(110,110,110,0.3); color: #0a58ca; padding: 8px 26px;">Start training with demo <br> account</a>
-            </div>
-            <div class="col-md-4 text-center mt-4 mb-4">
-                <img src="{{asset('assets/user/img/start-trading-3@3x.png')}}" width="120px" height="120px">
-                <h4 class="mt-4" style="font-family: bold; color: lightgrey;">Deposit and trade</h4>
-                <p style="color: gray;">Deposit minimal 5$ and start optimal trading</p>
-                <a href="{{url('register')}}" class="btn mt-4" style="background-color: rgba(110,110,110,0.3); color: #0a58ca; padding: 8px 26px;">Go to Deposit option</a>
-            </div>
-        </div>
     </div>
 </div>
 
 <div class="container py-3" id="faq">
     <div class="trading-section">
-        <h1 class="text-white">Frequently asked questions</h1>
-    </div>
-    <div class="py-3">
-        <div class="accordion" id="accordionPanelsStayOpenExample">
-            <div class="row">
-                <div class="col-md-6 mt-3">
+        <p class="text-capitalize text-center text-success">token FAQ</p>
+        <h2 class="text-capitalize text-center">frequently questions</h2>
+        <div class="row my-4">
+            <div class="col-md-6">
+                <div>
+                    <img src="{{asset('assets/user/img/faq.png')}}" style="object-fit: contain;" width="100%" height="400px">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
                                     aria-controls="panelsStayOpen-collapseOne">
-                                <h5 style="font-family: bold;">How to earn?</h5>
+                                <h5 style="font-family: med; margin: 0;">How to earn?</h5>
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
@@ -126,12 +139,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 mt-3">
+
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                <h5 style="font-family: bold;">Can I trade with the phone?</h5>
+                                <h5 style="font-family: med; margin: 0;">Can I trade with the phone?</h5>
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
@@ -140,12 +152,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 mt-3">
+
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                <h5 style="font-family: bold;">How long does it take to withdraw funds?</h5>
+                                <h5 style="font-family: med; margin: 0;">How long does it take to withdraw funds?</h5>
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
@@ -154,12 +165,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 mt-3">
+
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingFour">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
-                                <h5 style="font-family: bold;">What is the minimum deposit amount?</h5>
+                                <h5 style="font-family: med; margin: 0;">What is the minimum deposit amount?</h5>
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
@@ -168,12 +178,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 mt-3">
+
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingFive">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
-                                <h5 style="font-family: bold;">What is a trading platform and why it is needed?</h5>
+                                <h5 style="font-family: med; margin: 0;">What is a trading platform and why it is needed?</h5>
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
@@ -182,12 +191,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 mt-3">
+
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingSix">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
-                                <h5 style="font-family: bold;">Is there any fee for depositing and withdrawing funds from the account?</h5>
+                                <h5 style="font-family: med; margin: 0;">Is there any fee for depositing and withdrawing funds from the account?</h5>
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSix">
