@@ -42,9 +42,17 @@ class AuthController extends Controller
                 ->first();
 
             if ($finduser) {
-                Auth::login($finduser);
-
-                return redirect()->intended('/');
+                if($finduser->is_restricted == 0){
+                    Auth::login($finduser);
+                    return redirect()->intended('/');
+                }
+                else{
+                    return redirect('login')
+                        ->withErrors([
+                            'email' => 'Email Or Password Is Not Correct',
+                        ])
+                        ->onlyInput('email');
+                }
             } else {
                 $newUser = User::create([
                     'name' => $user->name,
@@ -77,7 +85,7 @@ class AuthController extends Controller
                     ->regenerate();
 
                 return redirect()->intended('admin');
-            } elseif (Auth::attempt($credentials)) {
+            } elseif (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_restricted' => 0])) {
                 $request->session()
                     ->regenerate();
 

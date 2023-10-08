@@ -6,7 +6,9 @@ use App\Interfaces\DashboardInterface;
 use App\Interfaces\DepositInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\WithdrawalInterface;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -79,12 +81,25 @@ class AdminController extends Controller
                 ->addColumn('balance', function ($data) {
                     return $data->account_balance;
                 })
-//                ->addColumn('actions', function ($data) {
-//                    $html = "";
-//
-//                    return $html;
-//                })
-//                ->rawColumns(['actions'])
+                ->addColumn('actions', function ($data) {
+                    if($data->is_restricted){
+                        $restricted = 0;
+                        $icon = 'fa fa-unlock';
+                        $btnClass = 'btn-danger';
+                        $btnText = 'Unrestrict';
+                    }
+                    else{
+                        $restricted = 1;
+                        $icon = 'fa-lock';
+                        $btnClass = 'btn-primary';
+                        $btnText = 'Restrict';
+                    }
+                    $html = "<a href='javascript:void(0);' data-restricted=$restricted data-id=$data->id class='btn btn-sm restrict $btnClass'><i class='fas $icon mr-1'></i>$btnText</a>
+                            <a href='javascript:void(0);'  data-id=$data->id class='btn btn-sm btn-outline-danger delete'><i class='fas fa-trash mr-1'></i>Delete</a>";
+
+                    return $html;
+                })
+                ->rawColumns(['actions'])
                 ->make(true);
         }
 
@@ -207,5 +222,32 @@ class AdminController extends Controller
     public function getPaymentMethods()
     {
         return view('admin.payment-methods.listing');
+    }
+
+    public function restrictUser(Request $request){
+        $response['success'] = false;
+        if(User::where('id', $request->user_id)->update(['is_restricted' => $request->is_restricted])){
+            $response['success'] = true;
+            $response['message'] = 'Operation Successful';
+        }
+        else{
+            $response['message'] = 'Something Went Wrong';
+        }
+
+        return response()->json($response);
+    }
+
+    public function deleteUser($id){
+        $response['success'] = false;
+        if(User::where('id', $id)->delete()){
+
+            $response['success'] = true;
+            $response['message'] = 'Account Deleted';
+        }
+        else{
+            $response['message'] = 'Something Went Wrong';
+        }
+
+        return response()->json($response);
     }
 }

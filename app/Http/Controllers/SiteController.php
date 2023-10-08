@@ -435,6 +435,5 @@ class SiteController extends Controller
         }
 
         return response()->json($response);
-
     }
 }

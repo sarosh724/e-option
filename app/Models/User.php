@@ -38,7 +38,8 @@ class User extends Authenticatable
         'remember_token',
         'google_id',
         'is_admin',
-        'deleted_at'
+        'deleted_at',
+        'is_restricted'
     ];
 
     /**

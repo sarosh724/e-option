@@ -113,6 +113,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
     Route::prefix('users')
         ->group(function () {
             Route::get('/', [AdminController::class, 'getUsers']);
+            Route::post('restrict-account', [AdminController::class, 'restrictUser']);
+            Route::delete('delete/{id}', [AdminController::class, 'deleteUser']);
         });
 
     Route::prefix('deposits')
