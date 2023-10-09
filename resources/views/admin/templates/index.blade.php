@@ -346,6 +346,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <!-- Select2 -->
 <script src="{{asset('assets/admin/plugins/select2/js/select2.full.min.js')}}"></script>
+<!-- BlockUI -->
+<script src='{{ asset("assets/admin/plugins/jquery-block-ui/jquery.blockUI.js") }}'></script>
 <!-- Datatables JS -->
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script>

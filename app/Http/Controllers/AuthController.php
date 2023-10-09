@@ -49,7 +49,7 @@ class AuthController extends Controller
                 else{
                     return redirect('login')
                         ->withErrors([
-                            'email' => 'Account Banned Due To Spamming',
+                            'email' => 'Your account has been banned due to over trading',
                         ])
                         ->onlyInput('email');
                 }
@@ -90,7 +90,7 @@ class AuthController extends Controller
                 if(Auth()->user()->is_restricted){
                     return redirect('login')
                         ->withErrors([
-                            'email' => 'Account Banned Due To Spamming',
+                            'email' => 'Your account has been banned due to over trading',
                         ])
                         ->onlyInput('email');
                 }

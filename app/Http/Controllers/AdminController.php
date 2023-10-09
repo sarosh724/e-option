@@ -227,6 +227,10 @@ class AdminController extends Controller
     public function restrictUser(Request $request){
         $response['success'] = false;
         if(User::where('id', $request->user_id)->update(['is_restricted' => $request->is_restricted])){
+            if($request->is_restricted){
+                $user = User::find($request->user_id);
+                send_email($user->email, 'Account Restricted', ['user' => $user], 'restricted');
+            }
             $response['success'] = true;
             $response['message'] = 'Operation Successful';
         }

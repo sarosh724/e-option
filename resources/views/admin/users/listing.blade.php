@@ -67,6 +67,7 @@
         }
 
         $("#data-table").on('click', '.restrict', function () {
+            $.blockUI();
             var user_id = $(this).data('id');
             var is_restricted = $(this).data('restricted');
                 $.ajax({
@@ -77,18 +78,20 @@
                         user_id: user_id,
                         "_token": "{{ csrf_token() }}",
                     }),
-                    processData: false,
+                    processData: true,
                     contentType: "application/json; charset=UTF-8",
                     dataType: "json",
                     cache: false,
                     success: function (res) {
                         if (res.success == 1) {
-                            Swal.fire('Success', res.message, 'success');
+                            $.unblockUI();
+                            toast(res.message, 'success');
                             setTimeout(function (){
                                 window.location.reload();
                             }, 1000);
                         } else {
-                            Swal.fire('Error', res.message, 'error');
+                            $.unblockUI();
+                            toast(res.message, 'error');
                         }
                     }
             });
