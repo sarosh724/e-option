@@ -70,7 +70,7 @@
             var user_id = $(this).data('id');
             var is_restricted = $(this).data('restricted');
                 $.ajax({
-                    url: "{{url('admin/users/restrict-account')}}/",
+                    url: "{{url('admin/users/restrict-account')}}",
                     type: "post",
                     data: JSON.stringify({
                         is_restricted: is_restricted,
