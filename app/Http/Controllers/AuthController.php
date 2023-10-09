@@ -49,7 +49,7 @@ class AuthController extends Controller
                 else{
                     return redirect('login')
                         ->withErrors([
-                            'email' => 'Email Or Password Is Not Correct',
+                            'email' => 'Account Banned Due To Spamming',
                         ])
                         ->onlyInput('email');
                 }
@@ -85,7 +85,15 @@ class AuthController extends Controller
                     ->regenerate();
 
                 return redirect()->intended('admin');
-            } elseif (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_restricted' => 0])) {
+            } elseif (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+
+                if(Auth()->user()->is_restricted){
+                    return redirect('login')
+                        ->withErrors([
+                            'email' => 'Account Banned Due To Spamming',
+                        ])
+                        ->onlyInput('email');
+                }
                 $request->session()
                     ->regenerate();
 
