@@ -83,6 +83,9 @@ class AuthController extends BaseController
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
+            if($user->is_restricted) {
+                return $this->sendError('Unauthorised.', ['error' => 'Your account has been banned due to over trading']);
+            }
             $success['token'] = $user->createToken('EOption')->plainTextToken;
             $success['name'] = $user->name;
 

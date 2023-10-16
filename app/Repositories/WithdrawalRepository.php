@@ -89,7 +89,7 @@ class WithdrawalRepository implements WithdrawalInterface
             $withdraw->status = "pending";
             $withdraw->save();
 
-            $user = User::find(auth()->user()->id);
+            $user = User::find($request->user_id);
             $data = new stdClass();
             $data->amount = $request->amount;
             $data->user_id = $user->id;

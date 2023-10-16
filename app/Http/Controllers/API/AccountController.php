@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Interfaces\PaymentMethodInterface;
 use App\Interfaces\SettingInterface;
 use App\Interfaces\SiteInterface;
+use App\Interfaces\WithdrawalInterface;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,15 +32,22 @@ class AccountController extends BaseController
     protected PaymentMethodInterface $paymentMethodInterface;
 
     /**
+     * @var WithdrawalInterface
+     */
+    protected WithdrawalInterface $withdrawalInterface;
+
+    /**
      * @param SettingInterface $settingInterface
      * @param SiteInterface $siteInterface
      * @param PaymentMethodInterface $paymentMethodInterface
+     * @param WithdrawalInterface $withdrawalInterface
      */
-    public function __construct(SettingInterface $settingInterface, SiteInterface $siteInterface, PaymentMethodInterface $paymentMethodInterface)
+    public function __construct(SettingInterface $settingInterface, SiteInterface $siteInterface, PaymentMethodInterface $paymentMethodInterface, WithdrawalInterface $withdrawalInterface)
     {
         $this->settingInterface = $settingInterface;
         $this->siteInterface = $siteInterface;
         $this->paymentMethodInterface = $paymentMethodInterface;
+        $this->withdrawalInterface = $withdrawalInterface;
     }
 
     /**
@@ -156,7 +164,7 @@ class AccountController extends BaseController
                 return $this->sendError("warning", "Sorry, Minimum Withdraw limit is ".$setting->withdraw_limit."$");
             }
 
-            $res = $this->siteInterface->storeWithdrawal($request);
+            $res = $this->withdrawalInterface->storeWithdrawal($request);
 
             if ($res['type'] == 'success') {
                 return $this->sendResponse('', $res['message']);
@@ -173,6 +181,10 @@ class AccountController extends BaseController
         }
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function changeUserAccount(Request $request): JsonResponse
     {
         $validate = Validator::make($request->all(), [
