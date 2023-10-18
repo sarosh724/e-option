@@ -863,24 +863,24 @@
                     }
 
 
-                    while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
+                    // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
                     value += Math.round((Math.random() < 0.49 ? .5 : -.5) * Math.random() * 10);
                     // if(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price){
                     //     value = coin_data.coin_price;
                     // }
-                    }
+                    // }
 
-                    while(open >= coin_data.coin_min_price && open <= coin_data.coin_max_price) {
+                    // while(open >= coin_data.coin_min_price && open <= coin_data.coin_max_price) {
                     open = value + Math.round(Math.random() * 16 - 8);
-                    }
+                    // }
 
-                    while(low >= coin_data.coin_min_price && low <= coin_data.coin_max_price) {
+                    // while(low >= coin_data.coin_min_price && low <= coin_data.coin_max_price) {
                     low = Math.min(value, open) - Math.round(Math.random() * 5);
-                    }
+                    // }
 
-                    while(high >= coin_data.coin_min_price && high <= coin_data.coin_max_price) {
+                    // while(high >= coin_data.coin_min_price && high <= coin_data.coin_max_price) {
                     high = Math.max(value, open) + Math.round(Math.random() * 5);
-                    }
+                    // }
 
                     chartData.unshift({
                         Date: newDate.getTime(),
@@ -915,19 +915,19 @@
                         var previousValue = lastDataObject.Close;
 
                         if (is_pump && pump_type == 'up') {
-                            while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
+                            // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
                                 value = am5.math.round(previousValue + (.25) * Math.random() * 1, 4);
-                            }
+                            // }
                         }
                         else if (is_pump && pump_type == 'down') {
-                            while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
+                            // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
                                 value = am5.math.round(previousValue - (.25) * Math.random() * 1, 4);
-                            }
+                            // }
                         }
                         else {
-                            while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
+                            // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
                                 value = am5.math.round(previousValue + (Math.random() < 0.5 ? .25 : -.25) * Math.random() * 2, 4);
-                            }
+                            // }
                         }
 
 
