@@ -88,6 +88,12 @@ class AuthController extends Controller
             } elseif (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
                 if(Auth()->user()->is_restricted){
+                    $request->session()
+                        ->invalidate();
+
+                    $request->session()
+                        ->regenerateToken();
+                    Auth::logout();
                     return redirect('login')
                         ->withErrors([
                             'email' => 'Your account has been banned due to over trading',
