@@ -871,15 +871,15 @@
                     // }
 
                     // while(open >= coin_data.coin_min_price && open <= coin_data.coin_max_price) {
-                    open = Math.abs(value + Math.round(Math.random() * 16 - 8));
+                    open = value + Math.round(Math.random() * 16 - 8);
                     // }
 
                     // while(low >= coin_data.coin_min_price && low <= coin_data.coin_max_price) {
-                    low = Math.abs(Math.min(value, open) - Math.round(Math.random() * 5));
+                    low = Math.min(value, open) - Math.round(Math.random() * 5);
                     // }
 
                     // while(high >= coin_data.coin_min_price && high <= coin_data.coin_max_price) {
-                    high = Math.abs(Math.max(value, open) + Math.round(Math.random() * 5));
+                    high = Math.max(value, open) + Math.round(Math.random() * 5);
                     // }
 
                     chartData.unshift({
