@@ -436,4 +436,18 @@ class SiteController extends Controller
 
         return response()->json($response);
     }
+
+    public function updateAccountBalance(Request $request){
+        $user = User::find(auth()->user()->id);
+        if($user->is_demo_account){
+            $balance = $user->demo_account_balance - $request->trade_amount;
+            User::where('id', auth()->user()->id)->update(['demo_account_balance' => $balance]);
+        }
+        else{
+            $balance = $user->account_balance - $request->trade_amount;
+            User::where('id', auth()->user()->id)->update(['account_balance' => $balance]);
+        }
+
+        return response()->json(true);
+    }
 }

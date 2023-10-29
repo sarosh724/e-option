@@ -759,6 +759,34 @@
             $("#time").hide();
 
             function runTimer(seconds, time_period, type) {
+                let amt = $("#amt").val();
+                $.ajax({
+                    url: "{{url('/update-account-balance')}}",
+                    type: "POST",
+                    data: JSON.stringify({
+                        trade_amount: amt,
+                    }),
+                    cache: false,
+                    processData: false,
+                    contentType: "application/json; charset=UTF-8",
+                    success: function (res) {
+                        if (res === true) {
+                            // toast(res.message, "success");
+                            // let html = `<small>Balance:</small>  $${res.balance.toFixed(2)}`
+                            // $('.user-account-balance').html(html)
+                            setAccountBalance();
+                        } else {
+                            // toast(res.message, "info");
+                            setAccountBalance();
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        setAccountBalance();
+                        // toast(res.message, "info");
+                        // alert(textStatus + ' : ' + errorThrown);
+                    }
+                });
+                // setAccountBalance();
                 let count = new Date();
                 count.setSeconds(count.getSeconds() + seconds);
                 var countDown = count.getTime();
@@ -796,7 +824,6 @@
                         let coin_id = $("#coin_id").val();
                         let coin_name = $("#coin_name").val();
                         let close_value = $("#close").val();
-                        let amt = $("#amt").val();
                         let profit = $("#profit").val();
                         $("#amt").val(0);
                         $("#profit").val(0);
@@ -916,7 +943,7 @@
 
                         if (is_pump && pump_type == 'up') {
                             // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
-                                value = Math.abs(am5.math.round(previousValue + (.25) * Math.random() * 1, 4));
+                                value = am5.math.round(previousValue + (.25) * Math.random() * 1, 4);
                             // }
                         }
                         else if (is_pump && pump_type == 'down') {

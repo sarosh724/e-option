@@ -54,6 +54,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/change-user-account', [SiteController::class, 'changeUserAccount']);
     Route::post('/change-password', [SiteController::class, 'changePassword']);
     Route::delete('/user-account/delete', [SiteController::class, 'deleteUserAccount']);
+    Route::post('/update-account-balance', [SiteController::class, 'updateAccountBalance']);
+
 
     Route::prefix('trading')
         ->group(function () {
