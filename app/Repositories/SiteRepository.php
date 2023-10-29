@@ -141,9 +141,24 @@ class SiteRepository implements SiteInterface
                         $user->account_balance += $request->profit;
                         $res['balance'] = $user->account_balance;
                     }
-                    $res['success'] = 1;
-                    $res['message'] = 'Congratulations, You earned profit of $' . $request->profit;
-                    $result = 'Profit';
+                    if($request->profit == 0){
+                        if($user->is_demo_account){
+                            $account_balance = $user->demo_account_balance + $request->invested_amount;
+                            User::where('id', auth()->user()->id)->update(['demo_account_balance' => $account_balance]);
+                        }
+                        else{
+                            $account_balance = $user->account_balance + $request->invested_amount;
+                            User::where('id', auth()->user()->id)->update(['account_balance' => $account_balance]);
+                        }
+                        $account_balance = $user->account_balance + $request->invested_amount;
+                        User::where('id', auth()->user()->id)->update(['account_balance' => $account_balance]);
+                        $res['message'] = 'We are sorry, the trade did not complete due to some reason, try again';
+                    }
+                    else {
+                        $res['success'] = 1;
+                        $res['message'] = 'Congratulations, You earned profit of $' . $request->profit;
+                        $result = 'Profit';
+                    }
                 } else {
 //                    if ($user->is_demo_account) {
 //                        $user->demo_account_balance -= $request->amount_invested;
@@ -167,9 +182,24 @@ class SiteRepository implements SiteInterface
                         $user->account_balance += $request->profit;
                         $res['balance'] = $user->account_balance;
                     }
-                    $res['success'] = 1;
-                    $res['message'] = 'Congratulations, You earned profit of $' . $request->profit;
-                    $result = 'Profit';
+                    if($request->profit == 0){
+                        if($user->is_demo_account){
+                            $account_balance = $user->demo_account_balance + $request->invested_amount;
+                            User::where('id', auth()->user()->id)->update(['demo_account_balance' => $account_balance]);
+                        }
+                        else{
+                            $account_balance = $user->account_balance + $request->invested_amount;
+                            User::where('id', auth()->user()->id)->update(['account_balance' => $account_balance]);
+                        }
+                        $account_balance = $user->account_balance + $request->invested_amount;
+                        User::where('id', auth()->user()->id)->update(['account_balance' => $account_balance]);
+                        $res['message'] = 'We are sorry, the trade did not complete due to some reason, try again';
+                    }
+                    else {
+                        $res['success'] = 1;
+                        $res['message'] = 'Congratulations, You earned profit of $' . $request->profit;
+                        $result = 'Profit';
+                    }
                 } else {
 //                    if ($user->is_demo_account) {
 //                        $user->demo_account_balance -= $request->amount_invested;
@@ -184,23 +214,24 @@ class SiteRepository implements SiteInterface
                 }
             }
             $user->save();
-
-            $trade = new Trade();
-            $trade->user_id = $user->id;
-            $trade->coin_id = $request->coin_id;
-            $trade->label = $request->label;
-            $trade->amount_invested = $request->amount_invested;
-            $trade->starting_price = $request->close_value;
-            $trade->closing_price = $request->latest;
-            $trade->account_type = ($user->is_demo_account) ? "demo" : "live";
-            $trade->profit = $request->profit;
-            $trade->time_period = $request->time_period;
-            $trade->result = $result;
-            $trade->save();
-            DB::commit();
+            if ($request->profit <> 0) {
+                $trade = new Trade();
+                $trade->user_id = $user->id;
+                $trade->coin_id = $request->coin_id;
+                $trade->label = $request->label;
+                $trade->amount_invested = $request->amount_invested;
+                $trade->starting_price = $request->close_value;
+                $trade->closing_price = $request->latest;
+                $trade->account_type = ($user->is_demo_account) ? "demo" : "live";
+                $trade->profit = $request->profit;
+                $trade->time_period = $request->time_period;
+                $trade->result = $result;
+                $trade->save();
+                DB::commit();
+            }
         } catch (\Exception $e) {
             DB::rollBack();
-            $res["message"] = "Internal Server Error";
+            $res["message"] = "Something went wrong!";
         }
 
         return $res;

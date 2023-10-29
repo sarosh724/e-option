@@ -855,8 +855,8 @@
                         success: function (res) {
                             if (res.success == 1) {
                                 toast(res.message, "success");
-                                let html = `<small>Balance:</small>  $${res.balance.toFixed(2)}`
-                                $('.user-account-balance').html(html)
+                                // let html = `<small>Balance:</small>  $${res.balance.toFixed(2)}`
+                                // $('.user-account-balance').html(html)
                                 setAccountBalance();
                             } else {
                                 toast(res.message, "info");
@@ -867,6 +867,7 @@
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             toast(res.message, "info");
+                            is_trade_running = false;
                             // alert(textStatus + ' : ' + errorThrown);
                         }
                     });
