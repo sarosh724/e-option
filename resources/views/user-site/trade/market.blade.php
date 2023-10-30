@@ -890,25 +890,29 @@
                         newDate.setSeconds(newDate.getSeconds() - i);
                     }
 
+                    value += Math.round((Math.random() < 0.49 ? .5 : -.5) * Math.random() * 10);
 
-                    // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
-                    value += Math.abs(Math.round((Math.random() < 0.49 ? .5 : -.5) * Math.random() * 10));
-                    // if(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price){
-                    //     value = coin_data.coin_price;
-                    // }
-                    // }
+                    if(value < 0){
+                        value = value * (-1);
+                    }
 
-                    // while(open >= coin_data.coin_min_price && open <= coin_data.coin_max_price) {
                     open = value + Math.round(Math.random() * 16 - 8);
-                    // }
 
-                    // while(low >= coin_data.coin_min_price && low <= coin_data.coin_max_price) {
+                    if(open < 0){
+                        open = open * (-1);
+                    }
+
                     low = Math.min(value, open) - Math.round(Math.random() * 5);
-                    // }
 
-                    // while(high >= coin_data.coin_min_price && high <= coin_data.coin_max_price) {
+                    if(low < 0){
+                        low = low * (-1);
+                    }
+
                     high = Math.max(value, open) + Math.round(Math.random() * 5);
-                    // }
+
+                    if(high < 0){
+                        high = high * (-1);
+                    }
 
                     chartData.unshift({
                         Date: newDate.getTime(),
@@ -932,7 +936,6 @@
             // update data
             var previousDate;
 
-            // let pump = true;
             setInterval(function () {
                 if (autoUpdate) {
                     var valueSeries = stockChart.get("stockSeries");
@@ -949,13 +952,17 @@
                         }
                         else if (is_pump && pump_type == 'down') {
                             // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
-                                value = Math.abs(am5.math.round(previousValue - (.25) * Math.random() * 1, 4));
+                                value = am5.math.round(previousValue - (.25) * Math.random() * 1, 4);
                             // }
                         }
                         else {
                             // while(value >= coin_data.coin_min_price && value <= coin_data.coin_max_price) {
-                                value = Math.abs(am5.math.round(previousValue + (Math.random() < 0.5 ? .25 : -.25) * Math.random() * 2, 4));
+                                value = am5.math.round(previousValue + (Math.random() < 0.5 ? .25 : -.25) * Math.random() * 2, 4);
                             // }
+                        }
+
+                        if(value < 0){
+                            value = value * (-1);
                         }
 
 
